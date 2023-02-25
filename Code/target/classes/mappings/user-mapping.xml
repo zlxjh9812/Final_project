@@ -76,4 +76,20 @@ values(#{UserId},#{password},#{tel},#{email},#{name},'사용자',#{birth},#{gend
 	UPDATE Users profileImg = #{profileImg} WHERE UserId = #{UserId}
 	]]>
 	 </update>
+	 <!-- User Report -->
+	 <update id="updateUserReportCount">
+	<![CDATA[
+		update Users set reportCount = (select nvl (max(reportCount),0) +1 from (select * from Users where UserId = #{UserId})) where UserId =#{UserId}
+		]]>
+	</update>
+	<update id="updateUserReportY">
+	<![CDATA[
+		update Users set report = 'Y' where UserId = #{UserId}
+	]]>
+	</update>
+	<update id="updateUserReportN">
+	<![CDATA[
+		update Users set report = 'N' where UserId = #{UserId}
+	]]>
+	</update>
 </mapper>

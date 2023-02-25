@@ -61,7 +61,7 @@
  						<div class="css-1rdb949-StyledLazyLoadingImage ezcopuc0">
  						 						<c:choose>
                    <c:when test="${result.filename != '2'}">
-                      <img alt="경로 확인 필요" src="${pageContext.servletContext.contextPath}/upload/thumbnail/${result.filename }" class="css-qhzw1o-StyledImg ezcopuc1">
+                      <img alt="경로 확인 필요" src="/img/${result.filename }" class="css-qhzw1o-StyledImg ezcopuc1">
                       
                    </c:when>
                    <c:otherwise>
@@ -90,6 +90,6 @@
 
   </main><!-- End #main -->
 
- <c:import url="footer.jsp"></c:import>
+<c:import url="../common/footer.jsp"></c:import>
 </body>
 </html>

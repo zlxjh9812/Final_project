@@ -91,7 +91,7 @@
 			FROM(
 				SELECT * 
 				FROM REVIEWBOARD 
-				WHERE boardnum = #{boardnum}
+				WHERE boardnum = #{boardnum} and report = 'N'
 		<if test="searchCondition == 'TITLE'">
 			AND TITLE LIKE '%'||#{searchKeyword}||'%'
 		</if>
@@ -117,7 +117,7 @@
 			FROM(
 				SELECT * 
 				FROM REVIEWBOARD 
-				WHERE 1=1
+				WHERE 1=1 and report = 'N'
 				AND TITLE LIKE '%'||#{searchKeyword}||'%'
 		ORDER BY BSEQ DESC
 		) 
@@ -137,7 +137,7 @@
 		<select id="getBoardListMain" resultMap="boardResult">
 		SELECT * 
 		FROM REVIEWBOARD 
-		WHERE boardnum!=4 
+		WHERE boardnum!=4  and report = 'N'
 		<if test="searchCondition == 'TITLE'">
 			AND TITLE LIKE '%'||#{searchKeyword}||'%'
 		</if>
@@ -153,7 +153,7 @@
 	<select id="getTotalPages" resultType="int">
 		SELECT count(*) 
 		FROM REVIEWBOARD 
-		WHERE boardnum=#{boardnum} 
+		WHERE boardnum=#{boardnum} and report = 'N'
 		<if test="searchCondition == 'TITLE'">
 			AND TITLE LIKE '%'||#{searchKeyword}||'%'
 		</if>
@@ -168,7 +168,7 @@
 		FROM (
 			SELECT ROWNUM RN, BSEQ, TITLE, NICKNAME, CONTENT,LIKE_NUM, UNLIKE_NUM, FILENAME, CNT  
 			FROM REVIEWBOARD 
-    		WHERE ROWNUM <= #{pageNum} * #{amount} 
+    		WHERE ROWNUM <= #{pageNum} * #{amount} and report = 'N'
     		ORDER BY BSEQ DESC 
     	) 
   		WHERE RN > (#{pageNum} - 1) * #{amount}
@@ -182,7 +182,7 @@
 			FROM (
 				SELECT * 
 				FROM REVIEWBOARD 
-				WHERE boardnum = 1
+				WHERE boardnum = 1 and report = 'N'
 				<if test="searchCondition == 'TITLE'">
 					AND TITLE LIKE '%'||#{searchKeyword}||'%'
 				</if>

@@ -518,7 +518,7 @@ border-radius: 15px;
 				url : 'deleteReport.do?arr='+chkArray, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
 				success : function (data) {
 					if(data === "false"){
-						alert("해당하는 이메일이 없습니다")
+						alert("오류가 발생하였습니다")
 					}else{
 						history.go(0);
 						

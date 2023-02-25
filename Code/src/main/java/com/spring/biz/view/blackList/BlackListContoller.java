@@ -35,7 +35,7 @@ public class BlackListContoller {
 		System.out.println("error2");
 //		model.addAttribute("boardList", boardService.getBoardList(vo));	// Model 정보 저장
 		
-		return "BlackList";
+		return "/admin/BlackList";
 	}
 	
 	@RequestMapping(value = "getEndDateBlackListUser.do")
@@ -51,14 +51,17 @@ public class BlackListContoller {
 		System.out.println("error2");
 //		model.addAttribute("boardList", boardService.getBoardList(vo));	// Model 정보 저장
 		
-		return "BlackListEndDate";
+		return "/admin/BlackListEndDate";
 	}
 	@ResponseBody
 	@RequestMapping(value = "deleteReport.do")
 	public String deleteReport(String arr[],UserBlackListVO vo,UserVO Ivo) {
+		System.out.println(1);
 		for(int i = 0;i<arr.length;i++) {
+			System.out.println(arr[i]);
 			vo.setUserId(arr[i]);
 			Ivo.setUserId(arr[i]);
+		
 			blackList.DeleteReportUser(vo);
 			userService.updateUserReportN(Ivo);
 		}

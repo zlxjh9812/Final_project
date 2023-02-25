@@ -53,6 +53,6 @@ public class HashTableContoller {
 		}
 		
     	model.addAttribute("result", result);
-    	return "tagSearch";
+    	return "/board/tagSearch";
 	}
 }

@@ -495,9 +495,44 @@ border-radius: 15px;
     	        if(chk) $("#check_all").prop('checked', false);
 
     	        else  $("#check_all").prop('checked', true);
+    	        
 				
     	    });
     	});
+      $("#btn").on("click", function(e) {
+    	  var chkArray = new Array();
+
+    	    $("input[name='UserId']:checked").each(function() { 
+    	      var tmpVal = $(this).val(); 
+    	      chkArray.push(tmpVal);
+    	    });
+
+    	    if( chkArray.length < 0 ){
+    	      alert("아무 값도 선택되지 않았습니다");
+    	      return;
+    	    }
+
+    	    console.log(chkArray);
+			var listVar = $('input[name=UserId]:checked').val();
+			
+			$.ajax({
+				type : 'get',
+				url : 'deleteReport.do?arr='+chkArray, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
+				success : function (data) {
+					if(data === "false"){
+						alert("오류가 발생하였습니다")
+					}else{
+						history.go(0);
+						
+						alert('회원 정지가 해제 되었습니다.');
+						
+					}
+					
+					
+				}			
+			}); // end ajax
+		
+      });
     } );
   
   </script>
@@ -508,6 +543,7 @@ border-radius: 15px;
   
    <main id="main" class="main" style="text-align: center;">
    <h1>신고된 전체 유저</h1>
+   <button id = "btn">해제하기</button>
 <table class="table" >
 			 
 			 
@@ -530,7 +566,7 @@ border-radius: 15px;
       
       <td >${list.reportDate }</td>
       <td  >${list.endDate }</td>
-      <td><input type = "checkbox" value = "${list.userId }" class="UserId"></td>
+      <td><input type = "checkbox" value = "${list.userId }" class="UserId" name = "UserId"></td>
     </tr>
     
     </c:forEach>

@@ -176,9 +176,9 @@
     		${board.content }
     	</div>
     	
-    	<div class="divide">  	
+    	<div class="divide" style="font-size: 20px;">  	
     	<c:forEach items="${ hashTag}" var = "tag">
-    			<a href="HashTagSearch.do?tags=${tag.tags }" id = "hashtags">#${tag.tags }</a>
+    		<a href="HashTagSearch.do?tags=${tag.tags }" id = "hashtags" >#${tag.tags }</a>
     		</c:forEach>
     	</div>
     		</div>

@@ -125,16 +125,23 @@ public class adminControler {
 //		System.out.println("error1");
 //		reviewService.updateReportReview(vo);
 //		System.out.println("error2");
-//		reviewService.deleteReportReview(vo);
-		System.out.println(vo.getTargetID());
+		reviewService.deleteReportReview(vo);
+		
+//		System.out.println(vo.getTargetID());
 		Ivo.setUserId(vo.getTargetID());
 		Mvo.setBseq(vo.getSeq());
 		boardService.reportUpdateReviewY(Mvo);
-		System.out.println(Ivo.getUserId());
-		System.out.println(userService.getUser(Ivo));
+		 
+		
 		userService.updateUserReportCount(Ivo);
-		int count = userService.getUser(Ivo).getReportCount();
+		
+		userService.idCheck(Ivo);
+		
+		
+		int count = userService.idCheck(Ivo).getReportCount();
+		
 		Bvo.setUserId(Ivo.getUserId());
+		
 		switch (count) {
 		case 3: Bvo.setDate(3);
 		if(userBlackListService.getUser(Bvo)!=null) {

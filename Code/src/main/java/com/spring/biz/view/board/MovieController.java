@@ -168,7 +168,7 @@ public class MovieController {
 		mode.addAttribute("cast",info.getCredits(contents_type, contents_num, "cast"));
 		mode.addAttribute("crew",info.getCredits(contents_type, contents_num, "crew"));
 		mode.addAttribute("info",info.getjsonObjectInfo(contents_type, contents_num));
-		return "MovieDetail";
+		return "/board/MovieDetail";
 	}
 	
 	@RequestMapping(value = "search.do")
@@ -178,7 +178,7 @@ public class MovieController {
 	    	List<ReviewBoardVO> result = boardService.getSearchReview(vo);
 	    	Collections.sort(result, new SortByLike());
 	    	model.addAttribute("result", result);
-	    	return "searchReview";
+	    	return "board/searchReview";
 	    	
 	    }else {
 	    	
@@ -187,7 +187,7 @@ public class MovieController {
 	         Collections.sort(result, new SortByVote());
 	         model.addAttribute("result", result);
 	    }
-	      return "search";
+	      return "/board/search";
 	   }
 	
 	
