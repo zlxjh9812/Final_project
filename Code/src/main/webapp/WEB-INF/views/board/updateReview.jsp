@@ -845,14 +845,20 @@ select {
 	<div class="container">
 		<div class="title">글쓰기</div>
 	<form action="updateBoard.do" method="post">
-		<input type="hidden" id="bseq" name="bseq" value="${board.bseq }">
+		
 	<input type = "hidden" id = "nickname" name="nickname" value = "${UserInfo.nickname }">
  	<input type="hidden" id = "userId" name="userId" value = "${User.userId }">
-			
+	<input type = "hidden" id = "bseq" name = "bseq" value = "${board.bseq }">
 			<div class="form-title">
 				<div>제목</div>
 				<input name="title" type="text" placeholder="제목을 입력해주세요." value = "${board.title }">
 			</div>
+			<div>
+					<input type = "file" name = "filename" id = "filename"><br>
+					<img id="miribogiimg" style="height: 100px; width: auto;" >
+					<button class="miribogi" type="button" id="overview-cancel">취소하기</button>
+					
+				</div>
 			<div class="search-bar">
 				<div>리뷰할 콘텐츠</div>
 				<input type="hidden" id="moviecode" name="moviecode" value="${board.moviecode }">
@@ -869,7 +875,7 @@ select {
 								<div>#태그</div>
 				
 				
-				<input name='basic'  id = "basic">
+				<input name='basic'  id = "basic" name = "basic">
 			
 			
 			</div>

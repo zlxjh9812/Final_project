@@ -3,6 +3,7 @@ package com.spring.biz.view.board;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
@@ -77,34 +79,44 @@ public class BoardController {
 		vo.setBseq(seq);
 		Hvo.setBseq(seq);
 		vo.setContentType(code);
-		System.out.println(basic);
-		try {
-			if(basic != null) {
-			JSONArray arr = new JSONArray(basic);
-			String[] list = null;
-			int len = arr.length();
-			if(arr!=null) {
-				list = new String[len];
-				for(int i = 0;i<len;i++) {
-					list[i] = arr.getJSONObject(i).getString("value");
-					System.out.println(list[i]);
-					Hvo.setTags(list[i]);
-					hashtagService.insertHashTag(Hvo);
-				}	
+		System.out.println(basic + "태그 확인용");
+		if(basic != null) {
+			try {
+				Hvo.setBseq(vo.getBseq());
+				hashtagService.updateHashTag(Hvo);
+				System.out.println(vo.getBseq());
+				JSONArray arr = new JSONArray(basic);
+				System.out.println(arr);
+				String[] list = null;
+				int len = arr.length();
+				if(arr!=null) {
+					list = new String[len];
+					for(int i = 0;i<len;i++) {
+						list[i] = arr.getJSONObject(i).getString("value");
+						System.out.println(list[i]);
+						Hvo.setTags(list[i]);
+						
+						
+						hashtagService.insertHashTag(Hvo);
+						System.out.println(Hvo.getTags());
+					}
+				}
+				System.out.println(list);
+				}
+			 catch (JSONException e) {
+				 e.printStackTrace();
+				
 			}
-			System.out.println(list);
+			
 			}
-			
-			
-		} catch (JSONException e) {
-			 e.printStackTrace();
-			
-		}
 		
 		List<String> list = getGenres.get_genres(code, moviecode);
 		for(int i = 0;i<list.size();i++) {
-			Gvo.setMovieGenres(list.get(i));
+			System.out.println(1);
+			Gvo.setMovieGeners(list.get(i));
+			System.out.println(2);
 			if(MovieGenresService.validMovieGenres(Gvo) == null) {
+				System.out.println(1);
 				MovieGenresService.insertGenres(Gvo);
 			}else {
 				MovieGenresService.updateGenres(Gvo);
@@ -151,7 +163,7 @@ public class BoardController {
 	    UUID uuid = UUID.randomUUID();
 	    String uploadFileName = uuid.toString() + "_" + originalFilename;
 
-	    String basePath = "C:\\upload\\thumbnail";
+	    String basePath = "C:\\img";
 
 	    File dir = new File(basePath);
 	    if (!dir.exists()) {
@@ -171,7 +183,8 @@ public class BoardController {
 
 	// 글 수정
 		@RequestMapping(value="updateBoard.do")
-		public String updateBoard( ReviewBoardVO vo,	@RequestParam(value="SC") String code,String basic,HashTagVO Hvo,SearchCriteria cri) {
+		public String updateBoard( ReviewBoardVO vo, 
+				@RequestParam(value="SC") String code,String basic,HashTagVO Hvo,SearchCriteria cri) {
 			int num;
 			if(code.equals("movie")) {
 				num=1;
@@ -182,8 +195,7 @@ public class BoardController {
 			}else {
 				num=4;
 			}
-			System.out.println(code);
-			System.out.println(num);
+			System.out.println(basic);
 			vo.setContentType(code);
 			vo.setBoardnum(num);
 			System.out.println(vo.getBseq());
@@ -192,6 +204,7 @@ public class BoardController {
 			if(basic != null) {
 				try {
 					Hvo.setBseq(vo.getBseq());
+					hashtagService.updateHashTag(Hvo);
 					System.out.println(vo.getBseq());
 					JSONArray arr = new JSONArray(basic);
 					String[] list = null;
@@ -202,7 +215,7 @@ public class BoardController {
 							list[i] = arr.getJSONObject(i).getString("value");
 							System.out.println(list[i]);
 							Hvo.setTags(list[i]);
-							hashtagService.updateHashTag(Hvo);
+							
 							System.out.println(1);
 							hashtagService.insertHashTag(Hvo);
 						}
@@ -284,7 +297,7 @@ public class BoardController {
 
 	// 글 상세 조회
 	@RequestMapping(value="/getBoard.do")
-	public String getBoard(ReviewBoardVO vo, Model model, UserVO uvo,HttpServletRequest request, CntHistoryVO cvo,HashTagVO Hvo) {
+	public String getBoard(ReviewBoardVO vo, Model model, UserVO uvo,HttpServletRequest request, CntHistoryVO cvo,HashTagVO Hvo,HttpServletResponse response) throws IOException {
 		System.out.println("글 상세 조회 처리");
 		HttpSession session = request.getSession();
 		ReviewBoardVO result = boardService.getBoard(vo);
@@ -292,7 +305,13 @@ public class BoardController {
 		if(result.getMoviecode()!=0) {
 			model.addAttribute("info",info.getjsonObjectInfo(result.getContentType(), result.getMoviecode()));	
 		}
-		
+		if(result.getReport().equals("Y")) {
+			response.setContentType("text/html; charset=UTF-8");
+	        PrintWriter out = response.getWriter();
+	        out.println("<script>alert('삭제된 게시물입니다.');history.go(-1);</script>");
+	        out.flush();
+	        return "redirect:history.go(-1)";
+		}
 		if((UserVO) session.getAttribute("User") != null) {			
 			uvo = (UserVO) session.getAttribute("User");
 			System.out.println(uvo.getUserId());
@@ -325,7 +344,7 @@ public class BoardController {
 		model.addAttribute("board", boardService.getBoard(vo));
 		
 		
-		return "getBoard";
+		return "/board/getBoard";
 	}
 
 	// 글 목록 검색

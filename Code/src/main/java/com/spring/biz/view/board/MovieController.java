@@ -209,7 +209,7 @@ public class MovieController {
 	       if(searchCondition.equals("movie") || searchCondition.equals("tv")) {
 	      getSearchUtil search = new getSearchUtil();
 	        List<SearchVO> result = search.getInfoList(searchCondition ,searchKeyword);
-	       
+	        List<String> poster = new ArrayList<String>();
 	        Collections.sort(result, new SortByVote());
 	        
 	        if(result.size()>=10) {
@@ -222,17 +222,22 @@ public class MovieController {
 	       for(int i=0;i<size;i++) { 
 	           String str = result.get(i).getTitle();
 	           int num = result.get(i).getContents_num();
+	           String img = result.get(i).getPoster_path();
+	           poster.add(img);
 	           resulthash.put(str,num); 
 	       } 
 	       
 	       Iterator<HashMap.Entry<String, Integer>> itr = resulthash.entrySet().iterator();
-	       while(itr.hasNext()) {
+	       int i = 0;
+	       while(itr.hasNext()||i == resulthash.size()-1) {
 	          
 	          Map.Entry<String, Integer> entry = itr.next();
 	          jsonObj = new JSONObject();
 	           jsonObj.put("data", entry.getKey());
-	           jsonObj.put("value", entry.getValue());      
+	           jsonObj.put("value", entry.getValue());   
+	           jsonObj.put("img",poster.get(i));
 	           arrayObj.add(jsonObj); 
+	           i++;
 	       }
 	       //뽑은 후 json파싱 
 //	       for(String str : resulthash.) {

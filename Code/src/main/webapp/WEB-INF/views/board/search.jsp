@@ -82,6 +82,6 @@
                  
   </main><!-- End #main -->
 
-  <c:import url="footer.jsp"></c:import>
+<c:import url="../common/footer.jsp"></c:import>
 </body>
 </html>

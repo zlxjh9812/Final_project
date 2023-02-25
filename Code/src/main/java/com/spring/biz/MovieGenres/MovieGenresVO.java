@@ -3,7 +3,7 @@ package com.spring.biz.MovieGenres;
 public class MovieGenresVO {
 
 	private int seq;
-	private String movieGenres;
+	private String movieGeners;
 	private int count;
 	public int getSeq() {
 		return seq;
@@ -11,11 +11,11 @@ public class MovieGenresVO {
 	public void setSeq(int seq) {
 		this.seq = seq;
 	}
-	public String getMovieGenres() {
-		return movieGenres;
+	public String getMovieGeners() {
+		return movieGeners;
 	}
-	public void setMovieGenres(String movieGenres) {
-		this.movieGenres = movieGenres;
+	public void setMovieGeners(String movieGeners) {
+		this.movieGeners = movieGeners;
 	}
 	public int getCount() {
 		return count;
@@ -25,7 +25,7 @@ public class MovieGenresVO {
 	}
 	@Override
 	public String toString() {
-		return "MovieGenresVO [seq=" + seq + ", movieGenres=" + movieGenres + ", count=" + count + "]";
+		return "MovieGenresVO [seq=" + seq + ", movieGeners=" + movieGeners + ", count=" + count + "]";
 	}
 
 	

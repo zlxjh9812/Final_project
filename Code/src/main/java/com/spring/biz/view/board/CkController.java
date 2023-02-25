@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -33,6 +34,7 @@ import com.spring.biz.user.UserVO;
 
 
 @Controller
+@SessionAttributes({"User"})
 public class CkController {
 	@Autowired
 	BoardService bo;
@@ -48,10 +50,11 @@ public class CkController {
 	@ResponseBody
 	@RequestMapping(value = "write.do")
 	public String writeDo(UserVO vo,String UserId) {
+		System.out.println(vo.getPassword());
 		if(vo.getUserId()=="") {
 			return "1";
 			
-		}else if(userService.getUser(vo).getReport().equals("Y")){
+		}else if(userService.idCheck(vo).getReport().equals("Y")){
 			return "2";
 		}
 		return "testCk";
@@ -60,10 +63,10 @@ public class CkController {
 	@RequestMapping(value = "writeGo.do")
 	public String writeDoGo() {
 	
-		return "insertBoard";
+		return "/board/insertBoard";
 	}
 	
-	@RequestMapping(value="/fileupload.do", method=RequestMethod.POST)
+	@RequestMapping(value="fileupload.do", method=RequestMethod.POST)
 	@ResponseBody
 	public String fileUpload(HttpServletRequest req, HttpServletResponse resp, 
                  MultipartHttpServletRequest multiFile) throws Exception {
@@ -77,8 +80,8 @@ public class CkController {
 					try{
 						String fileName = file.getName();
 						byte[] bytes = file.getBytes();
-						String uploadPath = "C:\\upload\\ck";
-						System.out.println(uploadPath);
+						String uploadPath = "C:\\img";
+						
 						File uploadFile = new File(uploadPath);
 						if(!uploadFile.exists()){
 							uploadFile.mkdirs();
@@ -87,11 +90,11 @@ public class CkController {
 						uploadPath = uploadPath + "/" + fileName;
 						out = new FileOutputStream(new File(uploadPath));
                         out.write(bytes);
-                        
+                        System.out.println(uploadPath);
                         printWriter = resp.getWriter();
                         resp.setContentType("text/html");
-                        String fileUrl = "/upload/ck/" + fileName;
-                        
+                     
+                        String fileUrl = "/img/" + fileName;
                         // json 데이터로 등록
                         // {"uploaded" : 1, "fileName" : "test.jpg", "url" : "/img/test.jpg"}
                         // 이런 형태로 리턴이 나가야함.
@@ -99,6 +102,7 @@ public class CkController {
                         json.addProperty("fileName", fileName);
                         json.addProperty("url", fileUrl);
                         System.out.println(fileUrl);
+                        System.out.println(uploadPath);
                         printWriter.println(json);
                     }catch(IOException e){
                         e.printStackTrace();
@@ -115,6 +119,7 @@ public class CkController {
 		}
 		return null;
 	}	
+	
 	
 	@RequestMapping(value = "test123.do")
 	public String test() {

@@ -5,22 +5,32 @@
 <mapper namespace="UserDAO">
 	
 	<resultMap type="user" id="userResult">
-		<result property="UserId" column="UserId"/>
+		<result property="UserId" column="userId"/>
 		<result property="password" column="password"/>
 		<result property="tel" column="tel"/>
-		<result property="email" column="name"/>
+		<result property="email" column="email"/>
+		<result property="name" column="name"/>
 		<result property="role" column="role"/>
-		<result property="user_img" column="userImg"/>
-		
+		<result property="birth" column="birth"/>
+		<result property="gender" column="gender"/>
+		<result property="nickName" column="nickname"/>
+		<result property="profileImg" column="profileImg"/>
+		<result property="reportCount" column="reportCount"/>
+		<result property="report" column="report"/>
 	</resultMap>
 
 	<!-- 회원가입(User) -->
 	<insert id="insertUser">
-		<![CDATA[ INSERT INTO Users(UserId,password,tel,email,name,role)
-		VALUES (#{UserId},#{password},#{tel},#{email},#{name},'사용자')
+		<![CDATA[ insert into Users(UserId,password,tel,email,name,role,birth,gender,nickname)
+values(#{UserId},#{password},#{tel},#{email},#{name},'사용자',#{birth},#{gender},#{nickname})
 		]]>
 	</insert>
-	
+	<!-- nickNameCheck -->
+	<select id="nickNameCheck" resultType="user">
+		<![CDATA[
+			select * from Users where nickName = #{nickName}
+		]]>
+	</select>
 	<!-- idCheck -->
 	<select id="idCheck" resultType="user">
 	<![CDATA[
@@ -62,6 +72,8 @@
 	]]>
 	</select>
 	<update parameterType="map" id="memberImgUpload">
-	UPDATE memberSET user_img = #{userImg}WHERE user_id = #{userId}
+	<![CDATA[
+	UPDATE Users profileImg = #{profileImg} WHERE UserId = #{UserId}
+	]]>
 	 </update>
 </mapper>

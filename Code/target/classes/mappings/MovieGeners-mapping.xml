@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 			
-<mapper namespace="MovieGenersDAO">
+<mapper namespace="MovieGenresDAO">
 
 	<resultMap type="MovieGeners" id="MovieGenersresult">
 		<result property="seq" column="seq" />
@@ -13,13 +13,13 @@
 	</resultMap>
 	
 	<!-- 댓글 신고 -->
-	<insert id="insertGeners">
+	<insert id="insertGenres">
 	<![CDATA[ 
 		insert into movie_geners (seq,movieGeners) 
 		values ((select nvl(max(seq),0)+1 from movie_geners),#{movieGeners})
 	]]>
 	</insert>
-	<update id="updateGeners">
+	<update id="updateGenres">
 	<![CDATA[
 		update movie_geners set count =  (select count from movie_geners where movieGeners = #{movieGeners})+1 
 		where movieGeners = #{movieGeners} 

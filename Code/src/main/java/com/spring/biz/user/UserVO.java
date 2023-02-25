@@ -1,9 +1,9 @@
 package com.spring.biz.user;
 
-import java.sql.Date;
+
 
 public class UserVO {
-	private String userId;
+	private String UserId;
 	private String password;
 	private String tel;
 	private String email;
@@ -11,17 +11,17 @@ public class UserVO {
 	private String role;
 	private int birth;
 	private String gender;
-	private String nickname;
+	private String nickName;
 	private String profileImg;
 	private int reportCount;
 	private String report;
 
 	public String getUserId() {
-		return userId;
+		return UserId;
 	}
 
 	public void setUserId(String userId) {
-		this.userId = userId;
+		this.UserId = userId;
 	}
 
 	public String getPassword() {
@@ -81,11 +81,11 @@ public class UserVO {
 	}
 
 	public String getNickname() {
-		return nickname;
+		return nickName;
 	}
 
 	public void setNickname(String nickname) {
-		this.nickname = nickname;
+		this.nickName = nickname;
 	}
 
 	public String getProfileImg() {
@@ -114,8 +114,8 @@ public class UserVO {
 
 	@Override
 	public String toString() {
-		return "UserVO [userId=" + userId + ", password=" + password + ", tel=" + tel + ", email=" + email + ", name="
-				+ name + ", role=" + role + ", birth=" + birth + ", gender=" + gender + ", nickname=" + nickname
+		return "UserVO [UserId=" + UserId + ", password=" + password + ", tel=" + tel + ", email=" + email + ", name="
+				+ name + ", role=" + role + ", birth=" + birth + ", gender=" + gender + ", nickName=" + nickName
 				+ ", profileImg=" + profileImg + ", reportCount=" + reportCount + ", report=" + report + "]";
 	}
 

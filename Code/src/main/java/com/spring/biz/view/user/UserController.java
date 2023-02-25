@@ -30,7 +30,7 @@ import com.spring.biz.user.UserVO;
 import com.spring.biz.view.email.MailSendService;
 
 @Controller
-@SessionAttributes({"User","User"})
+@SessionAttributes({"User"})
 
 public class UserController {
 	
@@ -38,8 +38,7 @@ public class UserController {
 	private MailSendService mailService;
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private UserService userinfoservice;
+
 	@Inject
 	BCryptPasswordEncoder pwdEncoder;
 	
@@ -51,10 +50,12 @@ public class UserController {
 		age = now.get(Calendar.YEAR)-(age/10000);
 		vo.setBirth(age);
 		vo.setPassword(pwdEncoder.encode(vo.getPassword()));
+		System.out.println(vo.getUserId());
+		System.out.println(vo.getNickname());
 		userService.insertUser(vo);
 		System.out.println("error1");
 		System.out.println(vo.getNickname());
-		userinfoservice.insertUser(vo);
+		
 		
 		System.out.println("error2");
 		response.setContentType("text/html; charset=UTF-8");
@@ -83,7 +84,7 @@ public class UserController {
 			System.out.println("로그인 완료");
 			model.addAttribute("User", userService.idCheck(vo));
 			System.out.println(vo.getUserId());
-			model.addAttribute("User",userinfoservice.getUser(vo));
+		
 			return "redirect:mainpage.do";
 		}else {
 			 	response.setContentType("text/html; charset=UTF-8");
@@ -130,7 +131,7 @@ public class UserController {
 	public int checkNickName(UserVO vo) {
 		int reuslt = 0;
 		System.out.println(vo.getNickname());
-		if(userinfoservice.getNickname(vo)!=null) {reuslt = 1;}else {reuslt = 0;}
+		if(userService.getNickname(vo)!=null) {reuslt = 1;}else {reuslt = 0;}
 		System.out.println(reuslt);
 		return reuslt;
 	}
@@ -177,7 +178,7 @@ public class UserController {
 	public String findId(UserVO vo,Model model) {
 		UserVO User = userService.emailCheck(vo);
 		model.addAttribute("id",User.getUserId());
-		return "resultId";
+		return "user/resultId";
 	}
 	@ResponseBody
 	@RequestMapping(value="/findPassword.do")
@@ -206,21 +207,21 @@ public class UserController {
 		System.out.println(1);
 		response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
-        out.println("<script>alert('비밀번호가 변경되었습니다 다시 로그인 해주세요.');location.href='testMovie.do';</script>");
+        out.println("<script>alert('비밀번호가 변경되었습니다 다시 로그인 해주세요.');location.href='/';</script>");
         System.out.println(2);
         out.flush();
-        return "result";
+        return "user/result";
 	}
 	@RequestMapping(value = "/findIdgo.do")
 	public String findIdGo() {
-		return "findId";
+		return "/user/findId";
 	}
 	@RequestMapping(value = "/updatePasswordGo.do")
 	public String updatePasswordGo() {
-		return "updatePassword";
+		return "/user/updatePassword";
 	}
 	@RequestMapping(value = "sign_up.do")
 	public String sign_up() {
-		return "sign_up";
+		return "/user/sign_up";
 	}
 }

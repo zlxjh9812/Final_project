@@ -177,8 +177,8 @@
     	</div>
     	
     	<div class="divide">  	
-    		<c:forEach items="${hashTag}" var = "tag">
-    			<a href="HashTagSearch.do?tags=${tag.tags }" id="hashtags" class="hash">#${tag.tags }</a>
+    	<c:forEach items="${ hashTag}" var = "tag">
+    			<a href="HashTagSearch.do?tags=${tag.tags }" id = "hashtags">#${tag.tags }</a>
     		</c:forEach>
     	</div>
     		</div>
@@ -206,7 +206,7 @@
 
     </main>
 	<br>
-	<c:import url="footer.jsp"></c:import>
+<c:import url="../common/footer.jsp"></c:import>
    
    <!-- 좋아요 버튼 -->
    <script src="<c:url value="/resources/assets/js/likebutton.js"/>"></script>

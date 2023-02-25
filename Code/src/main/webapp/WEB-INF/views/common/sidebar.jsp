@@ -446,14 +446,14 @@ border-radius: 15px;
             <c:otherwise>
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="<c:url value="resources/assets/img/profile-img.jpg"/>" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">${UserInfo.nickname }</span>
+            <span class="d-none d-md-block dropdown-toggle ps-2">${User.nickname }</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
             <input type="hidden" id="UserId" value="${User.userId }">
               <h6>${User.userId }</h6>
-              <span>${UserInfo.nickname }</span>
+              <span>${User.nickname }</span>
             </li>
             <li>
               <hr class="dropdown-divider">

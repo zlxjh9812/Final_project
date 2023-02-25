@@ -4,12 +4,13 @@
     <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
     <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
        <%@include file="../common/sidebar.jsp" %>
+       
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>리뷰 게시판</title>
-
+<script type="text/javascript" src="<c:url value="/resources/InsertAuthority.js"/>"></script>
    <main id="main" class="main">
    <!-- Modal -->
                <div class="modal fade" id="exampleModalCenter" tabindex="-1"
@@ -58,7 +59,7 @@
  						<div class="css-1rdb949-StyledLazyLoadingImage ezcopuc0">
  						<c:choose>
                    <c:when test="${board.filename != '2'}">
-                      <img alt="경호 확인 필요" src="C:/upload/thumbnail/${board.filename }" class="css-qhzw1o-StyledImg ezcopuc1">
+                      <img alt="경호 확인 필요" src="/img/${board.filename }" class="css-qhzw1o-StyledImg ezcopuc1">
                       
                    </c:when>
                    <c:otherwise>
@@ -131,7 +132,7 @@
                 
               
               
-		<c:import url="footer.jsp"></c:import>
+		<c:import url="../common/footer.jsp"></c:import>
   
   
   

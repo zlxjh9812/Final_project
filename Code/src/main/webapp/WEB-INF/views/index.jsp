@@ -15,7 +15,7 @@
   <meta content="" name="keywords">
 	
 
-	</style>
+	
  </head>
  <body>  
    <main id="main" class="main">

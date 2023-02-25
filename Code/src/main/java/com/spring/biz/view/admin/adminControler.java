@@ -55,7 +55,7 @@ public class adminControler {
 				System.out.println("error2");
 //				model.addAttribute("boardList", boardService.getBoardList(vo));	// Model 정보 저장
 //				System.out.println(reviewService.getBoardListWithDynamicPaging(cri).get(0).getReportSeq());
-		return "admin";
+		return "admin/admin";
 	}
 	
 	@RequestMapping(value = "/getCommentReport.do")
@@ -68,25 +68,26 @@ public class adminControler {
 		System.out.println("error1");
 		model.addAttribute("boardList", commentService.getBoardListWithDynamicPaging(cri));	// Model 정보 저장
 		model.addAttribute("pageMaker", pageMaker);
-		return "reportComment";
+		return "admin/reportComment";
 	}
 	@RequestMapping(value = "/getReportDetail.do")
 	public String getReportDetail(Model model ,ReportReviewVO vo) {
 		List<ReportReviewVO> list = reviewService.getReportReviewDetail(vo);
 		System.out.println(list);
 		model.addAttribute("reportDetail",list);
-		return "reportDetail";
+		return "admin/reportDetail";
 	}
 	@RequestMapping(value = "/getReportCommentDetail.do")
 	public String getReportCommentDetail(Model model ,ReportCommentVO vo) {
 		List<ReportCommentVO> list = commentService.getReportCommentDetail(vo);
 		System.out.println(list);
 		model.addAttribute("reportDetail",list);
-		return "reportDetail";
+		return "admin/reportDetail";
 	}
 	@RequestMapping(value = "/insertReviewReport.do")
 	public String insertReviewReport(ReportReviewVO vo,HttpServletResponse response) throws IOException {
-		
+		System.out.println(vo.getUserId() + "피 신고자");
+		System.out.println(vo.getTargetID());
 		if(reviewService.getValid(vo)==0) {
 			reviewService.insertReportReview(vo);
 		System.out.println("error");
@@ -263,7 +264,7 @@ public class adminControler {
 	@RequestMapping(value ="Report.do")
 	public String InsertReport() {
 		
-		return "InsertReport";
+		return "admin/InsertReport";
 	}
 	
 }

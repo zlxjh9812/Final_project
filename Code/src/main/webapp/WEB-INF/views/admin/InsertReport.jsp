@@ -65,7 +65,7 @@ function submitReport() {
 <div class="hiddenFields">
 <input type="hidden" name="seq" value="${board.bseq }">
 <input type="hidden" name="tableNum" value="${board.boardnum }">
-<input type="hidden" name="UserId" value="${UserInfo.userId }">
+<input type="hidden" name="UserId" value="${User.userId }">
 <input type="hidden" name="targetID" value="${board.userId }">
 </div>
 	<div id="reportsTop">
@@ -82,7 +82,7 @@ function submitReport() {
 		</dl>
         		<dl>
 			<dt>신고자 아이디</dt>
-			<dd><span>${UserInfo.userId }</span></dd>
+			<dd><span>${User.userId }</span></dd>
 		</dl>
 		<dl>
 			<dt>신고사유</dt>

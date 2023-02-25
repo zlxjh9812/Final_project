@@ -29,7 +29,25 @@ public class ReviewBoardVO {
 	private List<String> tags;
 	private String contentType;	
 	private String reviewPic;
+	private String report;
 	
+	
+	public String getReport() {
+		return report;
+	}
+
+
+
+
+
+	public void setReport(String report) {
+		this.report = report;
+	}
+
+
+
+
+
 	public ReviewBoardVO() {
 		this.pageNum = 1;
 		this.amount = 15;

@@ -9,14 +9,14 @@
 	<typeAliases>
 		<typeAlias type="com.spring.biz.UserBlackList.UserBlackListVO" alias="blackLIst"/>
 		<typeAlias type="com.spring.biz.reportReview.ReportReviewVO" alias="reportReview"/>
-		<typeAlias type="com.spring.biz.tableNum.tableNumVO" alias="tableValue"/>
-		<typeAlias type="com.spring.biz.reportComment.reportCommentVO" alias="reportComment"/>
+		<typeAlias type="com.spring.biz.tableNum.TableNumVO" alias="tableValue"/>
+		<typeAlias type="com.spring.biz.reportComment.ReportCommentVO" alias="reportComment"/>
 		<typeAlias type="com.spring.biz.user.UserVO" alias="user"/>
 		<typeAlias type="com.spring.biz.userInfo.UserInfoVO" alias="userInfo"/>
-		<typeAlias alias="board" type="com.spring.biz.board.MovieBoardVO"></typeAlias>
+		<typeAlias alias="board" type="com.spring.biz.board.ReviewBoardVO"></typeAlias>
 		<typeAlias alias="cnt"	type="com.spring.biz.CntHistory.CntHistoryVO"></typeAlias>
 		<typeAlias type="com.spring.biz.hashTag.HashTagVO" alias="hashTag"/>
-		<typeAlias type="com.spring.biz.movieGeners.MovieGenersVO" alias="MovieGeners"/>
+		<typeAlias type="com.spring.biz.MovieGenres.MovieGenresVO" alias="MovieGeners"/>
 	</typeAliases>
 	
 	<!-- Sql Mapper 설정 -->
