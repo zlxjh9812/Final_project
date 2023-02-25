@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+			
+<mapper namespace="BlackListDAO">
+	<resultMap type="blackLIst" id="blackLIstesult">
+		<result property="seq" column="SEQ" />
+	
+		<result property="UserId" column="UserId" />
+		<result property="ReportDate" column="ReportDate" />
+		<result property="EndDate" column="EndDate" />
+	</resultMap>
+	
+	<!-- 모든 유저 카운트 -->
+	<select id="getAllBlackCount" resultType="int">
+		<![CDATA[
+			 select count(*) from UserBlackList
+		]]>
+	</select>
+	<select id="getEndDateUserCount" resultType = "int">
+	<![CDATA[
+		select count(*) from UserBlackList where EndDate like sysdate
+		]]>
+	</select>
+	<!-- 댓글 신고 -->
+	<insert id="insertReportUserBySysdate">
+	<![CDATA[ insert into UserBlackList(UserId,seq,EndDate) values (#{UserId},(select nvl (max(seq),0) +1 from UserBlackList),sysdate+#{date})]]>
+	</insert>
+	<update id="updateByEndDate">
+	<![CDATA[ update UserBlackList set EndDate = (select EndDate from UserBlackList where UserId = #{UserId})+#{date} where UserId = #{UserId}]]>
+	</update>
+	<select id="getEndDateUser" resultMap="blackLIstesult">
+	<![CDATA[
+		SELECT * 
+		FROM(
+			SELECT ROWNUM RN, seq, ReportDate, EndDate, UserId
+			FROM(
+				SELECT * 
+				FROM  UserBlackList 
+				WHERE EndDate
+				like sysdate
+		ORDER BY seq ASC
+		) 
+			
+    		WHERE ROWNUM <= #{pageNum} * #{amount}
+    	) 
+  		
+  		WHERE RN > (#{pageNum} - 1) * #{amount}
+	]]>
+	</select>
+	<select id="getUser" resultMap="blackLIstesult">
+		<![CDATA[
+			select * from UserBlackList where UserId = #{UserId}
+		]]>
+	</select>
+	
+	
+	<select id="getBlackListUser" resultMap="blackLIstesult">
+	<![CDATA[
+		SELECT * 
+		FROM(
+			SELECT ROWNUM RN, seq, ReportDate, EndDate, UserId
+			FROM(
+				SELECT * 
+				FROM  UserBlackList 
+				WHERE 1=1
+				
+		ORDER BY seq ASC
+		) 
+			
+    		WHERE ROWNUM <= #{pageNum} * #{amount}
+    	) 
+  		
+  		WHERE RN > (#{pageNum} - 1) * #{amount}
+	]]>
+	</select>
+	<delete id="DeleteReportUser">
+		<![CDATA[
+			delete UserBlackList where UserId = #{UserId}
+		]]>
+		
+	</delete>
+</mapper>

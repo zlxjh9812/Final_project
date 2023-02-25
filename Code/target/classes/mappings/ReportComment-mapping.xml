@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+			
+<mapper namespace="reportCommentDAO">
+
+	<resultMap type="reportComment" id="reportCommentResult">
+		<result property="reportSeq" column="reportSeq"/>
+		<result property="seq" column="cseq"/>
+		<result property="UserId" column="UserId"/>
+		<result property="targetID" column="targetID"/>
+		<result property="tableNum" column="tableNum"/>
+		<result property="reportOption" column="reportOption"/>
+		<result property="reportDetail" column="reportDetail"/>
+		<result property="value" column="value"/>
+		<result property="RN" column="RN"/>
+	</resultMap>
+	<!-- 댓글 신고 -->
+	<insert id="insertReport">
+	<![CDATA[ INSERT INTO reportComment(reportSeq,cseq,UserId,targetID,tableNum,reportOption,reportDetail)
+		VALUES ((select nvl (max(reportSeq),0) +1 from reportComment),#{seq},#{UserId},#{targetID},#{tableNum},#{reportOption},#{reportDetail})
+		]]>
+	</insert>
+	
+	<!-- 페이징 전체 갯수 -->
+	<select id="getTotalPages" resultType="int">
+		<![CDATA[ SELECT count(*)
+		FROM (select cseq,targetID,tableNum, count(*) from reportComment group by cseq,targetID,tableNum having count(*)>=2  order by count(*) desc)
+		WHERE 1 = 1
+		]]>
+  	</select>
+  	<!-- 페이징 -->
+	<select id="getBoardListWithDynamicPaging" resultMap="reportCommentResult">
+		<![CDATA[            SELECT ROWNUM RN,cseq,targetID,value
+         
+		FROM (
+			SELECT ROWNUM RN,cseq,targetID,value
+			FROM (
+				 select cseq,targetID,value, count(*) from(select r.cseq,r.targetID,bn.valuefrom reportComment r,boardNum bn where r.tableNum = bn.tableNum) group by cseq,targetID,value  having count(*)>=2  order by count(*) desc
+			) 
+			
+    		WHERE ROWNUM <= #{pageNum} * #{amount}
+    		
+    	) 
+  		
+        
+  		WHERE RN > (#{pageNum} - 1) * #{amount}
+  		]]>
+  	</select>
+  	<!-- 상세정보 -->
+	<select id="getReportCommentDetail" resultMap="reportCommentResult">
+	<![CDATA[
+		select * from reportComment where cseq = #{seq}
+	]]>
+	</select>
+	<!-- 신고 중복방지 -->
+	<select id="getInvalid" resultType = "int">
+		<![CDATA[
+		select count(*) from reportComment where cseq = #{seq} and UserId = #{UserId}
+		]]>
+	</select>
+	<update id="updateReortComment">
+		<![CDATA[update  usercomment set report='y' where cseq = #{seq}]]>
+	</update>
+	<delete id="deleteReportComment">
+		<![CDATA[
+			delete from reportComment where cseq = #{seq}
+		]]>
+	</delete>
+</mapper>

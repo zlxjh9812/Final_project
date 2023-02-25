@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+			
+<mapper namespace="reportReviewDAO">
+
+	<resultMap type="reportReview" id="reportReviewResult">
+		<result property="reportSeq" column="reportSeq"/>
+		<result property="seq" column="bseq"/>
+		<result property="UserId" column="UserId"/>
+		<result property="targetID" column="targetID"/>
+		<result property="tableNum" column="tableNum"/>
+		<result property="reportOption" column="reportOption"/>
+		<result property="reportDetail" column="reportDetail"/>
+		<result property="value" column="value"/>
+		<result property="RN" column="RN"/>
+	</resultMap>
+	<!-- 신고하기 -->
+	<insert id="insertReport">
+	<![CDATA[ INSERT INTO reportReview(reportSeq,bseq,UserId,targetID,tableNum,reportOption,reportDetail)
+		VALUES ((select nvl (max(reportSeq),0) +1 from reportReview),#{seq},#{UserId},#{targetID},#{tableNum},#{reportOption},#{reportDetail})
+		]]>
+	</insert>
+	
+	<select id="getReportList" resultMap="reportReviewResult">
+		<![CDATA[
+			select bseq,targetID,tableNum ,count(*) from reportReview group by bseq,targetID,tableNum having count(*)>=1
+		]]>
+	</select>
+	<!-- 페이징 -->
+	<select id="getTotalPages" resultType="int">
+		<![CDATA[ SELECT count(*)
+		FROM (select bseq,targetID,tableNum, count(*) from reportReview group by bseq,targetID,tableNum having count(*)>=2  order by count(*) desc)
+		WHERE 1 = 1 
+		]]>
+  	</select>
+  	<!-- 페이징 -->
+	<select id="getBoardListWithDynamicPaging" resultMap="reportReviewResult">
+		<![CDATA[          SELECT ROWNUM RN,bseq,targetID,value
+         
+		FROM (
+			SELECT ROWNUM RN,bseq,targetID,value
+			FROM (
+				 select bseq,targetID,value, count(*) from(select r.bseq,r.targetID,bn.value from reportReview r, boardNum bn where r.tableNum = bn.tableNum) group by bseq,targetID,value  having count(*)>=2  order by count(*) desc
+			) 
+			
+    		WHERE ROWNUM <=  #{pageNum} * #{amount}
+    		
+    	) 
+  		
+        
+  		WHERE RN > (#{pageNum} - 1) * #{amount}
+  		]]>
+  	</select>
+  	<!-- 상세정보 -->
+	<select id="getReportDetail" resultMap="reportReviewResult">
+	<![CDATA[
+		select * from reportReview where bseq = #{seq}
+	]]>
+	</select>
+	<!-- 신고 중복체크 -->
+	<select id="getInvalid" resultType = "int">
+		<![CDATA[
+		select count(*) from reportReview where bseq = #{seq} and UserId = #{UserId}
+		]]>
+	</select>
+	<update id="updateReortReview">
+		<![CDATA[
+		update reviewboard set report='Y' where bseq = #{seq}
+		]]>
+	</update>
+	<delete id="deleteReportReview">
+		<![CDATA[
+			delete from reportReview where bseq = #{seq}
+		]]>
+	</delete>
+</mapper>

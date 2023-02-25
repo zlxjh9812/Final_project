@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="MovieBoardDAO">
+
+	<resultMap type="board" id="boardResult">
+		<id property="bseq" column="BSEQ"/>
+		<result property="boardnum" column="BOARDNUM"/>
+		<result property="title" column="TITLE"/>
+		<result property="nickname" column="NICKNAME"/>
+		<result property="content" column="CONTENT"/>
+		<result property="filename" column="FILENAME"/>
+		<result property="writedate" column="WRITEDATE"/>
+		<result property="like_num" column="LIKE_NUM"/>
+		<result property="unlike_num" column="UNLIKE_NUM"/>
+		<result property="cnt" column="CNT"/>
+		<result property="userId" column="USERID"/>
+		<result property="moviecode" column="MOVIECODE"/>
+		<result property="contentType" column="CONTENTTYPE"/>
+		
+	</resultMap>
+
+	<insert id="insertBoard">
+		 <![CDATA[INSERT INTO  reviewboard(bseq, boardnum, title, nickname,  content, filename, like_num, unlike_num, cnt, UserId,writedate, moviecode, contenttype)
+		VALUES (#{bseq}, #{boardnum}, #{title},#{nickname}, #{content},#{filename}
+		, 0, 0, 0, #{userId},sysdate, #{moviecode}, #{contentType}) ]]>	
+	</insert>
+	
+	<update id="updateBoard">
+		<![CDATA[
+			UPDATE REVIEWBOARD SET
+				TITLE = #{title}, 
+				CONTENT = #{content},
+				moviecode=#{moviecode},
+				contentType = #{contentType}
+			WHERE BSEQ = #{bseq}
+		]]>
+	</update>
+	
+	<delete id="deleteBoard">
+		<![CDATA[
+			UPDATE SET REPORT='Y' FROM REVIEWBOARD 
+			WHERE BSEQ = #{bseq}
+		]]>
+	</delete>
+	
+	<select id="getBoard" resultType="board">
+		<![CDATA[
+			SELECT * 
+			FROM REVIEWBOARD 
+			WHERE BSEQ = #{bseq}
+		]]>
+	</select>
+	
+	<select id="getCntBoard" resultType="cnt">
+		<![CDATA[
+			SELECT * 
+			FROM ReviewCntHistory 
+			WHERE BSEQ = #{bseq} AND USERID = #{userId} 
+		]]>
+	</select>
+	
+	<update id="updateCnt">
+		UPDATE REVIEWBOARD SET CNT = CNT+1 WHERE BSEQ=#{bseq}
+	</update>
+	
+	<insert id="insertCntHistory">
+		INSERT INTO REVIEWCNTHISTORY(BSEQ, USERID) VALUES(#{bseq}, #{userId})
+	</insert>
+	
+	<select id="getSeq" resultType="int">
+		 <![CDATA[select nvl(max(bseq), 0) + 1 from reviewboard]]>
+	</select>
+	
+	
+	<select id="getBoardList" resultMap="boardResult">
+		SELECT * 
+		FROM(
+			SELECT ROWNUM RN, BSEQ, BOARDNUM, TITLE, NICKNAME, CONTENT,WRITEDATE, FILENAME, LIKE_NUM, UNLIKE_NUM, CNT, USERID, MOVIECODE, CONTENTTYPE
+			FROM(
+				SELECT * 
+				FROM REVIEWBOARD 
+				WHERE boardnum = #{boardnum}
+		<if test="searchCondition == 'TITLE'">
+			AND TITLE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'CONTENT'">
+			AND CONTENT LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		ORDER BY BSEQ DESC
+		) 
+			<![CDATA[
+    		WHERE ROWNUM <= #{pageNum} * #{amount}
+    		]]>
+    	) 
+  		<![CDATA[
+  		WHERE RN > (#{pageNum} - 1) * #{amount}
+  		]]>
+  	
+	</select>
+	
+	<select id="getSearchReview" resultMap="boardResult">
+		SELECT * 
+		FROM(
+			SELECT ROWNUM RN, BSEQ, BOARDNUM, TITLE, NICKNAME, CONTENT,FILENAME,WRITEDATE, LIKE_NUM, UNLIKE_NUM, CNT, USERID 
+			FROM(
+				SELECT * 
+				FROM REVIEWBOARD 
+				WHERE 1=1
+				AND TITLE LIKE '%'||#{searchKeyword}||'%'
+		ORDER BY BSEQ DESC
+		) 
+			<![CDATA[
+    		WHERE ROWNUM <= #{pageNum} * #{amount}
+    		]]>
+    	) 
+  		<![CDATA[
+  		WHERE RN > (#{pageNum} - 1) * #{amount}
+  		]]>
+	</select>
+	
+	
+	
+	
+	
+		<select id="getBoardListMain" resultMap="boardResult">
+		SELECT * 
+		FROM REVIEWBOARD 
+		WHERE boardnum!=4 
+		<if test="searchCondition == 'TITLE'">
+			AND TITLE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'CONTENT'">
+			AND CONTENT LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		ORDER BY LIKE_NUM DESC
+	</select>
+	
+	
+	
+	
+	<select id="getTotalPages" resultType="int">
+		SELECT count(*) 
+		FROM REVIEWBOARD 
+		WHERE boardnum=#{boardnum} 
+		<if test="searchCondition == 'TITLE'">
+			AND TITLE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'CONTENT'">
+			AND CONTENT LIKE '%'||#{searchKeyword}||'%'
+		</if>
+  	</select>
+	
+	<select id="getBoardListWithPaging" resultMap="boardResult">
+		<![CDATA[
+		SELECT BSEQ, TITLE, NICKNAME, CONTENT,FILENAME,LIKE_NUM, UNLIKE_NUM, CNT
+		FROM (
+			SELECT ROWNUM RN, BSEQ, TITLE, NICKNAME, CONTENT,LIKE_NUM, UNLIKE_NUM, FILENAME, CNT  
+			FROM REVIEWBOARD 
+    		WHERE ROWNUM <= #{pageNum} * #{amount} 
+    		ORDER BY BSEQ DESC 
+    	) 
+  		WHERE RN > (#{pageNum} - 1) * #{amount}
+  		]]>
+  	</select>
+
+	<select id="getBoardListWithDynamicPaging" resultMap="boardResult">
+		SELECT BSEQ, TITLE, NICKNAME, CONTENT,FILENAME,LIKE_NUM, UNLIKE_NUM, CNT  
+		FROM (
+			SELECT ROWNUM RN, BSEQ, TITLE, NICKNAME, CONTENT,LIKE_NUM, UNLIKE_NUM, FILENAME, CNT 
+			FROM (
+				SELECT * 
+				FROM REVIEWBOARD 
+				WHERE boardnum = 1
+				<if test="searchCondition == 'TITLE'">
+					AND TITLE LIKE '%'||#{searchKeyword}||'%'
+				</if>
+				<if test="searchCondition == 'CONTENT'">
+					AND CONTENT LIKE '%'||#{searchKeyword}||'%'
+				</if>
+				ORDER BY BSEQ DESC
+			) 
+			<![CDATA[
+    		WHERE ROWNUM <= #{pageNum} * #{amount}
+    		]]>
+    	) 
+  		<![CDATA[
+  		WHERE RN > (#{pageNum} - 1) * #{amount}
+  		]]>
+  	</select>
+	
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="reviewBoard.DAO">
+	<!-- 관리자 게시글 삭제 -->
+	<delete id="deleteBoard">
+		<![CDATA[ delete from reviewboard where seq = #{seq}
+		]]>
+	</delete>
+	<select id="getBoard">
+		<![CDATA[
+			select * from "reviewboard" where bseq = #{seq}
+		]]>
+			
+	</select>
+</mapper>

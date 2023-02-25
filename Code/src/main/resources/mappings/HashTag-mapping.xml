@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+			
+<mapper namespace="HashTagDAO">
+
+		<resultMap type="hashTag" id="hashTagResult">
+		<result property="bseq" column="bseq" />
+	
+		<result property="tags" column="tags" />
+		
+		
+	</resultMap>
+<!-- 댓글 신고 -->
+	<insert id="insertHashTag">
+	<![CDATA[ INSERT INTO hashtag(bseq,tags)
+		VALUES (#{bseq},#{tags})]]>
+	</insert>
+	
+	<select id="getHashTag" resultMap="hashTagResult">
+		<![CDATA[
+			select * from hashtag where bseq = #{bseq}
+		]]>
+	</select>
+	<select id="SearchHashTag" resultType="int">
+		<![CDATA[
+			select bseq from hashtag where tags like '%'||#{tags}||'%'
+		]]>
+	</select>
+	<delete id="deleteHash">
+	<![CDATA[
+	delete hashtag where bseq = #{bseq}
+	]]>
+	</delete>
+	
+	
+</mapper>

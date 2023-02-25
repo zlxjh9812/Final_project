@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+			
+<mapper namespace="MovieGenersDAO">
+
+	<resultMap type="MovieGeners" id="MovieGenersresult">
+		<result property="seq" column="seq" />
+	
+		<result property="movieGeners" column="movieGeners" />
+		<result property="count" column="count" />
+		
+	</resultMap>
+	
+	<!-- 댓글 신고 -->
+	<insert id="insertGeners">
+	<![CDATA[ 
+		insert into movie_geners (seq,movieGeners) 
+		values ((select nvl(max(seq),0)+1 from movie_geners),#{movieGeners})
+	]]>
+	</insert>
+	<update id="updateGeners">
+	<![CDATA[
+		update movie_geners set count =  (select count from movie_geners where movieGeners = #{movieGeners})+1 
+		where movieGeners = #{movieGeners} 
+	]]>
+	</update>
+	<select id="getGenersChart" resultMap="MovieGenersresult">
+	<![CDATA[
+		select * from movie_geners
+	]]>
+	</select>
+	<select id="getGensers" resultType="MovieGeners">
+	<![CDATA[
+		select * from movie_geners where movieGeners = #{movieGeners}
+	]]>
+	</select>
+	
+</mapper>

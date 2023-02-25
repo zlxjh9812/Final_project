@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+			
+<mapper namespace="UserDAO">
+	
+	<resultMap type="user" id="userResult">
+		<result property="UserId" column="UserId"/>
+		<result property="password" column="password"/>
+		<result property="tel" column="tel"/>
+		<result property="email" column="name"/>
+		<result property="role" column="role"/>
+		<result property="user_img" column="userImg"/>
+		
+	</resultMap>
+
+	<!-- 회원가입(User) -->
+	<insert id="insertUser">
+		<![CDATA[ INSERT INTO Users(UserId,password,tel,email,name,role)
+		VALUES (#{UserId},#{password},#{tel},#{email},#{name},'사용자')
+		]]>
+	</insert>
+	
+	<!-- idCheck -->
+	<select id="idCheck" resultType="user">
+	<![CDATA[
+		select * from  Users where UserId = #{UserId}
+	]]>
+	</select>
+	<!-- telChk -->
+	<select id="telCheck" resultType="user">
+	<![CDATA[
+		select * from  Users where tel = #{tel}
+	]]>
+	</select>
+	<!-- 아이디 찾기 -->
+	<select id="emailCheck" resultType="user">
+	<![CDATA[
+		select * from  Users where email = #{email} and tel = #{tel}
+	]]>
+	</select>
+	<!-- 비밀번호 찾기 -->
+	<select id="FindPassword" resultType="user">
+	<![CDATA[
+		select * from  Users where email = #{email} and tel = #{tel} and UserId = #{UserId}
+	]]>
+	</select>
+	<!-- 비밀번호 재설정 -->
+	<update id="updatePassword">
+	<![CDATA[
+		update Users set password = #{password} where email = #{email} and tel = #{tel} and UserId = #{UserId}
+	]]>
+	</update>
+	<select id="getUser" resultType="user">
+		<![CDATA[
+			select * from Users where UserId = #{UserId} and password = #{password}
+		]]>
+	</select>
+	<select id="getAllUser" resultMap="userResult">
+	<![CDATA[
+	select * from Users
+	]]>
+	</select>
+	<update parameterType="map" id="memberImgUpload">
+	UPDATE memberSET user_img = #{userImg}WHERE user_id = #{userId}
+	 </update>
+</mapper>
