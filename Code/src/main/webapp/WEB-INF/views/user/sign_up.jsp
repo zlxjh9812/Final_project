@@ -58,19 +58,7 @@
             <b>이름</b>
             <input type="text" id="name" name="name" >
         </div>
-        <div class="field">
-        
-            <b>성별</b>
-            <div id = "gender">
-            <input type="radio" id="gender" name="gender" value="M" ><label>남자</label>
-            <input type="radio" id="gender" name="gender" value="W" ><label>여자</label>
-            </div>
-            <div id = "age">
-            <b>생년월일</b>
-            <input type = "number" id = "birth" name = "birth" placeholder="'-'없이 8자를 입력해주세요">
-            </div>
-        </div>
-        
+      
 
 		 <div class="field tel-number">
            <b>별명</b>
@@ -105,7 +93,7 @@
         <div class="field tel-number">
             <b>휴대전화</b>
            
-            <input type="number" placeholder="전화번호 입력하세요" id = "tel" name = "tel">
+            <input type="number" placeholder="전화번호를 '-'를 제외하고 입력해주세요" id = "tel" name = "tel">
         </div>
 
         <!-- 6. 가입하기 버튼 -->

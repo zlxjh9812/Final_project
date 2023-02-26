@@ -11,6 +11,7 @@
 <!-- 게시판 css -->
 <link href ="<c:url value="/resources/assets/css/table.css"/>" rel="stylesheet">
 <link href ="stylesheet" href="<c:url value="/resources/assets/css/button.css"/>">
+<script type="text/javascript" src="<c:url value="/resources/InsertAuthority.js"/>"></script>
 
    <main id="main" class="main">
    <!-- Modal -->
@@ -74,6 +75,7 @@
 			                </tbody>
 			            </table>
 <button type="button" class="custom-btn btn-1" style="float:inline; margin-right:3px; margin-top:20px;" onClick="location.href='#'" id="write">글쓰기</button>
+
 
         </div>
     </div>

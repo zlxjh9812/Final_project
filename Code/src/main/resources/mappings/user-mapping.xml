@@ -11,8 +11,7 @@
 		<result property="email" column="email"/>
 		<result property="name" column="name"/>
 		<result property="role" column="role"/>
-		<result property="birth" column="birth"/>
-		<result property="gender" column="gender"/>
+	
 		<result property="nickName" column="nickname"/>
 		<result property="profileImg" column="profileImg"/>
 		<result property="reportCount" column="reportCount"/>
@@ -21,8 +20,8 @@
 
 	<!-- 회원가입(User) -->
 	<insert id="insertUser">
-		<![CDATA[ insert into Users(UserId,password,tel,email,name,role,birth,gender,nickname)
-values(#{UserId},#{password},#{tel},#{email},#{name},'사용자',#{birth},#{gender},#{nickname})
+		<![CDATA[ insert into Users(UserId,password,tel,email,name,role,nickname)
+values(#{UserId},#{password},#{tel},#{email},#{name},'사용자',#{nickname})
 		]]>
 	</insert>
 	<!-- nickNameCheck -->

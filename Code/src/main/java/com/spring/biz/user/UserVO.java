@@ -9,8 +9,7 @@ public class UserVO {
 	private String email;
 	private String name;
 	private String role;
-	private int birth;
-	private String gender;
+	
 	private String nickName;
 	private String profileImg;
 	private int reportCount;
@@ -64,21 +63,7 @@ public class UserVO {
 		this.role = role;
 	}
 
-	public int getBirth() {
-		return birth;
-	}
 
-	public void setBirth(int birth) {
-		this.birth = birth;
-	}
-
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
 
 	public String getNickname() {
 		return nickName;
@@ -115,7 +100,7 @@ public class UserVO {
 	@Override
 	public String toString() {
 		return "UserVO [UserId=" + UserId + ", password=" + password + ", tel=" + tel + ", email=" + email + ", name="
-				+ name + ", role=" + role + ", birth=" + birth + ", gender=" + gender + ", nickName=" + nickName
+				+ name + ", role=" + role +   ", nickName=" + nickName
 				+ ", profileImg=" + profileImg + ", reportCount=" + reportCount + ", report=" + report + "]";
 	}
 

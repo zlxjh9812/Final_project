@@ -38,7 +38,7 @@
                                  <div class="member-footer">
  <hr>
                                     <div>
-                                       <a href="sign_up.do">회원가입?</a> <a href="findId.do">아이디 찾기</a><a href="updatePasswordGo.do">비밀번호 찾기</a>
+                                       <a href="sign_up.do">회원가입</a> <a href="findId.do">아이디 찾기</a><a href="updatePasswordGo.do">비밀번호 찾기</a>
                                     </div>
                                  </div>
                               </form>
@@ -81,7 +81,7 @@
  						<div class="css-1rdb949-StyledLazyLoadingImage ezcopuc0">
  						<c:choose>
                    <c:when test="${board.filename != '2'}">
-                      <img alt="경호 확인 필요" src="${pageContext.servletContext.contextPath}/upload/thumbnail/${board.filename }" class="css-qhzw1o-StyledImg ezcopuc1">
+                      <img alt="경호 확인 필요" src="/img/${board.filename }" class="css-qhzw1o-StyledImg ezcopuc1">
                       
                    </c:when>
                    <c:otherwise>

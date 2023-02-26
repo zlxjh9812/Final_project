@@ -45,10 +45,7 @@ public class UserController {
 	@RequestMapping(value = "/insertUser.do")
 	public String insertUser(UserVO vo,HttpServletResponse response) throws IOException {
 		System.out.println("회원가입");
-		int age = vo.getBirth();
-		Calendar now = Calendar.getInstance();
-		age = now.get(Calendar.YEAR)-(age/10000);
-		vo.setBirth(age);
+	
 		vo.setPassword(pwdEncoder.encode(vo.getPassword()));
 		System.out.println(vo.getUserId());
 		System.out.println(vo.getNickname());
