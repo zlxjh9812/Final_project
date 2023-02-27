@@ -36,6 +36,8 @@ import com.spring.biz.movie.SearchVO;
 import com.spring.biz.util.getContentInfo;
 import com.spring.biz.util.getInfoUtil;
 import com.spring.biz.util.getSearchUtil;
+import com.spring.biz.view.board.MovieController.SortByLike;
+import com.spring.biz.view.board.MovieController.SortByVote;
 
 @Controller
 public class MovieController {
@@ -174,13 +176,25 @@ public class MovieController {
 	@RequestMapping(value = "search.do")
 	   public String searsch(@RequestParam(value = "SC")String searchCondition,Model model,String searchKeyword, ReviewBoardVO vo) {
 	    if(searchCondition.equals("review"))  {
-	    	
+	    	System.out.println("review일때");
 	    	List<ReviewBoardVO> result = boardService.getSearchReview(vo);
 	    	Collections.sort(result, new SortByLike());
 	    	model.addAttribute("result", result);
+	    	model.addAttribute("searchname", searchCondition);
+	    	System.out.println(searchCondition);
 	    	return "board/searchReview";
 	    	
-	    }else {
+	    }else if(searchCondition.equals("free")){
+	    	System.out.println("free일 때");
+	    	vo.setBoardnum(4);
+	    	List<ReviewBoardVO> result = boardService.getBoardList(vo);
+	    	Collections.sort(result, new SortByLike());
+	    	model.addAttribute("result", result);
+	    	model.addAttribute("searchname", searchCondition);
+	    	System.out.println(searchCondition);
+	    	return "board/searchReview";
+	    }
+	    else {
 	    	
 		getSearchUtil search = new getSearchUtil();
 	         List<SearchVO> result = search.getInfoList(searchCondition, searchKeyword);

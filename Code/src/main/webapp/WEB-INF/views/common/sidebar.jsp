@@ -9,7 +9,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>#리뷰어스</title>
+  
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -334,6 +334,64 @@ border-radius: 15px;
 		border-radius: 0.5em;
       }
       
+      
+      .list_wrap {
+    width: 1500px;
+    margin-left:100px;
+    padding: 50px;
+}
+
+.list_wrap ul {
+    font-size: 0;
+}
+.list_wrap .item {
+    display: inline-block;
+    width: 250px;
+    margin-top: 40px;
+    margin-left: 2%;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+.list_wrap .item:nth-child(-n+5) {
+    margin-top: 0;
+}
+.list_wrap .item:nth-child(5n-4) {
+    margin-left: 0;
+}
+.list_wrap .item .image {
+    width: 100%;
+    height: 200px;
+    background-color: #ddd;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: cover;
+}
+
+.list_wrap .item .cont {
+    padding: 20px;
+}
+.list_wrap .item strong {
+    display: block;
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    letter-spacing: -1px;
+}
+.list_wrap .item p {
+    font-size: 13px;
+    letter-spacing: -1px;
+}
+.list_wrap .item a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 5px 10px;
+    background: #eee;
+    font-size: 13px;
+    letter-spacing: -1px;
+}
+.list_wrap .item a:hover {
+    background: #325cb2;
+    color: #fff;
+}
+      
 }
 .custom-btn {
   width: 100px;
@@ -368,6 +426,16 @@ border-radius: 15px;
    -4px -4px 5px 0px #fff9,
    7px 7px 20px 0px #0002,
    4px 4px 5px 0px #0001;
+}
+
+.userIconMidWrap{
+    display: flex;
+    border: 1px solid coral;
+    border-radius: 50%;
+}
+
+.userIconMid{
+    width: 100px;
 }
   
    </style>
@@ -415,6 +483,7 @@ border-radius: 15px;
 		<option value="movie" selected>영화</option>
 		<option value="tv">TV</option>
 		<option value="review">리뷰</option>
+		<option value="free">자유게시판</option>
 	</select>
       </form>
 
@@ -445,12 +514,13 @@ border-radius: 15px;
             </c:when>
             <c:otherwise>
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="<c:url value="resources/assets/img/profile-img.jpg"/>" alt="Profile" class="rounded-circle">
+            <img src="<c:url value="${User.profileImg }"/>" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">${User.nickname }</span>
           </a><!-- End Profile Iamge Icon -->
 
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
+            <div class="userIconMidWrap"><img class="userIconMid" src="<c:url value="${User.profileImg }"/>" alt="Profile" class="rounded-circle"></div>
             <input type="hidden" id="UserId" value="${User.userId }">
               <h6>${User.userId }</h6>
               <span>${User.nickname }</span>
@@ -496,8 +566,8 @@ border-radius: 15px;
               </a>
             </li>
 
-          </ul
-          ><!-- End Profile Dropdown Items -->
+          </ul>
+          <!-- End Profile Dropdown Items -->
           
      </c:otherwise>
          </c:choose>
@@ -615,11 +685,6 @@ border-radius: 15px;
           <li>
             <a href="mainpage.do?type=tv">
               <i class="bi bi-circle"></i><span>인기 TV프로그램</span>
-            </a>
-          </li>
-          <li>
-            <a href="mainpage.do?type=webtoon">
-              <i class="bi bi-circle"></i><span>인기 웹툰</span>
             </a>
           </li>
         </ul>
