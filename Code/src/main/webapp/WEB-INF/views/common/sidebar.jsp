@@ -43,7 +43,7 @@
   <link href="<c:url value="/resources/assets/css/style.css"/>" rel="stylesheet">
 	<link href="<c:url value="/resources/assets/css/style.css"/>" rel="stylesheet">
   <!-- JS LINK -->
- 	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+ 		
  	<link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" >
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -78,8 +78,7 @@
     line-height: 1.5em;
     color : #222;
     margin: 0;
-   
-    
+     
 }
 .modal-content{
    border-radius: 15px;
@@ -438,6 +437,10 @@ border-radius: 15px;
     width: 100px;
 }
   
+  
+  div .social{
+   border-radius: 10px;
+  }
    </style>
   
 </head>
@@ -760,7 +763,20 @@ border-radius: 15px;
   
    <script src="<c:url value="/resources/assets/js/main.js"/>"></script>
    <script src="<c:url value="/resources/assets/js/autoComplete.js"/>"></script>
-   
+  <!-- 소셜 로그인 -->
+   <script>
+function onSignIn(){
+	var auth2 = gapi.auth2.getAuthInstance()
+	if(auth2.isSignedIn.get()){
+	 var profile = auth2.currentUser.get().getBasicProfile();
+	 	googleLoginPro(profile)
+	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+	  console.log('Name: ' + profile.getName());
+	  console.log('Image URL: ' + profile.getImageUrl());
+	  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+	}
+}
+</script>
 
    		<!-- Modal -->
                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -784,6 +800,10 @@ border-radius: 15px;
                                        <a href="sign_up.do">회원가입</a>&nbsp|&nbsp<a href="findIdgo.do">아이디 찾기</a>&nbsp|&nbsp<a href="updatePasswordGo.do">비밀번호 찾기</a>
                                     </div>
                                  </div>
+                                 <div style="display: flex; justify-content:center;">
+                                 <a class="btn btn-google" id="googleBtn" onclick = "onSignIn()"><img src="/resources/images/googleLogo.png" style="width:190px; border-radius:10px;" class="google" ></a>                        
+								 <a class="btn btn-naver" id="naverBtn"><img src="/resources/images/naverLogo.png" style="width:190px; border-radius:10px;" class="naver"></a>
+								 </div> 
                               </form>
                            </div>
 
@@ -792,5 +812,34 @@ border-radius: 15px;
                      </div>
                   </div>
                </div>
+               
+                <script>
+		$(".login_button").click(function() {
+			/* 로그인 메서드 서버 요청 */
+			$("#login_form").attr("action", "login");
+			$("#login_form").submit();
+		});
+		
+		const onClickGoogleLogin = (e) => {
+			window.location.replace("https://accounts.google.com/o/oauth2/v2/auth?client_id=585825444581-ma3pfcguq60016nmeqggno0kk1u3diol.apps.googleusercontent.com&redirect_uri=http://localhost:8000/login/googel/auth&response_type=code&scope=email%20profile%20openid&access_type=offline")
+		}
+		
+		const googleBtn = document.getElementById("googleBtn");
+		googleBtn.addEventListener("click",onClickGoogleLogin);
+		
+		const onClickNaverLogin = (e) => {
+			window.location.replace("https://nid.naver.com/oauth2.0/authorize?client_id=Cz7QXG_Qs8pNo5QwnL7c&redirect_uri=http://localhost:8000/login/naver/auth&response_type=code&state=9kgsGTfH4j7IyAkg&access_type=offline")
+		}
+		
+		const naverBtn = document.getElementById("naverBtn");
+		naverBtn.addEventListener("click",onClickNaverLogin);
+		
+		const onClickKakaoLogin = (e) => {
+			window.location.replace("https://kauth.kakao.com/oauth/authorize?client_id=e5f14b8cf07df3224e5e595fc5dc4d1c&redirect_uri=http://localhost:8000/biz/login/kakao/auth&response_type=code")
+		}
+		
+		const kakaoBtn = document.getElementById("kakaoBtn");
+		kakaoBtn.addEventListener("click",onClickKakaoLogin);
+	</script>
      </body>
    </html>
