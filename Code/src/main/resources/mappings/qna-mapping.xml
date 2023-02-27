@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+			
+<mapper namespace="com.spring.biz.support.qna.QnaBoardVO">
+
+	<resultMap id="qnaBoardResultMap" type="QnaBoardVO">
+		<id property="boardId" column="board_id" />
+		<result property="subject" column="subject" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="writer" column="writer" />
+		<result property="writerId" column="writer_id" />
+		<result property="writeDate" column="write_date" />
+		<result property="isDeleted" column="is_deleted" />
+		<result property="isAnswered" column="is_answered" />
+	</resultMap>
+	
+	<resultMap id="fileUploadResultMap" type="FileUploadVO">
+		<id property="fileId" column="file_id" />
+		<result property="boardId" column="board_id" />
+		<result property="filePath" column="file_path" />
+	</resultMap>
+	
+	<select id="getBoardCount" resultType="int">
+		SELECT COUNT(*)
+		FROM qna_board
+		WHERE is_deleted = 'N'
+	</select>
+
+	<select id="getMyBoardCount" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM qna_board
+		WHERE writer_id = #{userId} AND is_deleted = 'N'
+		<if test="searchType != null and keyword != null">
+			<choose>
+				<when test="searchType == 'title'">
+					AND title LIKE '%' || #{keyword} || '%'
+				</when>
+				<when test="searchType == 'content'">
+					AND content LIKE '%' || #{keyword} || '%'
+				</when>
+				<when test="searchType == 'subject'">
+					AND subject LIKE '%' || #{keyword} || '%'
+				</when>
+				<otherwise>
+					AND (title LIKE '%' || #{keyword} || '%' OR content LIKE
+					'%' || #{keyword} || '%')
+				</otherwise>
+			</choose>
+		</if>
+	</select>
+	
+	<select id="getBoardList" resultMap="qnaBoardResultMap">
+	<![CDATA[
+		SELECT board_id, subject, title, writer, write_date, is_answered
+		FROM (
+		      SELECT board_id, subject, title, writer, write_date, is_answered, row_number() over(order by board_id desc) as rNum
+		      FROM qna_board
+		      WHERE is_deleted = 'N'
+		      )
+		WHERE rNum between #{startRow} AND #{endRow}
+		ORDER BY board_id DESC
+	]]>
+	</select>
+	
+	<select id="getMyBoardList" parameterType="map" resultMap="qnaBoardResultMap">
+		SELECT board_id, subject, title, writer, write_date, is_answered
+		FROM (
+			SELECT board_id, subject, title, writer, write_date, is_answered,
+			row_number() over(order by board_id DESC) as rNum
+			FROM qna_board
+			WHERE writer_id = #{userId} AND is_deleted = 'N'
+		<if test="searchType != null and keyword != null">
+			<choose>
+				<when test="searchType == 'title'">
+					AND title LIKE '%' || #{keyword} || '%'
+				</when>
+				<when test="searchType == 'content'">
+					AND content LIKE '%' || #{keyword} || '%'
+				</when>
+				<when test="searchType == 'subject'">
+					AND subject LIKE '%' || #{keyword} || '%'
+				</when>
+				<otherwise>
+					AND (title LIKE '%' || #{keyword} || '%' OR content LIKE
+					'%' ||
+					#{keyword} || '%')
+				</otherwise>
+			</choose>
+		</if>
+		) sub
+		WHERE rNum between #{criteria.startRow} AND #{criteria.endRow}
+		ORDER BY board_id DESC
+	</select>
+	
+	<!-- 글 조회 -->
+	<select id="getBoard" parameterType="int" resultMap="qnaBoardResultMap">
+		SELECT *
+		FROM qna_board
+		WHERE board_id = #{boardId}
+	</select>
+	
+	<!-- 글 작성 -->
+	<insert id="insertBoard" parameterType="QnaBoardVO">
+        <selectKey resultType="int" keyProperty="boardId" order="BEFORE">
+            SELECT qna_board_seq.NEXTVAL FROM DUAL
+        </selectKey>
+	        INSERT INTO qna_board(board_id, subject, title, content, writer, writer_id)
+	        VALUES (#{boardId}, #{subject}, #{title}, #{content}, #{writer}, #{writerId})
+    </insert>
+    
+    <!-- 첨부파일 조회 -->
+    <select id="getUploadFiles" parameterType="int" resultMap="fileUploadResultMap">
+		SELECT * FROM qna_board_file
+		WHERE board_id = #{boardId}
+	</select>
+    
+    <!-- 첨부파일 업로드 -->
+    <insert id="insertFileUpload" parameterType="FileUploadVO">
+		INSERT INTO qna_board_file (file_id ,board_id ,file_path)
+		VALUES (qna_board_file_seq.NEXTVAL, #{boardId}, #{filePath})
+	</insert>
+	
+</mapper>
