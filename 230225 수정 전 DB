@@ -1,0 +1,241 @@
+DROP TABLE Users;
+
+CREATE TABLE Users (
+   UserId   varchar2(100)      NOT NULL,
+   password   varchar2(100)      NOT NULL,
+   tel   varchar2(100)      NOT NULL,
+   email   varchar2(100)      NOT NULL,
+   name   varchar2(100)      NOT NULL,
+   role   varchar2(100)      NOT NULL
+);
+
+select * from reportReview;
+
+select * from boardnum;
+insert into boardnum(tablenum, value) values(4,'자유게시판');
+
+commit;
+
+select * from users;
+
+insert into users(userid, password, tel, email, name, role) values('park', '1234', '010-4592-3860', 'tjdqja117@naver.com', '박성범', 'admin');
+
+
+
+DROP TABLE usercomment;
+
+CREATE TABLE usercomment (
+   cseq   number(10)      NOT NULL,
+   userid   varchar2(100)      NOT NULL,
+   regdate   date      NOT NULL,
+   content   varchar2(3000)      NOT NULL,
+   ref   number(10)      NOT NULL,
+   step   number(2)      NOT NULL,
+   depth   number(2)      NOT NULL,
+   like_num   number(3)      NOT NULL,
+   unlike_num   number(3)      NOT NULL,
+   del   number(1)      NOT NULL,
+   emo   number(1)      NOT NULL,
+   bseq   NUMBER(10)      NOT NULL
+);
+
+
+
+DROP TABLE reviewboard;
+
+CREATE TABLE reviewboard(
+   bseq   NUMBER(10)      NOT NULL,
+   boardnum   NUMBER(1)      NOT NULL,
+   title   VARCHAR2(100)      NOT NULL,
+   nickname   VARCHAR2(100)      NOT NULL,
+   content   VARCHAR2(3000)      NOT NULL,
+   filename   VARCHAR2(100)      NULL,
+   writedate   DATE   DEFAULT sysdate   NOT NULL,
+   like_num   NUMBER(4)   DEFAULT 0   NULL,
+   unlike_num   NUMBER(4)   DEFAULT 0   NULL,
+   cnt   NUMBER(5)   DEFAULT 0   NULL,
+   UserId   varchar2(100)      NOT NULL,
+    report varchar2(1) default 'N',
+    moviecode number(10) not null,
+    contenttype varchar2(30) not null
+);
+
+commit;
+
+commit;
+alter table users add gender varchar2(1) default 'M';
+alter table reviewboard add contentType varchar2(30);
+alter table reviewboard drop column report;
+update reviewboard set report='N';
+commit;
+
+delete from reviewboard where boardnum=4;
+
+select * from reviewboard;
+
+drop table hashtag;
+
+CREATE TABLE HASHTAG(
+bseq number(4),
+tags varchar2(300)
+);
+
+select * from hashtag;
+
+select * from reviewboard;
+
+
+DROP TABLE REPORT;
+
+CREATE TABLE REPORT (
+   RPT_SEQ   NUMBER(10)      NOT NULL,
+   USER_ID   VARCHAR2(100)      NOT NULL,
+   TARGET_ID   VARCHAR2(100)      NOT NULL,
+   TARGET_SEQ   NUMBER(10)      NULL,
+   TARGET_CSEQ   NUMBER(10)      NULL,
+   RPT_DATE   DATE   DEFAULT sysdate   NOT NULL,
+   CATEGORY   NUMBER(3)      NOT NULL,
+   contentseq   number(5)      NOT NULL
+);
+
+
+
+DROP TABLE MovieDetailContents;
+
+CREATE TABLE MovieDetailContents (
+   Contentcode   number(10)      NOT NULL,
+   seq   number(10)      NULL,
+   comments   varchar2(500)      NOT NULL,
+   LikeCnt   number(10)   DEFAULT 0   NOT NULL,
+   UserId   varchar2(100)      NOT NULL
+);
+
+
+
+DROP TABLE UserInfo;
+
+CREATE TABLE UserInfo (
+   nickname   varchar2(50)      NOT NULL,
+   exps   NUMBER(10)   DEFAULT 0   NOT NULL,
+   levels   NUMBER(10)   DEFAULT 1   NOT NULL,
+   points   NUMBER(10)   DEFAULT 0   NOT NULL,
+   profiles   varchar2(50)      NULL,
+   info   varchar2(500)      NULL,
+   UserId   varchar2(100)      NOT NULL
+);
+
+
+
+commit;
+insert into userinfo(nickname, exps, levels, points, profiles, info, userid)
+values('사자', 0,1,0,'프로필','연습용 슈퍼계정', 'park'); 
+
+
+
+DROP TABLE reviewlikehistory;
+
+CREATE TABLE reviewlikehistory (
+   bseq   NUMBER(10)      NOT NULL,
+   UserId   VARCHAR2(100)      NOT NULL
+);
+
+
+
+DROP TABLE ReviewCntHistory;
+
+CREATE TABLE ReviewCntHistory (
+    bseq   NUMBER(10)      NOT NULL,
+   UserId   varchar2(100)      NOT NULL
+    
+);
+
+
+select * from  ReviewCntHistory;
+
+DROP TABLE ReviewUnlikeHistory;
+
+CREATE TABLE ReviewUnlikeHistory (
+   bseq   NUMBER(10)      NOT NULL,
+    UserId   varchar2(100)      NOT NULL
+);
+
+
+
+DROP TABLE DetailContentLike;
+
+CREATE TABLE DetailContentLike (
+   Contentcode   number(5)      NOT NULL,
+   seq   number(5)      NULL,
+   UserId   varchar2(100)      NOT NULL
+);
+
+
+
+DROP TABLE CommentLike;
+
+CREATE TABLE CommentLike (
+   UserId   varchar2(100)      NOT NULL,
+   cseq   number(10)      NOT NULL
+);
+
+
+
+DROP TABLE CommentUnlike;
+
+CREATE TABLE CommentUnlike (
+   UserId   varchar2(100)      NOT NULL,
+   cseq   number(10)      NOT NULL
+);
+
+
+
+DROP TABLE ContentMarked;
+
+CREATE TABLE ContentMarked (
+   Contentcode   number(5)      NOT NULL,
+   seq   number(5)      NULL,
+   UserId   varchar2(100)      NOT NULL
+);
+
+
+
+DROP TABLE UserBlackList;
+
+CREATE TABLE UserBlackList (
+   UserId   varchar2(100)      NOT NULL,
+   seq   NUMBER(5)      NOT NULL
+);
+
+create table boardNum(
+    tableNum number(1),
+    value varchar2(30)
+);
+
+CREATE TABLE reportComment(
+    reportSeq NUMBER(5), 
+   targetID VARCHAR2(100), 
+   tableNum NUMBER(1), 
+   reportOption VARCHAR2(50), 
+   reportDetail VARCHAR2(500), 
+   cseq NUMBER(10), 
+   UserId VARCHAR2(100), 
+   report VARCHAR2(1) DEFAULT 'N'
+);
+
+CREATE TABLE reportReview(
+    reportSeq NUMBER(5), 
+   bseq NUMBER(10), 
+   UserId VARCHAR2(100), 
+   targetID VARCHAR2(100), 
+   tableNum NUMBER(1), 
+   reportOption VARCHAR2(50), 
+   reportDetail VARCHAR2(500)
+   );
+   
+   select * from reportReview;
+
+  CREATE TABLE MOVIE_GENERS(
+    seq NUMBER(3), 
+   movieGeners VARCHAR2(100), 
+   count NUMBER(3) DEFAULT 0
+   );
