@@ -315,9 +315,9 @@
                                    >
                                    <script type="text/javascript">
                                    user_num = $('#user_id').val();
-                                   var check = $('#check').val();
+                                    check = $('#check').val();
                                    $("#like_insert").on("click", function(e) {
-                                	    
+                                	   console.log($('#check').val()); 
                                    	console.log($('#user_id').val());
                                        if (!$('#user_id').val()) {
                                            Swal.fire({
@@ -345,11 +345,11 @@
                                                        contents_type: $('#contents_type').val(),
                                                        mem_num: $('#user_id').val(),
                                                        userId : $('#user_id').val(),
-                                                       check: check
+                                                       check: $('#check').val()
                                                    },
                                                    success: function(param) {
                                                        if (param.result == 'success') { // 보고싶어요
-                                                           check = 1;
+                                                    	   $('#check').val(1);
                                                            $('#like')
                                                                .removeClass(
                                                                    'css-1tc9iuk-StylelessButton-ContentActionButton')
@@ -358,7 +358,7 @@
                                                            $('#off').hide();
                                                            $('#on').show();
                                                        } else if (param.result == 'cancel') { // 보고싶어요 취소
-                                                           check = 0;
+                                                    	   $('#check').val(0);
                                                            $('#like')
                                                                .removeClass(
                                                                    'css-15hndx7-StylelessButton-ContentActionButton')

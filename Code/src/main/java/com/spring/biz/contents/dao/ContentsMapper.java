@@ -32,8 +32,8 @@ public interface ContentsMapper {
 	@Delete("DELETE FROM contents_star WHERE contents_num=#{contents_num} AND contents_type=#{contents_type} AND userId=#{userId}")
 	public void deleteStar(StarVO star);
 
-	// 보고싶어요
-	@Insert("INSERT INTO contents_like (clike_num, contents_num, contents_type, userId) VALUES (dcontents_like_seq_NEXTVAL(),#{contents_num},#{contents_type},#{userId})")
+	// 보고싶어요	(dcontents_star_seq.nextval)
+	@Insert("INSERT INTO contents_like (clike_num, contents_num, contents_type, userId) VALUES ((dcontents_like_seq.NEXTVAL),#{contents_num},#{contents_type},#{userId})")
 	public void contentsLike(LikeVO like);
 
 	// 보고싶어요 기등록 여부 확인

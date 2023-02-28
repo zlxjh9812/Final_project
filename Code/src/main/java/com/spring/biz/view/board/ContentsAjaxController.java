@@ -16,6 +16,7 @@ import com.spring.biz.comment.service.CommentService;
 import com.spring.biz.contents.service.ContentsService;
 import com.spring.biz.like.LikeVO;
 import com.spring.biz.like.StarVO;
+import com.spring.biz.user.UserVO;
 
 @Controller
 public class ContentsAjaxController {
@@ -63,7 +64,7 @@ public class ContentsAjaxController {
 	public Map<String, String> resetRating(HttpSession session, StarVO starVO) {
 		Map<String, String> map = new HashMap<String, String>();
 
-		String user_id = (String) session.getAttribute("user_id");
+		String user_id = (String) session.getAttribute("User");
 		
 		if (user_id == null) {// 로그인이 되지 않은 경우
 			map.put("result", "logout");
@@ -81,16 +82,20 @@ public class ContentsAjaxController {
 			System.out.println("board/contetsLike.do");
 		Map<String, String> map = new HashMap<String, String>();
 
-		String user_id = (String) session.getAttribute("user_id");
+		UserVO user_id = (UserVO) session.getAttribute("User");
 		
 		if (user_id == null) {
 			map.put("result", "logout");
 		} else {
 			if (check == 1) { // 이미 보고싶어요 등록이 되어 있는 상태일 경우
+				like.setUserId(user_id.getUserId());
 				contentsService.cancelLike(like); // 한번 더 누르면 취소
+				System.out.println(check);
 				map.put("result", "cancel");
 			} else {
+				like.setUserId(user_id.getUserId());
 				contentsService.contentsLike(like);
+				System.out.println(check);
 				map.put("result", "success");
 			}
 		}
