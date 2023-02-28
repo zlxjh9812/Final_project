@@ -14,6 +14,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -30,20 +31,34 @@ import com.spring.biz.board.BoardService;
 import com.spring.biz.board.ReviewBoardVO;
 import com.spring.biz.board.PageDTO;
 import com.spring.biz.board.SearchCriteria;
+import com.spring.biz.comment.CommentVO;
+import com.spring.biz.comment.service.CommentService;
+import com.spring.biz.contents.service.ContentsService;
+import com.spring.biz.like.LikeVO;
+import com.spring.biz.like.StarVO;
 import com.spring.biz.movie.ContentsDetailVO;
 import com.spring.biz.movie.ContentsVO;
 import com.spring.biz.movie.SearchVO;
+import com.spring.biz.user.UserService;
+import com.spring.biz.user.UserVO;
 import com.spring.biz.util.getContentInfo;
 import com.spring.biz.util.getInfoUtil;
 import com.spring.biz.util.getSearchUtil;
-import com.spring.biz.view.board.MovieController.SortByLike;
-import com.spring.biz.view.board.MovieController.SortByVote;
 
 @Controller
 public class MovieController {
 	
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private CommentService commentService;
+	
+	@Autowired
+	private ContentsService contentsService;
+	
+	@Autowired
+	private UserService userService;
 	
 	
 	public class SortByDate implements Comparator<ContentsVO> {
@@ -121,13 +136,13 @@ public class MovieController {
 	}
 	
 	@RequestMapping(value = "ContentsDetail.do")
-	public String Detail(@RequestParam(value = "type") String contents_type,Model mode,@RequestParam(value = "id") int contents_num) {
-		getContentInfo info = new getContentInfo();
+	public String Detail(@RequestParam(value = "type") String contents_type,Model mode,@RequestParam(value = "id") int contents_num, HttpSession session) {
 		
+		getContentInfo info = new getContentInfo();
 		ContentsDetailVO contents = info.getInfoDetail(contents_type, contents_num);
 		List<ContentsDetailVO> reco = new ArrayList<ContentsDetailVO>();
 		
-		// 임시로 사용할 List 생성
+				// 임시로 사용할 List 생성
 				List<ContentsDetailVO> temp = new ArrayList<ContentsDetailVO>();
 				// 일단 모든 컨텐츠를 불러와서 저장
 				temp = info.getInfoList(contents_type);
@@ -164,7 +179,72 @@ public class MovieController {
 						}
 					}
 				}
-		
+				
+//				String user_Id = (String) session.getAttribute("user_Id");
+				UserVO user_Id = (UserVO) session.getAttribute("User");
+				CommentVO comment = new CommentVO();
+				comment.setContents_num(contents_num);
+				comment.setContents_type(contents_type);
+				List<CommentVO> commentList = commentService.selectList(comment); // 해당 컨텐츠에 달린 코멘트 리스트 불러오기
+				mode.addAttribute("commentList", commentList);
+				
+				List<UserVO> cmt_memberList = new ArrayList<UserVO>(); // 각각의 코멘트 작성자 정보를 불러오기
+				for (int i = 0; i < commentList.size(); i++) {
+					UserVO cmt_member = new UserVO();
+					cmt_member = userService.findMemberById(commentList.get(i).getUserId()); // 코멘트 리스트에서 각각의 코멘트 작성자의 mem_num을 통해 상세 정보를 불러와 vo에 저장
+					cmt_memberList.add(cmt_member); // List 타입으로 저장
+					Integer countLike = commentService.getCountLike(commentList.get(i).getComment_num()); // 코멘트 좋아요 갯수
+					if (countLike != null) {
+						commentList.get(i).setCountLike(countLike); //각각의 코멘트의 좋아요 갯수
+					}
+				}
+				mode.addAttribute("cmt_memberList", cmt_memberList); 
+				
+				
+				if (user_Id != null) { // 로그인 된 상태
+					// star
+					StarVO star = new StarVO();
+					star.setContents_num(contents_num);
+					star.setContents_type(contents_type);
+					star.setUserId(user_Id.getUserId());
+					System.out.println("asd" + star);
+					StarVO starVO = contentsService.getStar(star); // 로그인한 유저가 해당 컨텐츠를 평가했는지의 정보를 불러옴
+					mode.addAttribute("starVO", starVO);
+
+					comment.setUserId(user_Id.getUserId()); // 코멘트에 로그인한 유저가 좋아요를 눌렀는지 확인하기 위해 user_Id 셋팅
+					for (int i = 0; i < commentList.size(); i++) {
+						comment.setComment_num(commentList.get(i).getComment_num()); // 루프를 돌며 코멘트 넘버 값을 바꿔줌 
+						int checkCmtLike = commentService.checkCmtLike(comment);  // 각각 모든 코멘트들을 확인
+						commentList.get(i).setCheckCmtLike(checkCmtLike); // 좋아요 여부 정보를 각각 저장 ( 0 → 좋아요 안 누름 / 1 → 좋아요 누름 ) 
+					}
+					mode.addAttribute("commentList", commentList);
+					System.out.println(comment + "Comment");
+					System.out.println(commentList + "CommentList");
+					
+					CommentVO getComment = commentService.getComment(comment); // 로그인한 유저가 작성한 코멘트 정보
+					System.out.println("asd" + 1);
+					int checkComment = commentService.checkComment(comment); // 해당 컨텐츠에 코멘트 작성 여부 확인
+					System.out.println("asd" + 2);
+					
+					mode.addAttribute("getComment", getComment);
+					System.out.println("asd" + 3);
+					mode.addAttribute("checkComment", checkComment);
+					System.out.println("asd" + 4);
+
+					LikeVO like = new LikeVO();
+					System.out.println("asd" + 5);
+					like.setContents_num(contents_num);
+					System.out.println("asd" + 6);
+					like.setContents_type(contents_type);
+					System.out.println("asd" + 7);
+					like.setUserId(user_Id.getUserId());
+					System.out.println("asd" + like);
+					int check = contentsService.checkLike(like); // 보고싶어요 등록 여부 확인
+					System.out.println("asd" + 9);	
+					mode.addAttribute("check", check); // 1 → 등록 되어 있음 0 → 등록 되어 있지 않음
+					mode.addAttribute("user_id", user_Id.getUserId());
+				}
+//				mode.addAttribute("user_id", 0);
 		mode.addAttribute("reco", reco);
 		mode.addAttribute("image",info.getImages(contents_type, contents_num));
 		mode.addAttribute("cast",info.getCredits(contents_type, contents_num, "cast"));
@@ -176,25 +256,13 @@ public class MovieController {
 	@RequestMapping(value = "search.do")
 	   public String searsch(@RequestParam(value = "SC")String searchCondition,Model model,String searchKeyword, ReviewBoardVO vo) {
 	    if(searchCondition.equals("review"))  {
-	    	System.out.println("review일때");
+	    	
 	    	List<ReviewBoardVO> result = boardService.getSearchReview(vo);
 	    	Collections.sort(result, new SortByLike());
 	    	model.addAttribute("result", result);
-	    	model.addAttribute("searchname", searchCondition);
-	    	System.out.println(searchCondition);
 	    	return "board/searchReview";
 	    	
-	    }else if(searchCondition.equals("free")){
-	    	System.out.println("free일 때");
-	    	vo.setBoardnum(4);
-	    	List<ReviewBoardVO> result = boardService.getBoardList(vo);
-	    	Collections.sort(result, new SortByLike());
-	    	model.addAttribute("result", result);
-	    	model.addAttribute("searchname", searchCondition);
-	    	System.out.println(searchCondition);
-	    	return "board/searchReview";
-	    }
-	    else {
+	    }else {
 	    	
 		getSearchUtil search = new getSearchUtil();
 	         List<SearchVO> result = search.getInfoList(searchCondition, searchKeyword);

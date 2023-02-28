@@ -15,6 +15,11 @@
 	<context:component-scan base-package="com.spring.biz.*"/>
 	<context:property-placeholder location="classpath:db.properties" />
 	
+	<context:component-scan base-package="com.spring.biz.*">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	
 		<mvc:annotation-driven/>
 	
 		<!-- DataSource 설정 -->
@@ -28,7 +33,12 @@
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="configLocation" value="classpath:sql-map-config.xml"></property>
 		<property name="dataSource" ref="dataSource"></property>
+		<property name="typeAliasesPackage" value="com.spring.biz.comment,com.spring.biz.movie" />
 	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.spring.biz.**.dao" />
+	</bean>
+	
 	
 	<bean class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSession"></constructor-arg>
