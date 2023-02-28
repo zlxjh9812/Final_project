@@ -301,12 +301,12 @@
                                     <c:if test="${check!=1 }">css-1tc9iuk-StylelessButton-ContentActionButton e1svyhwg23</c:if>"
                                    >
                                    <script type="text/javascript">
-                                   var user_num = $('#user_id').val();
+                                   user_num = $('#user_id').val();
                                    var check = $('#check').val();
                                    $("#like_insert").on("click", function(e) {
                                 	    
-                                   	console.log(1);
-                                       if (!user_num) {
+                                   	console.log(user_num);
+                                       if (!$('#user_id').val()) {
                                            Swal.fire({
                                                title: ' ',
                                                text: '내 보관함에 작품을 담으려면 로그인이 필요해요.',
@@ -321,16 +321,16 @@
                                            })
                                            return;
                                        }
-                                       if (user_num) {
+                                       if ($('#user_id').val()) {
                                            $
                                                .ajax({
-                                                   url: 'contentsLike.do',
+                                                   url: 'board/contentsLike.do',
                                                    type: 'post',
                                                    dataType: 'json',
                                                    data: {
                                                        contents_num: $('#contents_num').val(),
                                                        contents_type: $('#contents_type').val(),
-                                                       mem_num: user_num,
+                                                       mem_num: $('#user_id').val(),
                                                        check: check
                                                    },
                                                    success: function(param) {

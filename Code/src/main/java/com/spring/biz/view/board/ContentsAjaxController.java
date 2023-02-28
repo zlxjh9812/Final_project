@@ -78,7 +78,7 @@ public class ContentsAjaxController {
 	@RequestMapping("/board/contentsLike.do")
 	@ResponseBody
 	public Map<String, String> contentsLike(HttpSession session, LikeVO like, @RequestParam int check) {
-
+			System.out.println("board/contetsLike.do");
 		Map<String, String> map = new HashMap<String, String>();
 
 		String user_id = (String) session.getAttribute("user_id");
