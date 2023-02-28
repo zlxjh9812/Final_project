@@ -2,16 +2,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<<<<<<< HEAD
+
 <script type="text/javascript" src="/resources/js/jquery-3.6.0.min.js"></script>
 <!-- css -->
-=======
+
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 <script src='<c:url value="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js" />'></script>
 <script src='<c:url value="/resources/assets/js/jquery.rateit.js" />'></script>
 <script src='<c:url value="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" />'></script>
->>>>>>> refs/remotes/origin/master
+
 <link href="<c:url value="/resources/assets/js/jquery.rateit.js" />" rel="stylesheet"> 
 <link href="<c:url value="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" />" rel="stylesheet"> 
 <link href="<c:url value="/resources/assets/js/lightbox.js" />" rel="stylesheet"> 
@@ -23,13 +23,13 @@
 <link href="<c:url value="/resources/assets/css/rateit.css" />" rel="stylesheet"> 
 <link href="<c:url value="/resources/assets/css/style.css" />" rel="stylesheet"> 
 <link href="<c:url value="/resources/assets/css/sujin.css" />" rel="stylesheet"> 
-<<<<<<< HEAD
+
 <link href="<c:url value="/resources/assets/css/yunee.css" />" rel="stylesheet">
 
 <head>
 	<title>상세정보</title>
 </head>
-=======
+
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link href="<c:url value="/resources/assets/css/yunee.css" />" rel="stylesheet">
 <link href="<c:url value="/resources/assets/js/detail.js" />" rel="stylesheet">   
@@ -39,7 +39,7 @@
   integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
   crossorigin="anonymous"
 />
->>>>>>> refs/remotes/origin/master
+
 <style>
 *{
    font-family: 'SUIT-Medium';
@@ -318,7 +318,7 @@
                                    var check = $('#check').val();
                                    $("#like_insert").on("click", function(e) {
                                 	    
-                                   	console.log(user_num);
+                                   	console.log($('#user_id').val());
                                        if (!$('#user_id').val()) {
                                            Swal.fire({
                                                title: ' ',
@@ -344,6 +344,7 @@
                                                        contents_num: $('#contents_num').val(),
                                                        contents_type: $('#contents_type').val(),
                                                        mem_num: $('#user_id').val(),
+                                                       userId : $('#user_id').val(),
                                                        check: check
                                                    },
                                                    success: function(param) {
@@ -699,19 +700,19 @@
 																						<a
 																							title="${cmt_memberList[status.index].name }의 프로필"
 																							class="css-1f9m1s4-StylelessLocalLink eovgsd01"
-																							href="${pageContext.request.contextPath}/member/myPage.do?user_num=${commentList.mem_num}"><div
+																							href="${pageContext.request.contextPath}/member/myPage.do?user_num=${commentList.userId}"><div
 																								class="css-107z6xc">
 																								<div class="css-bv6e27-ProfilePhotoImage">
 																									<c:if
-																										test="${empty cmt_memberList[status.index].photo_name}">
+																										test="${empty cmt_memberList[status.index].profileImg}">
 																										<img
 																											src="${pageContext.request.contextPath}/resources/images/face.png"
 																											width="32" height="32" class="my-photo">
 																									</c:if>
 																									<c:if
-																										test="${!empty cmt_memberList[status.index].photo_name}">
+																										test="${!empty cmt_memberList[status.index].profileImg}">
 																										<img width="32" height="32" class="my-photo"
-																											src="${pageContext.request.contextPath}/member/photoView.do?user_num=${commentList.mem_num}">
+																											src="${pageContext.request.contextPath}/member/photoView.do?user_num=${commentList.userId}">
 																									</c:if>
 																								</div>
 																							</div>

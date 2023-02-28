@@ -75,6 +75,11 @@ values(#{UserId},#{password},#{tel},#{email},#{name},'사용자',#{nickname})
 	UPDATE Users profileImg = #{profileImg} WHERE UserId = #{UserId}
 	]]>
 	 </update>
+	 <select id="findMemberById" parameterType="String" resultType="user">
+        SELECT *
+        FROM users
+        WHERE userId = #{UserId}
+    </select>
 	 <!-- User Report -->
 	 <update id="updateUserReportCount">
 	<![CDATA[

@@ -104,7 +104,7 @@ public class ContentsAjaxController {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		String user_id = (String) session.getAttribute("user_id");
+		String user_id = (String) session.getAttribute("Users");
 		
 		if (user_id == null) {
 			map.put("result", "logout");

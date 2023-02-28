@@ -27,7 +27,7 @@ public interface CommentMapper {
 	public CommentVO getComment(CommentVO comment);
 
 	// 코멘트 수정
-	@Update("UPDATE comments SET content=#{content}, modify_date=CURRENT_TIMESTAMP()  WHERE contents_num=#{contents_num} AND contents_type=#{contents_type} AND userId=#{userId}")
+	@Update("UPDATE comments SET content=#{content}  WHERE contents_num=#{contents_num} AND contents_type=#{contents_type} AND userId=#{userId}")
 	public void updateComment(CommentVO commentVO);
 
 	// 코멘트 삭제

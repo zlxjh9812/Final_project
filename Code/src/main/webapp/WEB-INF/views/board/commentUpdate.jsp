@@ -29,7 +29,7 @@ $(function() {
     cmtUpdate = function() {
     	let user_id = $('#user_id').val();
         $.ajax({
-            url: 'commentUpdate.do',
+            url: 'member/commentUpdate.do',
             type: 'post',
             data: {
                 contents_num: $('#contents_num').val(),
@@ -75,7 +75,7 @@ $(function() {
     cmtDel = function() {
     	let user_id = $('#user_id').val();
         $.ajax({
-            url: 'commentDelete.do',
+            url: 'board/commentDelete.do',
             type: 'post',
             data: {
                 contents_num: $('#contents_num').val(),

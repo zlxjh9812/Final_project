@@ -25,7 +25,7 @@ $(document).ready(function() {
     //코멘트 등록
      cmtSubmit = function() {
          
-         var User_Id = $('#user_id').val;
+         var User_Id = $('#user_id').val();
          if (User_Id == ''){
             User_Id = null;
          } 
@@ -42,6 +42,7 @@ $(document).ready(function() {
                 contents_num : $('#contents_num_comment').val(),            
                 contents_type : $('#contents_type_comment').val(),
                 content : $('#comment').val(),
+                userId : $('#user_id').val(),
                 star_num : star_num
                 },
              dataType: 'json',

@@ -14,13 +14,14 @@
 					star_num)
 		VALUES 
 				(
-					dcomment_seq_nextval(),
+					
+					(dcomment_seq.nextval),
 					#{commentVO.contents_num},
 					#{commentVO.contents_type},
 					#{commentVO.content},
 					#{commentVO.userId},
 				<if test="star_num == 0 "> <!-- 별점이 없으면 일단 dcomment 테이블에서 임의의 star_num을 생성 → 나중에 별점을 추가할 경우 이 star_num과 연결할 용도 -->
-					contents_star_seq_nextval()
+					(dcontents_star_seq.nextval)
 				</if>
 				<if test="star_num > 0 "> <!-- 이미 등록된 별점이 있으면 dcontents_star 테이블에서 가져온 star_num을 입력 -->
 					#{star_num}

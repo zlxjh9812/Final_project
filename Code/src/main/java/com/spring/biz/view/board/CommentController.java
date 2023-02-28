@@ -54,15 +54,16 @@ public class CommentController {
 	@ResponseBody
 	public Map<String, String> commentSubmit(CommentVO commentVO, HttpSession session) {
 		System.out.println(commentVO+"commentVO확인");
+		System.out.println(commentVO.getUserId());
 		Map<String, String> map = new HashMap<String, String>();
 		Map<String, Object> insert_map = new HashMap<String, Object>();
 
-		String user_id = (String) session.getAttribute("user_id");
-		if (user_id == null) {// 로그인이 되지 않은 경우
+		
+		if (commentVO.getUserId() == null) {// 로그인이 되지 않은 경우
 			map.put("result", "logout");
 		} else {// 로그인 된 경우
 			// CommentVO에 회원 번호 셋팅
-			commentVO.setUserId(user_id); // 코멘트 작성
+			commentVO.setUserId(commentVO.getUserId() ); // 코멘트 작성
 			insert_map.put("commentVO", commentVO);
 			insert_map.put("star_num", commentVO.getStar_num()); // 만약 이미 등록된 별점이 있다면 dcontents_star 테이블에서 해당 star_num을 끌고와서 저장할 예정
 			commentService.insertComment(insert_map);
@@ -86,7 +87,7 @@ public class CommentController {
 		Map<String, String> map = new HashMap<String, String>();
 
 		String user_id = (String) session.getAttribute("user_id");
-		if (user_id == null) {// 로그인이 되지 않은 경우
+		if (commentVO.getUserId() == null) {// 로그인이 되지 않은 경우
 			map.put("result", "logout");
 		} else {// 로그인 된 경우
 			String content = commentService.getComment(commentVO).getContent();
@@ -100,14 +101,14 @@ public class CommentController {
 	@RequestMapping(value = {"/board/commentUpdate.do", "/member/commentUpdate.do"})
 	@ResponseBody
 	public Map<String, String> commentUpdate(CommentVO commentVO, HttpSession session) {
-
+		System.out.println("commentUpdate" + commentVO.getUserId());
 		Map<String, String> map = new HashMap<String, String>();
 		String user_id = (String) session.getAttribute("user_id");
-		if (user_id == null) {// 로그인이 되지 않은 경우
+		if (commentVO.getUserId() == null) {// 로그인이 되지 않은 경우
 			map.put("result", "logout");
 		} else {// 로그인 된 경우
 			// 업데이트
-			commentVO.setUserId(user_id);;
+			commentVO.setUserId(commentVO.getUserId());;
 			commentService.updateComment(commentVO);
 			map.put("result", "success");
 		}
@@ -122,11 +123,11 @@ public class CommentController {
 		Map<String, String> map = new HashMap<String, String>();
 
 		String user_id = (String) session.getAttribute("user_id");
-		if (user_id == null) {// 로그인이 되지 않은 경우
+		if (commentVO.getUserId() == null) {// 로그인이 되지 않은 경우
 			map.put("result", "logout");
 		} else {// 로그인 된 경우
 			// 삭제
-			commentVO.setUserId(user_id);
+			commentVO.setUserId(commentVO.getUserId());
 			commentService.deleteComment(commentVO);
 			map.put("result", "success");
 		}
