@@ -26,7 +26,7 @@ public class NaverLogin {
         postParams.add(new BasicNameValuePair("grant_type", "authorization_code"));
         postParams.add(new BasicNameValuePair("client_id", "Cz7QXG_Qs8pNo5QwnL7c"));
         postParams.add(new BasicNameValuePair("client_secret", "0zfUj3e1Ss"));
-        postParams.add(new BasicNameValuePair("redirect_uri", "http://localhost:8000/biz/login/naver/auth")); // 리다이렉트 URI
+        postParams.add(new BasicNameValuePair("redirect_uri", "http://localhost:8000/login/naver/auth")); // 리다이렉트 URI
         postParams.add(new BasicNameValuePair("code", autorize_code)); // 로그인 과정중 얻은 code 값
         postParams.add(new BasicNameValuePair("state", state)); // 로그인 과정중 얻은 code 값
  

@@ -403,7 +403,7 @@
 					<input name="title" type="text" placeholder="제목을 입력해주세요." required>
 				</div>
 
-				<div style="justify-content: space-between; display: flex;">
+				<div style="justify-content: space-around; display: flex;">
 					<div>
 						<input type="file" name="uploadFile" id="uploadFile"><br>
 						<img id="miribogiimg" style="height: 100px; width: auto;">
@@ -415,7 +415,8 @@
 							<div>리뷰할 콘텐츠</div>
 							<input type="hidden" id="moviecode" name="moviecode" value="0">
 							<input type="search" id="autocomplete" name="searchKeyword"
-								aria-label="Search"> <select id="Search" name="SC">
+								aria-label="Search">
+								 <select id="Search" name="SC">
 								<option value="none" selected>--선택--</option>
 								<option value="movie">영화 리뷰</option>
 								<option value="tv">TV 프로그램 리뷰</option>
