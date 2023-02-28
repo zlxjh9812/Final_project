@@ -8,19 +8,7 @@
 <html>
 <head>
 
-<!-- css -->
-<link href="<c:url value="/resources/assets/js/jquery.rateit.js" />" rel="stylesheet"> 
-<link href="<c:url value="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" />" rel="stylesheet"> 
-<link href="<c:url value="/resources/assets/js/lightbox.js" />" rel="stylesheet"> 
-<link href="<c:url value="/resources/assets/js/scroll.js" />" rel="stylesheet"> 
-<link href="<c:url value="/resources/assets/js/detail.js" />" rel="stylesheet"> 
-<link href="<c:url value="/resources/assets/js/cmtLike.js" />" rel="stylesheet"> 
-<link href="<c:url value="/resources/assets/css/lightbox.css" />" rel="stylesheet"> 
-<link href="<c:url value="/resources/assets/css/mj.css" />" rel="stylesheet"> 
-<link href="<c:url value="/resources/assets/css/rateit.css" />" rel="stylesheet"> 
-<link href="<c:url value="/resources/assets/css/style.css" />" rel="stylesheet"> 
-<link href="<c:url value="/resources/assets/css/sujin.css" />" rel="stylesheet"> 
-<link href="<c:url value="/resources/assets/css/yunee.css" />" rel="stylesheet">
+stylesheet">
 
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">

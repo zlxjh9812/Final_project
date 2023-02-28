@@ -3,18 +3,20 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script type="text/javascript" src="/resources/js/jquery-3.6.0.min.js"></script>
-<link href="<c:url value="/resources/js/jquery.rateit.js" />" rel="stylesheet"> 
+<!-- css -->
+<link href="<c:url value="/resources/assets/js/jquery.rateit.js" />" rel="stylesheet"> 
 <link href="<c:url value="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" />" rel="stylesheet"> 
-<link href="<c:url value="/resources/js/lightbox.js" />" rel="stylesheet"> 
-<link href="<c:url value="/resources/js/scroll.js" />" rel="stylesheet"> 
-<link href="<c:url value="/resources/js/detail.js" />" rel="stylesheet"> 
-<link href="<c:url value="/resources/js/cmtLike.js" />" rel="stylesheet"> 
-<link href="<c:url value="/resources/css/lightbox.css" />" rel="stylesheet"> 
-<link href="<c:url value="/resources/css/mj.css" />" rel="stylesheet"> 
-<link href="<c:url value="/resources/css/rateit.css" />" rel="stylesheet"> 
-<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet"> 
-<link href="<c:url value="/resources/css/sujin.css" />" rel="stylesheet"> 
-<link href="<c:url value="/resources/css/yunee.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/assets/js/lightbox.js" />" rel="stylesheet"> 
+<link href="<c:url value="/resources/assets/js/scroll.js" />" rel="stylesheet"> 
+<link href="<c:url value="/resources/assets/js/detail.js" />" rel="stylesheet"> 
+<link href="<c:url value="/resources/assets/js/cmtLike.js" />" rel="stylesheet"> 
+<link href="<c:url value="/resources/assets/css/lightbox.css" />" rel="stylesheet"> 
+<link href="<c:url value="/resources/assets/css/mj.css" />" rel="stylesheet"> 
+<link href="<c:url value="/resources/assets/css/rateit.css" />" rel="stylesheet"> 
+<link href="<c:url value="/resources/assets/css/style.css" />" rel="stylesheet"> 
+<link href="<c:url value="/resources/assets/css/sujin.css" />" rel="stylesheet"> 
+<link href="<c:url value="/resources/assets/css/yunee.css" />" rel="stylesheet">
+
 <head>
 	<title>상세정보</title>
 </head>
