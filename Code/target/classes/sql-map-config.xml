@@ -17,6 +17,8 @@
 		<typeAlias alias="cnt"	type="com.spring.biz.CntHistory.CntHistoryVO"></typeAlias>
 		<typeAlias type="com.spring.biz.hashTag.HashTagVO" alias="hashTag"/>
 		<typeAlias type="com.spring.biz.MovieGenres.MovieGenresVO" alias="MovieGeners"/>
+		<typeAlias alias="QnaBoardVO" type="com.spring.biz.support.qna.QnaBoardVO"/>
+		<typeAlias alias="FileUploadVO" type="com.spring.biz.support.qna.FileUploadVO"/>
 	</typeAliases>
 	
 	<!-- Sql Mapper 설정 -->
@@ -30,5 +32,6 @@
 		<mapper resource="mappings/tableNum-mapping.xml"/>
 		<mapper resource="mappings/ReportReview-mapping.xml"/>
 		<mapper resource="mappings/ReportComment-mapping.xml"/>
+		<mapper resource="mappings/qna-mapping.xml"/>
 	</mappers>
 </configuration>
