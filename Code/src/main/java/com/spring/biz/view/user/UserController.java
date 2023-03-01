@@ -71,19 +71,19 @@ public class UserController {
 	public String login(UserVO vo, Model model, HttpServletResponse response) throws IOException {
 		System.out.println("로그인 시도");
 		System.out.println(vo.getUserId());
-		
+		boolean result = false;
 		UserVO User = userService.idCheck(vo);
-		System.out.println(User.getUserId());
-		System.out.println(User.getName());
-		boolean result = pwdEncoder.matches(vo.getPassword(),User.getPassword());
+		if(User!= null) {
+		 result = pwdEncoder.matches(vo.getPassword(),User.getPassword());
 		System.out.println(result);
+		}
 		if(User!=null && result) {
 			System.out.println("로그인 완료");
 			model.addAttribute("User", userService.idCheck(vo));
 			System.out.println(vo.getUserId());
 		
 			return "redirect:mainpage.do";
-		}else if(User.getRole().equals("관리자")) {
+		}else if(User!=null&&User.getRole().equals("관리자")) {
 			PrintWriter out = response.getWriter();
             out.println("<script>alert('로그인 정보를 확인해주세요.');location.href='getReviewReport.do';</script>");
             out.flush();
