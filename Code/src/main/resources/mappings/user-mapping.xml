@@ -119,7 +119,12 @@ values(#{UserId},#{password},#{tel},#{email},#{name},'사용자',#{nickname})
     	WHERE nickname = #{nickName}
   	</select>
   	
-  	
-	
+  	<update parameterType="map" id="userImgUpload">
+	<![CDATA[
+	UPDATE Users
+	SET profileImg = #{profileImg}
+	WHERE UserId = #{UserId}
+	]]>
+	</update>
 	
 </mapper>

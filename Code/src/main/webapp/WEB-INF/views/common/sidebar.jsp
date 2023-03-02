@@ -41,7 +41,6 @@
   
   <!-- Template Main CSS File -->
   <link href="<c:url value="/resources/assets/css/style.css"/>" rel="stylesheet">
-	<link href="<c:url value="/resources/assets/css/style.css"/>" rel="stylesheet">
   <!-- JS LINK -->
  		
  	<link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" >
@@ -429,12 +428,11 @@ border-radius: 15px;
 
 .userIconMidWrap{
     display: flex;
-    border: 1px solid coral;
-    border-radius: 50%;
 }
 
-.userIconMid{
-    width: 100px;
+.navbar-userImg{
+	width: 40px;
+	height: 40px;
 }
   
   
@@ -517,13 +515,25 @@ border-radius: 15px;
             </c:when>
             <c:otherwise>
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="<c:url value="${User.profileImg }"/>" alt="Profile" class="rounded-circle">
+          	<c:if test="${User.profileImg == null}">
+	            <img src="<c:url value="/resources/assets/img/blankUserImg.png"/>" class="navbar-userImg">
+          	</c:if>
+          	<c:if test="${User.profileImg != null }">
+    	        <img src="<c:url value="${User.profileImg }"/>" alt="Profile" class="navbar-userImg">
+          	</c:if>
             <span class="d-none d-md-block dropdown-toggle ps-2">${User.nickname }</span>
           </a><!-- End Profile Iamge Icon -->
 
          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-            <div class="userIconMidWrap"><img class="userIconMid" src="<c:url value="${User.profileImg }"/>" alt="Profile" class="rounded-circle"></div>
+            <div class="userIconMidWrap">
+            	<c:if test="${User.profileImg == null}">
+	            	<img class="userIconMid" src="<c:url value="/resources/assets/img/blankUserImg.png"/>">
+          		</c:if>
+          		<c:if test="${User.profileImg != null }">
+    	        	<img class="userIconMid" src="<c:url value="${User.profileImg }"/>" alt="Profile">
+          		</c:if>
+            </div>
             <input type="hidden" id="UserId" value="${User.userId }">
               <h6>${User.userId }</h6>
               <span>${User.nickname }</span>
@@ -565,7 +575,7 @@ border-radius: 15px;
             <li>
               <a class="dropdown-item d-flex align-items-center" href="/logout.do">
                 <i class="bi bi-box-arrow-right"></i>
-                <span>로그 아웃</span>
+                <span>로그아웃</span>
               </a>
             </li>
 

@@ -20,7 +20,7 @@
 					</c:when>
 					<c:otherwise>
 						<div class="image-container">
-							<img src="${pageContext.servletContext.contextPath}/resources/emptyUserImg.png" id="preview" class="profile-img"> <label for="imageFile" class="file-label" id="file-label"><i class="fas fa-camera"></i></label>
+							<img src="/resources/assets/img/blankUserImg.png" id="preview" class="profile-img"> <label for="imageFile" class="file-label" id="file-label"><i class="fas fa-camera"></i></label>
 						</div>
 					</c:otherwise>
 				</c:choose>
