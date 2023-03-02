@@ -7,12 +7,11 @@
 	<resultMap type="user" id="userResult">
 		<result property="UserId" column="userId"/>
 		<result property="password" column="password"/>
+		<result property="name" column="name"/>
+		<result property="nickName" column="nickname"/>
 		<result property="tel" column="tel"/>
 		<result property="email" column="email"/>
-		<result property="name" column="name"/>
 		<result property="role" column="role"/>
-	
-		<result property="nickName" column="nickname"/>
 		<result property="profileImg" column="profileImg"/>
 		<result property="reportCount" column="reportCount"/>
 		<result property="report" column="report"/>
@@ -96,4 +95,31 @@ values(#{UserId},#{password},#{tel},#{email},#{name},'사용자',#{nickname})
 		update Users set report = 'N' where UserId = #{UserId}
 	]]>
 	</update>
+	
+	<select id="findUserById" parameterType="String" resultType="user">
+		SELECT *
+		FROM users
+		WHERE userId = #{UserId}
+	</select>
+	
+	<update id="userEdit" parameterType="user">
+		UPDATE users
+		SET UserId = #{userId}
+		   ,password = #{password}
+		   ,name = #{name}
+           ,nickname = #{nickName}
+           ,email = #{email}
+           ,tel = #{tel}
+        WHERE userId = #{UserId}
+	</update>
+	
+	<select id="checkNameDuplicate" parameterType="String" resultType="int">
+    	SELECT COUNT(*)
+    	FROM users
+    	WHERE nickname = #{nickName}
+  	</select>
+  	
+  	
+	
+	
 </mapper>

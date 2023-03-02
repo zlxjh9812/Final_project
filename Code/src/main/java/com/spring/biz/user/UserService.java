@@ -2,6 +2,8 @@ package com.spring.biz.user;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 
 public interface UserService {
 
@@ -13,6 +15,9 @@ public interface UserService {
 	
 	// 아이디 중복 체크
 	public UserVO idCheck(UserVO vo);
+	
+	// 닉네임 중복검사
+	public boolean isNameDuplicate(String userName);
 	
 	// 전화번호 체크
 	public UserVO telCheck(UserVO vo);
@@ -30,7 +35,7 @@ public interface UserService {
 	public List<UserVO> getUserList(UserVO vo);
 	
 	// 프로필 이미지 등록
-	public void userImgUpload(String userId, String userImg);
+	public void uploadProfileImage(MultipartFile file, UserVO user) throws Exception;
 	
 	// 유저 탈퇴
 	public void withdraw(UserVO vo);
@@ -40,6 +45,9 @@ public interface UserService {
 	
 	// 유저 정보 가져오기
 	public UserVO findMemberById(String userId);
+	
+	// 유저 정보 가져오기
+	public UserVO findUserById(String userId);
 	
 	// 닉네임 정보 가져오기
 	public UserVO getNickname(UserVO vo);

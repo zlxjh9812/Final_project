@@ -214,6 +214,15 @@ public class UserController {
         out.flush();
         return "user/result";
 	}
+	
+	// 닉네임 중복 확인
+	@ResponseBody
+	@PostMapping("/checkNameDuplicate")
+	public boolean checkNameDuplicate(@RequestParam String nickname) {
+		return userService.isNameDuplicate(nickname);
+	
+	}
+	
 	@RequestMapping(value = "/findIdgo.do")
 	public String findIdGo() {
 		return "/user/findId";

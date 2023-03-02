@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/mypage/mypage.js"></script>
 <title>Insert title here</title>
 </head>
 <body>${pageContext.servletContext.contextPath}

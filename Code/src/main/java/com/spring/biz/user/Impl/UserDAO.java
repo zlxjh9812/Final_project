@@ -66,13 +66,17 @@ public class UserDAO {
 	
 	public void userImgUpload(String userId, String userImg) {
 		Map<String, String> parameterMap = new HashMap<String, String>();
-		parameterMap.put("userId", userId);
-	    parameterMap.put("userImg", userImg);	    
+		parameterMap.put("UserId", userId);
+	    parameterMap.put("profileImg", userImg);	    
 		mybatis.update("UserDAO.userImgUpload", parameterMap);
 	}
 	
 	public UserVO findMemberById(String userId) {
 		return mybatis.selectOne("UserDAO.findMemberById", userId);
+	}
+	
+	public UserVO findUserById(String userId) {
+		return mybatis.selectOne("UserDAO.findUserById", userId);
 	}
 
 	public void userEdit(UserVO vo) {
@@ -81,5 +85,9 @@ public class UserDAO {
 	
 	public void withdraw(UserVO vo) {
 		mybatis.update("UserDAO.withdraw", vo);
+	}
+	
+	public int checkNameDuplicate(String userName) {
+		return mybatis.selectOne("UserDAO.checkNameDuplicate", userName);
 	}
 }

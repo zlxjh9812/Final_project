@@ -469,7 +469,7 @@ border-radius: 15px;
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="mainpage.do?type=movie" class="logo d-flex align-items-center">
+      <a href="/mainpage.do?type=movie" class="logo d-flex align-items-center">
         <span class="d-none d-lg-block">#Reviewers</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -513,7 +513,7 @@ border-radius: 15px;
             <c:when test="${User.userId  eq null }">
                <!-- Button trigger modal -->
                <button type="button" class="custom-btn btn-1" data-toggle="modal" data-target="#exampleModalCenter">로그인</button>
-                        <button type="button" class="custom-btn btn-1" onclick="location.href='sign_up.do'">회원가입</button>
+                        <button type="button" class="custom-btn btn-1" onclick="location.href='/sign_up.do'">회원가입</button>
             </c:when>
             <c:otherwise>
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
@@ -533,7 +533,7 @@ border-radius: 15px;
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="/users-profile.html">
                 <i class="bi bi-person"></i>
                 <span>내 프로필</span>
               </a>
@@ -543,7 +543,7 @@ border-radius: 15px;
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href=/"users-profile.html">
                 <i class="bi bi-gear"></i>
                 <span>계정 설정</span>
               </a>
@@ -553,7 +553,7 @@ border-radius: 15px;
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+              <a class="dropdown-item d-flex align-items-center" href="/pages-faq.html">
                 <i class="bi bi-question-circle"></i>
                 <span>도움말</span>
               </a>
@@ -563,7 +563,7 @@ border-radius: 15px;
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="logout.do">
+              <a class="dropdown-item d-flex align-items-center" href="/logout.do">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>로그 아웃</span>
               </a>
@@ -592,18 +592,18 @@ border-radius: 15px;
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="mainpage.do?type=movie">
+        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="/mainpage.do?type=movie">
           <i class="bi bi-grid"></i>
           <span>메인 페이지</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="mainpage.do?type=movie">
+            <a href="/mainpage.do?type=movie">
               <i class="bi bi-circle"></i><span>인기 영화</span>
             </a>
           </li>
           <li>
-            <a href="mainpage.do?type=tv">
+            <a href="/mainpage.do?type=tv">
               <i class="bi bi-circle"></i><span>인기 TV프로그램</span>
             </a>
           </li>
@@ -618,17 +618,17 @@ border-radius: 15px;
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="getBoardList.do?boardnum=1">
+            <a href="/getBoardList.do?boardnum=1">
               <i class="bi bi-circle"></i><span>영화</span>
             </a>
           </li>
           <li>
-            <a href="getBoardList.do?boardnum=2">
+            <a href="/getBoardList.do?boardnum=2">
               <i class="bi bi-circle"></i><span>TV프로그램</span>
             </a>
           </li>
           <li>
-            <a href="getBoardList.do?boardnum=3">
+            <a href="/getBoardList.do?boardnum=3">
               <i class="bi bi-circle"></i><span>웹툰</span>
             </a>
           </li>      
@@ -640,7 +640,7 @@ border-radius: 15px;
         </a>
         <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="getBoardList.do?boardnum=4">
+            <a href="/getBoardList.do?boardnum=4">
               <i class="bi bi-circle"></i><span>자유 게시판</span>
             </a>
           </li>
@@ -648,21 +648,21 @@ border-radius: 15px;
         </ul>
       </li><!-- End Forms Nav -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="mypage.do">
+        <a class="nav-link collapsed" href="/mypage">
           <i class="bi bi-person"></i>
           <span>마이페이지</span>
         </a>
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="cs.do">
+        <a class="nav-link collapsed" href="/support">
           <i class="bi bi-question-circle"></i>
           <span>고객센터</span>
         </a>
       </li><!-- End F.A.Q Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="login.do" data-toggle="modal"
+        <a class="nav-link collapsed" href="/login.do" data-toggle="modal"
                   data-target="#exampleModalCenter">
           <i class="bi bi-box-arrow-in-right"></i>
           <span>로그인</span>
@@ -675,18 +675,18 @@ border-radius: 15px;
             <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="mainpage.do?type=movie">
+        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="/mainpage.do?type=movie">
           <i class="bi bi-grid"></i>
           <span>메인 페이지</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="mainpage.do?type=movie">
+            <a href="/mainpage.do?type=movie">
               <i class="bi bi-circle"></i><span>인기 영화</span>
             </a>
           </li>
           <li>
-            <a href="mainpage.do?type=tv">
+            <a href="/mainpage.do?type=tv">
               <i class="bi bi-circle"></i><span>인기 TV프로그램</span>
             </a>
           </li>
@@ -699,17 +699,17 @@ border-radius: 15px;
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="getBoardList.do?boardnum=1">
+            <a href="/getBoardList.do?boardnum=1">
             <i class="bi bi-circle"></i><span>영화</span>
             </a>
           </li>
           <li>
-            <a href="getBoardList.do?boardnum=2">
+            <a href="/getBoardList.do?boardnum=2">
             <i class="bi bi-circle"></i><span>TV프로그램</span>
             </a>
           </li>
           <li>
-            <a href="getBoardList.do?boardnum=3">
+            <a href="/getBoardList.do?boardnum=3">
             <i class="bi bi-circle"></i><span>웹툰</span>
             </a>
           </li>        
@@ -722,7 +722,7 @@ border-radius: 15px;
         </a>
         <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="getBoardList.do?boardnum=4">
+            <a href="/getBoardList.do?boardnum=4">
             	<i class="bi bi-circle"></i><span>자유 게시판</span>
             </a>
           </li>
@@ -730,21 +730,21 @@ border-radius: 15px;
         </ul>
       </li><!-- End Forms Nav -->
      	 <li class="nav-item">
-        	<a class="nav-link collapsed" href="mypage.do">
+        	<a class="nav-link collapsed" href="/mypage">
          		<i class="bi bi-person"></i>
           		<span>마이페이지</span>
        		 </a>
      	 </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="cs.do">
+        <a class="nav-link collapsed" href="/support">
         	<i class="bi bi-question-circle"></i>
           	<span>고객센터</span>
         </a>
       </li><!-- End F.A.Q Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="logout.do">
+        <a class="nav-link collapsed" href="/logout.do">
         	<i class="bi bi-box-arrow-in-right"></i>
           	<span>로그아웃</span>
         </a>
@@ -784,7 +784,7 @@ function onSignIn(){
                      <div class="modal-content">
                         <div class="modal-body">
                            <div class="member">
-                              <form action="login.do" method="post">
+                              <form action="/login.do" method="post">
                                  <h2>#REVIEWERS</h2>
                                  <h1>로그인</h1>
                                  <div class="field">
@@ -797,7 +797,7 @@ function onSignIn(){
 <!--                                  <div class="member-footer"> -->
  <hr>
                                     <div>
-                                       <a href="sign_up.do">회원가입</a>&nbsp|&nbsp<a href="findIdgo.do">아이디 찾기</a>&nbsp|&nbsp<a href="updatePasswordGo.do">비밀번호 찾기</a>
+                                       <a href="/sign_up.do">회원가입</a>&nbsp|&nbsp<a href="/findIdgo.do">아이디 찾기</a>&nbsp|&nbsp<a href="/updatePasswordGo.do">비밀번호 찾기</a>
                                     </div>
                                  </div>
                                  <div style="display: flex; justify-content:center;">

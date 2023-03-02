@@ -1,7 +1,5 @@
 package com.spring.biz.user;
 
-
-
 public class UserVO {
 	private String UserId;
 	private String password;
@@ -9,7 +7,6 @@ public class UserVO {
 	private String email;
 	private String name;
 	private String role;
-	
 	private String nickName;
 	private String profileImg;
 	private int reportCount;
