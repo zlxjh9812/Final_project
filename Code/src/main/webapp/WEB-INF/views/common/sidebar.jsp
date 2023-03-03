@@ -543,7 +543,7 @@ border-radius: 15px;
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="/users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="/mypage">
                 <i class="bi bi-person"></i>
                 <span>내 프로필</span>
               </a>
@@ -553,7 +553,7 @@ border-radius: 15px;
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href=/"users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="/mypage/edit">
                 <i class="bi bi-gear"></i>
                 <span>계정 설정</span>
               </a>
@@ -563,7 +563,7 @@ border-radius: 15px;
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="/pages-faq.html">
+              <a class="dropdown-item d-flex align-items-center" href="/support">
                 <i class="bi bi-question-circle"></i>
                 <span>도움말</span>
               </a>

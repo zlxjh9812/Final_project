@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ReviewLikeDAO">
+
+	<resultMap type="reviewLike" id="likeResult">
+		<id property="seq" column="SEQ"/>
+		<result property="userid" column="USERID"/>		
+	</resultMap>
+
+	<insert id="ReviewLike">
+		insert into REVIEWLIKE(seq, userid) values(#{seq}, #{userid})
+	</insert>
+
+	<select id="findLike" resultType="int">
+		select count(*) from REVIEWLIKE where seq=#{seq} and userid=#{userid}
+	</select>
+	
+	<delete id="ReviewUnLike">
+		delete from REVIEWLIKE where seq = #{seq} and userid=#{userid}
+	</delete>
+
+	
+</mapper>

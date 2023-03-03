@@ -105,4 +105,16 @@ public class BoardServiceImpl implements BoardService {
 
 		boardDAO.reportUpdateReviewN(vo);
 	}
+	
+	@Override
+	public void updateReviewLike(ReviewBoardVO vo) {
+		boardDAO.updateReviewLike(vo);
+		
+	}
+
+	@Override
+	public void updateReviewLikeCancel(ReviewBoardVO vo) {
+		boardDAO.updateReviewLikeCancel(vo);
+		
+	}
 }
