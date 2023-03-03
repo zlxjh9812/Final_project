@@ -45,4 +45,6 @@ public interface BoardService {
 		
 		public void reportUpdateReviewY(ReviewBoardVO vo);
 		public void reportUpdateReviewN(ReviewBoardVO vo);
+		public void updateReviewLike(ReviewBoardVO vo);
+		public void updateReviewLikeCancel(ReviewBoardVO vo);
 }

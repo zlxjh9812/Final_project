@@ -7,6 +7,7 @@
 
 		<!-- Alias 설정 -->
 	<typeAliases>
+		<typeAlias alias="reviewLike" type="com.spring.biz.reviewLike.ReviewLikeVO"/>
 		<typeAlias type="com.spring.biz.UserBlackList.UserBlackListVO" alias="blackLIst"/>
 		<typeAlias type="com.spring.biz.reportReview.ReportReviewVO" alias="reportReview"/>
 		<typeAlias type="com.spring.biz.tableNum.TableNumVO" alias="tableValue"/>
@@ -22,6 +23,7 @@
 	
 	<!-- Sql Mapper 설정 -->
 	<mappers>
+		<mapper resource="mappings/reviewLike-mapping.xml"/>
 		<mapper resource="mappings/user-mapping.xml"/>
 		<mapper resource="mappings/userInfo-mapping.xml"/>
 		<mapper resource="mappings/board-mapping.xml"/>

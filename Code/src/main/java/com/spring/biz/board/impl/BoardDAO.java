@@ -114,4 +114,16 @@ public class BoardDAO {
 	public void reportUpdateReviewN(ReviewBoardVO vo) {
 		mybatis.update("BoardDAO.reportUpdateReviewN",vo);
 	}
+	
+	//리뷰 좋아요
+	public void updateReviewLike(ReviewBoardVO vo) {
+		mybatis.update("BoardDAO.updateReviewLike",vo);
+		
+	}
+	
+	//리뷰 좋아요 취소
+	public void updateReviewLikeCancel(ReviewBoardVO vo) {
+		mybatis.update("BoardDAO.updateReviewLikeCancel",vo);
+		
+	}
 }

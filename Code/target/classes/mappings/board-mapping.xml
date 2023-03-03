@@ -27,6 +27,15 @@
 		, 0, 0, 0, #{userId},sysdate, #{moviecode}, #{contentType}) ]]>	
 	</insert>
 	
+	<update id="updateReviewLike">
+		UPDATE REVIEWBOARD SET like_num = like_num+1 where bseq = #{bseq}
+	</update>
+
+	<update id="updateReviewLikeCancel">
+		UPDATE REVIEWBOARD SET like_num = like_num-1 where bseq = #{bseq}
+	</update>
+	
+	
 	<update id="updateBoard">
 		<![CDATA[
 			UPDATE REVIEWBOARD SET
@@ -134,7 +143,7 @@
 	
 	
 	
-		<select id="getBoardListMain" resultMap="boardResult">
+	<select id="getBoardListMain" resultMap="boardResult">
 		SELECT * 
 		FROM REVIEWBOARD 
 		WHERE boardnum!=4  and report = 'N'
