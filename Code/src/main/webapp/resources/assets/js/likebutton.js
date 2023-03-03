@@ -16,11 +16,12 @@ if(likeVar){
 			url : '/likeDown.do',
 			data: {
 				seq : seq,
-				userid: userid
+				userid: userid,
 				},
 			success: function(data){
 				animationHeart.classList.remove('animation');
 				heart.classList.remove('fill-color');
+				location.reload();
 			}
 		
 		});	
@@ -37,12 +38,13 @@ if(likeVar){
 			url : '/likeUp.do',
 			data: 	{
 						seq : seq,
-						userid: userid			
+						userid: userid,
 					}
 				,
 			success:function(data){
 				animationHeart.classList.add('animation');
 				heart.classList.add('fill-color');
+				location.reload();
 				}
 			});	
 	});
