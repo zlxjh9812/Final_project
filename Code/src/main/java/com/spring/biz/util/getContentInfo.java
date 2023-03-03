@@ -46,6 +46,7 @@ public class getContentInfo {
 
 			// 만들어진 JSON 객체는 JSONObject 사용해서 저장
 			JSONObject jsonObject = (JSONObject) jsonParser.parse(result);
+			
 			 
 			// 만들어진 JSONObject에서 key가 total_pages인 value를 추출하기 위해서 get() 사용
 			vo.setOverview(jsonObject.get("overview").toString());
@@ -216,7 +217,7 @@ public class getContentInfo {
 					BufferedReader bf;
 
 					bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
-
+					
 					result = bf.readLine();
 
 					JSONParser jsonParser = new JSONParser();

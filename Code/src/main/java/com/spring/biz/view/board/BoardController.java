@@ -35,6 +35,7 @@ import com.spring.biz.board.BoardService;
 import com.spring.biz.board.PageDTO;
 import com.spring.biz.board.ReviewBoardVO;
 import com.spring.biz.board.SearchCriteria;
+import com.spring.biz.comment.CommentVO;
 import com.spring.biz.hashTag.HashTagService;
 import com.spring.biz.hashTag.HashTagVO;
 
@@ -394,6 +395,7 @@ public class BoardController {
 						result.get(i).setReviewPic(temp);
 						System.out.println(result.get(i).getReviewPic());
 					}
+					
 					
 				}
 				model.addAttribute("pageMaker", pageMaker);	// Model 정보 저장

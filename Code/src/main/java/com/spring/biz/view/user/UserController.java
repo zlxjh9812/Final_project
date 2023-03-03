@@ -84,6 +84,7 @@ public class UserController {
 		
 			return "redirect:mainpage.do";
 		}else if(User!=null&&User.getRole().equals("관리자")) {
+			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
             out.println("<script>alert('로그인 정보를 확인해주세요.');location.href='getReviewReport.do';</script>");
             out.flush();

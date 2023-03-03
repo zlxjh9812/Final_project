@@ -8,7 +8,7 @@
 <html>
 <head>
 
-stylesheet">
+
 
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -159,6 +159,7 @@ stylesheet">
     		<div class="barleft">작성자: ${board.nickname }</div>
     		<div class="barcenter">${board.writedate }</div>
     		<div class="barright">❤ ${board.like_num }&nbsp&nbsp👁‍🗨${board.cnt}&nbsp&nbsp <a href="#" id="report">🚨</a> </div>
+    		
     	</div>
 		<div class="title">
 			${board.title } 
@@ -171,6 +172,7 @@ stylesheet">
     		 	<c:forEach items="${info.genres}" var = "tag">
     				<a href="HashTagSearch.do?tags=${tag }" id = "hashtags" style=" font-size:x-large;"> ${tag }</a>
     			</c:forEach>	
+    			
 		</div>
 	</div>
     	    		
@@ -218,6 +220,9 @@ stylesheet">
 		$("#report").on("click",function(e){
 			const url = "Report.do"
 			window.open(url,'신고하기','width=500, height=700, scrollbars=yes,resizable=no');
+		})
+		
+				
 		})
 	</script>
 </body>
