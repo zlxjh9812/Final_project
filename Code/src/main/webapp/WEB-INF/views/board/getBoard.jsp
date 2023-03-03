@@ -158,7 +158,7 @@
     	<div class="topbar">
     		<div class="barleft">작성자: ${board.nickname }</div>
     		<div class="barcenter">${board.writedate }</div>
-    		<div class="barright">❤ ${board.like_num }&nbsp&nbsp👁‍🗨${board.cnt}&nbsp&nbsp <a href="#" id="report">🚨</a> </div>
+    		<div class="barright">❤ ${board.like_num }&nbsp&nbsp👁‍🗨${board.cnt}&nbsp&nbsp <a href="#" onclick="window.open('Report.do','신고하기','width=500, height=700, scrollbars=yes,resizable=no');">🚨</a> </div>
     		
     	</div>
 		<div class="title">
@@ -187,12 +187,22 @@
     		</c:forEach>
     	</div>
     		</div>
-    	<c:if test="${User.userId eq true }">	</c:if>
+    		
    		<div class="topbar_link" style="width: 1000px; margin:0 auto;">
+   		<c:if test="${User.userId  ne null}">
    		<div class="like">
-    		<div class="heart"></div>
-    		<div class="animation-heart"></div>    
+<c:choose>
+   		<c:when test="${like eq 1 }">
+    		<div class="heart fill-color"></div>
+    		<div class="animation-heart animation"></div>    
+   		</c:when>
+   		<c:otherwise>
+   			<div class="heart"></div>
+    		<div class="animation-heart"></div>
+    	</c:otherwise>    
+</c:choose>
     	</div>
+   		</c:if>
    		<div style="margin-top:10px;">
    		<c:if test="${User.userId  eq board.userId }">
    			
@@ -207,11 +217,16 @@
    				<a href="#" onClick="history.back()">목록</a> <a href="#">|</a> <a href="#">댓글</a>
    		</div>
    	</div>
-    
 
-    </main>
+    </main>	
 	<br>
-<c:import url="../common/footer.jsp"></c:import>
+	<div style="margin-bottom:10%;">
+		<c:import url="../common/footer.jsp"></c:import>
+	</div>
+   
+   <input type="hidden" id="seq" value="${board.bseq}">
+   <input type="hidden" id="userid" value="${User.userId}">
+   <input type="hidden" id="likeVar" value="${like}">
    
    <!-- 좋아요 버튼 -->
    <script src="<c:url value="/resources/assets/js/likebutton.js"/>"></script>
