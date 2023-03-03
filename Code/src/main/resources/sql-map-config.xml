@@ -33,5 +33,6 @@
 		<mapper resource="mappings/tableNum-mapping.xml"/>
 		<mapper resource="mappings/ReportReview-mapping.xml"/>
 		<mapper resource="mappings/ReportComment-mapping.xml"/>
+		<mapper resource="mappings/reply-mapping.xml"/>
 	</mappers>
 </configuration>

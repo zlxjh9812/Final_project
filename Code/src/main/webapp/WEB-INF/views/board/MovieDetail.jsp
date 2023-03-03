@@ -449,7 +449,7 @@
 													코멘트수정
 												</button>
 											</c:if>
-										<button onclick="location.href='index.jsp'"
+										<button onClick="location.href='cgetBoardList.do?type=${info.contents_type }&id=${info.contents_num }'"
 													class="css-orm7r7-StylelessButton-ContentActionButton-ContentCommentButtonOnSm e1svyhwg25"
 													style="color: black;">
 													<div class="Icon cardlist css-1q1i623-SVG e1282e850">

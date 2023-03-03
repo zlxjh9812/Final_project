@@ -119,6 +119,32 @@
   	
 	</select>
 	
+		<select id="cgetBoardList" resultMap="boardResult">
+		SELECT * 
+		FROM(
+			SELECT ROWNUM RN, BSEQ, BOARDNUM, TITLE, NICKNAME, CONTENT,WRITEDATE, FILENAME, LIKE_NUM, UNLIKE_NUM, CNT, USERID, MOVIECODE, CONTENTTYPE
+			FROM(
+				SELECT * 
+				FROM REVIEWBOARD 
+				WHERE report = 'N' and CONTENTTYPE = #{contentType} and MOVIECODE = #{moviecode}
+		<if test="searchCondition == 'TITLE'">
+			AND TITLE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'CONTENT'">
+			AND CONTENT LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		ORDER BY BSEQ DESC
+		) 
+			<![CDATA[
+    		WHERE ROWNUM <= #{pageNum} * #{amount}
+    		]]>
+    	) 
+  		<![CDATA[
+  		WHERE RN > (#{pageNum} - 1) * #{amount}
+  		]]>
+  	
+	</select>
+	
 	<select id="getSearchReview" resultMap="boardResult">
 		SELECT * 
 		FROM(

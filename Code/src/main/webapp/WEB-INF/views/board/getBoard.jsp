@@ -7,9 +7,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-
-
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
@@ -18,7 +15,45 @@
   <meta content="" name="keywords">
 
 <style>
-      
+
+	input {
+	  width: 150px;
+	  height: 32px;
+	  font-size: 20px;
+	  border: 0;
+	  border-radius: 15px;
+	  outline: none;
+	  text-align:center;
+	  padding-left: 10px;
+	  background-color: rgb(233, 233, 233);
+	}
+ 	
+	  .text_box {
+	  position:relative; 
+	  display:inline-block; 
+	  width:100%;
+	  }
+	  .text_box textarea {
+	  width:100%; 
+	  height:152px; 
+	  color:#666; 
+	  font-family:"ht_r"; 
+	  font-size:18px; 
+	  line-height:28px; 
+	  padding:20px; 
+	  border:1px solid #e4dcd3; 
+	  outline:0; 
+	  resize:none
+	  }
+	  .text_box .count {
+	  position:absolute; 
+	  right:20px; 
+	  bottom:20px; 
+	  color:#666; 
+	  font-family:"ht_r"; 
+	  font-size:15px;
+	  }	
+  	
       table{
       width:80%;
       }
@@ -158,8 +193,7 @@
     	<div class="topbar">
     		<div class="barleft">작성자: ${board.nickname }</div>
     		<div class="barcenter">${board.writedate }</div>
-    		<div class="barright">❤ ${board.like_num }&nbsp&nbsp👁‍🗨${board.cnt}&nbsp&nbsp <a href="#" onclick="window.open('Report.do','신고하기','width=500, height=700, scrollbars=yes,resizable=no');">🚨</a> </div>
-    		
+    		<div class="barright">❤ ${board.like_num }&nbsp&nbsp👁‍🗨${board.cnt}&nbsp&nbsp <a href="#" id="report">🚨</a> </div>
     	</div>
 		<div class="title">
 			${board.title } 
@@ -172,37 +206,30 @@
     		 	<c:forEach items="${info.genres}" var = "tag">
     				<a href="HashTagSearch.do?tags=${tag }" id = "hashtags" style=" font-size:x-large;"> ${tag }</a>
     			</c:forEach>	
-    			
 		</div>
 	</div>
     	    		
     		
     	<div class="content" style="font-size:large;">
     		${board.content }
-    	</div>
+    		
+    		
+    	</div>		
     	
     	<div class="divide" style="font-size: 20px;">  	
     	<c:forEach items="${ hashTag}" var = "tag">
     		<a href="HashTagSearch.do?tags=${tag.tags }" id = "hashtags" >#${tag.tags }</a>
     		</c:forEach>
     	</div>
+    	
     		</div>
     		
+    	<c:if test="${User.userId eq true }">	</c:if>
    		<div class="topbar_link" style="width: 1000px; margin:0 auto;">
-   		<c:if test="${User.userId  ne null}">
    		<div class="like">
-<c:choose>
-   		<c:when test="${like eq 1 }">
-    		<div class="heart fill-color"></div>
-    		<div class="animation-heart animation"></div>    
-   		</c:when>
-   		<c:otherwise>
-   			<div class="heart"></div>
-    		<div class="animation-heart"></div>
-    	</c:otherwise>    
-</c:choose>
+    		<div class="heart"></div>
+    		<div class="animation-heart"></div>    
     	</div>
-   		</c:if>
    		<div style="margin-top:10px;">
    		<c:if test="${User.userId  eq board.userId }">
    			
@@ -216,18 +243,81 @@
 		</c:if>
    				<a href="#" onClick="history.back()">목록</a> <a href="#">|</a> <a href="#">댓글</a>
    		</div>
+   		
    	</div>
+   	
+    </main>
+    <main id="main" class="main" style="margin-top:0px;">
+    	<div style=" width: 1000px; margin:0 auto;">
+    	<c:if test="${User.userId != null}">
+   	    	<div style="border: 1px solid; width: 1000px; padding: 3px">
+				<form id="form1" name="form1">
+					<input type="hidden" id="bseq1" name="bseq" value="<c:out value="${board.bseq}"/>"> 
+					
+					작성자: <input type="text" id="writer1" name="writer"  value="${User.nickname }" size="15" readonly><br/>
+					<div class="text_box">
+						<textarea style="resize: none" id="content1" name="content" rows="3" cols="100" maxlength="200" placeholder="댓글을 달아주세요."></textarea>
+					<div class="count"><span>0</span>/200</div>
+					</div>
+					<a onclick="formSubmit()">저장</a>
 
-    </main>	
-	<br>
-	<div style="margin-bottom:10%;">
+				</form>
+			</div>
+			</c:if>
+    	
+    	<div id="replyList"> 
+			<c:forEach var="replyList" items="${replyList}" varStatus="status">
+				<div id="replyItem<c:out value="${replyList.rseq}"/>"
+							style="border: 1px solid gray; width: 1000px; padding: 5px; margin-top: 5px; margin-left: <c:out value="${10*replyList.redepth}"/>px; display: inline-block">	
+					<c:out value="${replyList.writer}"/> <c:out value="${replyList.regdate}"/>
+					    	<c:if test="${User.nickname  eq replyList.writer }">
+					<a onclick="replyDelete('<c:out value="${replyList.rseq}"/>')">삭제</a>
+					<a onclick="replyUpdate('<c:out value="${replyList.rseq}"/>')">수정</a>
+							</c:if>
+							<c:if test="${User.userId != null}">
+					<a onclick="replyReply('<c:out value="${replyList.rseq}"/>')">댓글</a>
+						</c:if>
+					<br/>
+					<div id="reply<c:out value="${replyList.rseq}"/>"><c:out value="${replyList.content}"/></div>
+				</div><br/>
+			</c:forEach>
+		</div>
+
+		<div id="replyDiv" style="width: 99%; display:none">
+			<form id="form2" name="form2" action="replyWrite.do" method="post">
+				<input type="hidden" id="bseq2" name="bseq" value="<c:out value="${board.bseq}"/>"> 
+				<input type="hidden" id="rseq2" name="rseq"> 
+				<div class="text_box">
+					<textarea style="resize: none" id="content2" name="content" rows="3" cols="100" maxlength="200"></textarea>
+					<div class="count"><span>0</span>/200</div>
+				</div>
+				<a onclick="replyUpdateSave()">저장</a>
+				<a onclick="replyUpdateCancel()">취소</a>
+			</form>
+		</div>
+			
+		
+		<div id="replyDialog" style="width: 99%; display:none">
+			<form id="form3" name="form3" action="replyWrite.do" method="post">
+				<input type="hidden" id="bseq3" name="bseq" value="<c:out value="${board.bseq}"/>"> 
+				<input type="hidden" id="rseq3" name="rseq"> 
+				<input type="hidden" id="reparent3" name="reparent"> 
+				작성자: <input type="text" id="writer3" name="writer"  value="${User.nickname }" size="15" readonly> <br/>
+				<div class="text_box">
+					<textarea style="resize: none" id="content3" name="content" rows="3" cols="100" maxlength="500"></textarea>
+					<div class="count"><span>0</span>/200</div>
+				</div>
+				<a onclick="replyReplySave()">저장</a>
+				<a onclick="replyReplyCancel()">취소</a>
+			</form>
+		</div>
+   	</div>
+   	    </main>
+   	
+    <div style="margin-bottom:10%;">
 		<c:import url="../common/footer.jsp"></c:import>
 	</div>
-   
-   <input type="hidden" id="seq" value="${board.bseq}">
-   <input type="hidden" id="userid" value="${User.userId}">
-   <input type="hidden" id="likeVar" value="${like}">
-   
+	
    <!-- 좋아요 버튼 -->
    <script src="<c:url value="/resources/assets/js/likebutton.js"/>"></script>
    	<link rel="stylesheet" href="<c:url value="/resources/assets/css/likebutton.css"/>">
@@ -236,9 +326,163 @@
 			const url = "Report.do"
 			window.open(url,'신고하기','width=500, height=700, scrollbars=yes,resizable=no');
 		})
-		
-				
-		})
 	</script>
+	
+	<script>
+	
+	$('.text_box textarea').keyup(function(){
+		  var content = $(this).val();
+		  $('.text_box .count span').html(content.length);
+		  if (content.length > 200){
+		    alert("최대 200자까지 입력 가능합니다.");
+		    $(this).val(content.substring(0, 200));
+		    $('.text_box .count span').html(200);
+		  }
+		});
+
+function chkInputValue(id, msg){
+	if ( $.trim($(id).val()) == "") {
+		alert(msg+" 입력해주세요.");
+		$(id).focus();
+		return false;
+	}
+	return true;
+}
+function formSubmit(){
+	if ( ! chkInputValue("#content1", "글 내용을")) return;
+	
+	var formData = $("#form1").serialize();
+	
+	$.ajax({
+		url: "replyWrite.do", 
+		type:"post", 
+		data : formData,
+		success: function(result){
+			if (result!=="") {
+				$("#writer1").val("");
+				$("#content1").val("");
+				$("#replyList").append(result);
+				alert("저장되었습니다.");
+				location.reload();
+			} else{
+				alert("서버에 오류가 있어서 저장되지 않았습니다.");
+			}
+		}
+	})		
+}
+
+function replyDelete(rseq){
+	if (!confirm("삭제하시겠습니까?")) {
+		return;
+	}
+	$.ajax({
+		url: "replyDelete.do",
+		type:"post", 
+		data: {"rseq": rseq},
+		success: function(result){
+			if (result=="OK") {
+				$("#replyItem"+rseq).remove();
+				alert("삭제되었습니다.");
+				location.reload();
+			} else{
+				alert("댓글이 있어서 삭제할 수 없습니다.");
+			}
+		}
+	})
+}
+
+var updateRseq = updateContent = null;
+function replyUpdate(rseq){
+	hideDiv("replyDialog");
+	
+	$("#replyDiv").show();
+	
+	if (updateRseq) {
+		$("#replyDiv").appendTo(document.body);
+		$("#reply"+updateRseq).text(updateContent);
+	} 
+	
+	$("#rseq2").val(rseq);
+	$("#content2").val($("#reply"+rseq).text());
+	$("#reply"+rseq).text("");
+	$("#replyDiv").appendTo($("#reply"+rseq));
+	$("#content2").focus();
+	updateRseq   = rseq;
+	updateContent = $("#content2").val();
+} 
+
+function replyUpdateSave(){
+	if ( ! chkInputValue("#content2", "글 내용을")) return;
+	
+	var formData = $("#form2").serialize();
+	$.ajax({
+		url: "replyWrite.do", 
+		type:"post", 
+		data : formData,
+		success: function(result){
+			if (result!=="") {
+				$("#reply"+updateRseq).text($("#content2").val());
+				$("#replyDiv").hide();
+				alert("저장되었습니다.");
+				location.reload();
+			} else{
+				alert("서버에 오류가 있어서 저장되지 않았습니다.");
+			}
+		}
+	})
+} 
+
+function replyUpdateCancel(){
+	hideDiv("#replyDiv");
+	
+	$("#reply"+updateRseq).text(updateContent);
+	updateRseq = updateContent = null;
+} 
+
+function hideDiv(id){
+	$(id).hide();
+	$(id).appendTo(document.body);
+}
+
+function replyReply(rseq){
+	$("#replyDialog").show();
+	
+	if (updateRseq) {
+		replyUpdateCancel();
+	} 
+	
+	$("#reparent3").val(rseq);
+	$("#content3").val("");
+	$("#replyDialog").appendTo($("#reply"+rseq));
+	$("#writer3").focus();
+} 
+function replyReplyCancel(){
+	hideDiv("#replyDialog");
+} 
+
+function replyReplySave(){
+	if ( ! chkInputValue("#content3", "글 내용을")) return;
+
+	var formData = $("#form3").serialize();
+	$.ajax({
+		url: "replyWrite.do",
+		type:"post", 
+		data : formData,
+		success: function(result){
+			if (result!=="") {
+				var parent = $("#reparent3").val();
+				$("#replyItem"+parent).after(result);
+				$("#replyDialog").hide();
+				alert("저장되었습니다.");
+				$("#writer3").val("");
+				$("#content3").val("");
+				location.reload();
+			} else{
+				alert("서버에 오류가 있어서 저장되지 않았습니다.");
+			}
+		}
+	})	
+}
+</script>
 </body>
 </html> 		

@@ -68,6 +68,12 @@ public class BoardDAO {
 		
 		return mybatis.selectList("BoardDAO.getBoardList", vo);
 	}
+	// 게시글 목록 조회
+		public List<ReviewBoardVO> cgetBoardList(ReviewBoardVO vo){
+			System.out.println("getBoardList 수행");
+			
+			return mybatis.selectList("BoardDAO.cgetBoardList", vo);
+		}
 	
 	// 메인페이지 리뷰 보드 읽기
 	public List<ReviewBoardVO> getBoardListMain(ReviewBoardVO vo){

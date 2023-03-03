@@ -33,6 +33,8 @@ public interface BoardService {
 		
 		// 글 목록 조회
 		public int getTotalPages(ReviewBoardVO vo);
+		
+		public List<ReviewBoardVO> cgetBoardList(ReviewBoardVO vo);
 
 		// 글 목록 조회 with paging
 		public List<ReviewBoardVO> getBoardListWithPaging(SearchCriteria cri);

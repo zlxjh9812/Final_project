@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="replyMapper">
+
+	<!-- 댓글 조회 -->
+	<select id="readReply" resultType="com.spring.biz.reply.ReplyVO" parameterType="int">
+		SELECT BSEQ, RSEQ, WRITER, REDELETEFLAG, CONTENT, REGDATE, REPARENT, REDEPTH, REORDER
+         FROM REPLY
+         WHERE BSEQ=#{bseq} AND REDELETEFLAG='N'
+         ORDER BY REORDER
+	</select>
+	
+	<!-- 댓글 작성 -->
+    <insert id="writeReply" parameterType="com.spring.biz.reply.ReplyVO" >
+        <selectKey resultType="String" keyProperty="rseq" order="BEFORE">
+            SELECT NVL(MAX(RSEQ),0)+1 FROM REPLY
+        </selectKey>
+    
+        INSERT INTO REPLY(BSEQ, RSEQ, WRITER, REDELETEFLAG, CONTENT, REGDATE, REORDER, REPARENT, REDEPTH)
+        VALUES (#{bseq}, #{rseq}, #{writer}, 'N', #{content}, SYSDATE, #{reorder},
+                   <choose>
+                       <when test="reparent==null">#{rseq}, 0</when>
+                       <otherwise>#{reparent}, #{redepth}</otherwise>
+                   </choose>
+               )
+    </insert>
+	
+	<!-- 부모 찾기 -->
+	<select id="selectReplyParent" resultType="com.spring.biz.reply.ReplyVO" parameterType="String">
+        SELECT BSEQ, REDEPTH+1 REDEPTH, REORDER 
+          FROM REPLY
+         WHERE RSEQ=#{reparent}
+    </select>
+    
+    <!-- 1올려주기 -->
+    <update id="updateReplyOrder" parameterType="com.spring.biz.reply.ReplyVO"> 
+        UPDATE REPLY
+           SET REORDER = REORDER + 1 
+         WHERE BSEQ=#{bseq} AND REORDER>${reorder}       
+    </update> 
+    
+    <select id="selectReplyMaxOrder" resultType="Integer" parameterType="String">
+        SELECT NVL(MAX(REORDER),0)+1
+          FROM REPLY
+         WHERE BSEQ=#{bseq}
+    </select>
+	
+	<!-- 댓글 수정 -->
+    <update id="updateReply" parameterType="com.spring.biz.reply.ReplyVO">
+        UPDATE REPLY
+           SET CONTENT=#{content} 
+         WHERE RSEQ=#{rseq}
+    </update> 
+
+	<!-- 댓글 삭제 -->
+    <update id="deleteReply" parameterType="String"> 
+        UPDATE REPLY
+           SET REDELETEFLAG='Y' 
+         WHERE RSEQ=#{rseq}       
+    </update>
+	
+	<select id="selectReplyChild" resultType="Integer" parameterType="String">
+        SELECT COUNT(*)
+          FROM REPLY
+         WHERE REPARENT=#{reparent} AND RSEQ!=#{reparent} AND REDELETEFLAG='N'
+    </select>
+	
+	<!-- 선택된 댓글 조회 -->
+	<select id="selectReply" resultType="com.spring.biz.reply.ReplyVO">
+		SELECT
+				BSEQ
+			  , RSEQ
+			  , CONTENT
+			  , WRITER
+			  , REGDATE
+		  FROM REPLY
+		 WHERE RSEQ = #{rseq}
+	</select>
+</mapper>

@@ -117,4 +117,10 @@ public class BoardServiceImpl implements BoardService {
 		boardDAO.updateReviewLikeCancel(vo);
 		
 	}
+
+	@Override
+	public List<ReviewBoardVO> cgetBoardList(ReviewBoardVO vo) {
+		// TODO Auto-generated method stub
+		return boardDAO.cgetBoardList(vo);
+	}
 }
