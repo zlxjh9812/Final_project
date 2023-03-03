@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,10 +35,10 @@ import com.spring.biz.board.BoardService;
 import com.spring.biz.board.PageDTO;
 import com.spring.biz.board.ReviewBoardVO;
 import com.spring.biz.board.SearchCriteria;
+import com.spring.biz.comment.CommentVO;
 import com.spring.biz.hashTag.HashTagService;
 import com.spring.biz.hashTag.HashTagVO;
-import com.spring.biz.reviewLike.LikeService;
-import com.spring.biz.reviewLike.ReviewLikeVO;
+
 import com.spring.biz.user.UserVO;
 import com.spring.biz.userInfo.UserInfoVO;
 import com.spring.biz.util.getContentInfo;
@@ -58,8 +57,7 @@ public class BoardController {
 	private HashTagService hashtagService;
 	@Autowired
 	private MovieGenresService MovieGenresService;
-	@Autowired
-	private LikeService likeService;
+	
 	
 	
 	@RequestMapping(value="insertBoard.do")
@@ -302,11 +300,6 @@ public class BoardController {
 	@RequestMapping(value="/getBoard.do")
 	public String getBoard(ReviewBoardVO vo, Model model, UserVO uvo,HttpServletRequest request, CntHistoryVO cvo,HashTagVO Hvo,HttpServletResponse response) throws IOException {
 		System.out.println("글 상세 조회 처리");
-		
-		//리뷰 좋아요
-		ReviewLikeVO like = new ReviewLikeVO();
-		like.setSeq(vo.getBseq());
-		
 		HttpSession session = request.getSession();
 		ReviewBoardVO result = boardService.getBoard(vo);
 		getContentInfo info = new getContentInfo();
@@ -329,12 +322,6 @@ public class BoardController {
 			if(boardService.getCntBoard(cvo) == null) {
 				boardService.insertCntHistory(cvo);
 				boardService.updateCnt(vo);
-			}
-			like.setUserid(uvo.getUserId());
-			
-			if(likeService.findLike(like)!=0) {	
-				System.out.println("좋아요 확인-컨트롤러");
-				model.addAttribute("like", likeService.findLike(like));
 			}
 		}
 		
@@ -362,7 +349,7 @@ public class BoardController {
 	}
 
 	// 글 목록 검색
-	@RequestMapping(value="/getBoardList.do")
+	@RequestMapping(value="getBoardList.do")
 	public String getBoardList(Model model,@RequestParam(value="boardnum") int num, ReviewBoardVO vo, HashTagVO Hvo) {
 		vo.setBoardnum(num);
 		System.out.println(num);
@@ -408,6 +395,7 @@ public class BoardController {
 						result.get(i).setReviewPic(temp);
 						System.out.println(result.get(i).getReviewPic());
 					}
+					
 					
 				}
 				model.addAttribute("pageMaker", pageMaker);	// Model 정보 저장
@@ -471,42 +459,6 @@ public class BoardController {
 	      }
 	      return "fileupload/upload_ok";
 	   }
-	
-	@RequestMapping("/likeUp.do")
-	@ResponseBody
-	public String likeUp(ReviewLikeVO rvo, ReviewBoardVO vo) {
-		
-		
-		System.out.println(rvo.getSeq());
-		System.out.println(rvo.getUserid());
-		if(rvo.getUserid() != null) {
-			if(likeService.findLike(rvo) == 0) {	
-				likeService.ReviewLike(rvo);
-				vo.setBseq(rvo.getSeq());
-				boardService.updateReviewLike(vo);			
-			}
-		}
-	
-		return  "";
-	}
-	
-	@RequestMapping("/likeDown.do")
-	@ResponseBody
-	public String likeDown(ReviewLikeVO rvo, ReviewBoardVO vo) {
-		
-		
-		System.out.println(rvo.getSeq());
-		System.out.println(rvo.getUserid());
-		
-		if(likeService.findLike(rvo) == 1) {	
-			likeService.ReviewUnLike(rvo);
-			vo.setBseq(rvo.getSeq());
-			boardService.updateReviewLikeCancel(vo);			
-		}else {
-				
-		}
-		return  "";
-	}
 	}
 
 

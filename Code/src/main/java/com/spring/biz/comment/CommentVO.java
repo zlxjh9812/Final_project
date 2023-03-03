@@ -15,6 +15,16 @@ public class CommentVO {
 	private double star; // 코멘트랑 세트로 쓰일 별점이 저장될 용도
 	private int countLike; // 코멘트에 눌린 좋아요 갯수
 	private int checkCmtLike; // 코멘트 좋아요 여부 확인
+	private String MovieTitle;
+	
+
+	public String getMovieTitle() {
+		return MovieTitle;
+	}
+
+	public void setMovieTitle(String movieTitle) {
+		MovieTitle = movieTitle;
+	}
 
 	public CommentVO() {
 		super();

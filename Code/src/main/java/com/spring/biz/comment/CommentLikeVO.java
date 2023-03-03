@@ -9,6 +9,15 @@ public class CommentLikeVO {
 	private int contents_num; // 작성한 코멘트의 컨텐츠 번호
 	private double star; // 만약 이미 등록한 별점이 존재한다면 별점을 저장할 변수
 	private int countLike; // 코멘트에 눌린 좋아요 갯수
+	private String MovieTitle;
+
+	public String getMovieTitle() {
+		return MovieTitle;
+	}
+
+	public void setMovieTitle(String movieTitle) {
+		MovieTitle = movieTitle;
+	}
 
 	public int getComment_num() {
 		return comment_num;
