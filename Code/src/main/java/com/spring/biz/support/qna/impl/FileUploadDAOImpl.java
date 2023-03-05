@@ -13,7 +13,7 @@ import com.spring.biz.support.qna.FileUploadVO;
 public class FileUploadDAOImpl implements FileUploadDAO {
 
 	private final SqlSession sqlSession;
-	private final String NAMESPACE = "com.spring.biz.support.qna.QnaBoardVO";
+	private final String NAMESPACE = "com.spring.biz.support.qna.QnaBoardDAO";
 
 	@Autowired
 	public FileUploadDAOImpl(SqlSession sqlSession) {
@@ -28,6 +28,11 @@ public class FileUploadDAOImpl implements FileUploadDAO {
 	@Override
 	public void insertFileUpload(FileUploadVO fileUpload) {
 		sqlSession.insert(NAMESPACE + ".insertFileUpload", fileUpload);
+	}
+	
+	@Override
+	public void deleteFileById(int fileId) {
+		sqlSession.delete(NAMESPACE + ".deleteFileUploadById", fileId);
 	}
 
 }

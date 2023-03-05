@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.biz.mypage.MyContentsDAO">
+
+	<resultMap type="MyContentsVO" id="myContentsResult">
+		<result property="userId" column="userId" />
+		<result property="contentsType" column="contents_type" />
+		<result property="contentsNum" column="contents_num" />
+	</resultMap>
+
+	<resultMap type="MyStarVO" id="myStarContentsResult">
+		<result property="userId" column="userId" />
+		<result property="contents_type" column="contents_type" />
+		<result property="contents_num" column="contents_num" />
+		<result property="star" column="star" />
+	</resultMap>
+	
+	<resultMap type="board" id="myReviewResult">
+		<id property="bseq" column="BSEQ"/>
+		<result property="boardnum" column="BOARDNUM"/>
+		<result property="title" column="TITLE"/>
+		<result property="nickname" column="NICKNAME"/>
+		<result property="content" column="CONTENT"/>
+		<result property="filename" column="FILENAME"/>
+		<result property="writedate" column="WRITEDATE"/>
+		<result property="like_num" column="LIKE_NUM"/>
+		<result property="unlike_num" column="UNLIKE_NUM"/>
+		<result property="cnt" column="CNT"/>
+		<result property="userId" column="USERID"/>
+		<result property="moviecode" column="MOVIECODE"/>
+		<result property="contentType" column="CONTENTTYPE"/>
+	</resultMap>
+
+	<!-- 좋아요한 게시물 개수 -->
+	<select id="countAllMyLike" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM contents_like
+		WHERE userId = #{userId}
+		<if test="searchType != null and keyword != null">
+			<choose>
+				<when test="searchType == 'title'">
+					AND title LIKE '%' || #{keyword} || '%'
+				</when>
+				<when test="searchType == 'contentType'">
+					AND contents_type LIKE '%' || #{keyword} || '%'
+				</when>
+			</choose>
+		</if>
+	</select>
+
+	<!-- 좋아요한 게시물 목록 -->
+	<select id="getMyLikeContents" parameterType="map" resultMap="myContentsResult">
+		SELECT clike_num, userId, contents_type, contents_num
+		FROM ( SELECT clike_num, userId, contents_type, contents_num, row_number() over(order by clike_num DESC) as rNum
+			   FROM contents_like
+		       WHERE userId = #{userId}
+			   <if test="searchType != null or keyword != null">
+				<choose>
+					<when test="searchType == 'title'">
+						AND title LIKE '%' || #{keyword} || '%'
+					</when>
+					<when test="searchType == 'contentType'">
+						AND contents_type LIKE '%' || #{keyword} || '%'
+					</when>
+				</choose>
+			  </if>
+		) sub
+		WHERE rNum between #{criteria.startRow} AND #{criteria.endRow}
+		ORDER BY clike_num DESC
+	</select>
+
+	<!-- 평가한 게시물 개수 -->
+	<select id="countAllMyStar" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM contents_star
+		WHERE userId = #{userId}
+		<if test="searchType != null or keyword != null">
+			<choose>
+				<when test="searchType == 'title'">
+					AND title LIKE '%' || #{keyword} || '%'
+				</when>
+				<when test="searchType == 'contentType'">
+					AND contents_type LIKE '%' || #{keyword} || '%'
+				</when>
+			</choose>
+		</if>
+	</select>
+
+	<!-- 평가한 게시물 목록 -->
+	<select id="getMyStarContents" parameterType="map" resultMap="myStarContentsResult">
+		SELECT star_num, userId, contents_type, contents_num, star
+		FROM (
+		SELECT star_num, userId, contents_type, contents_num, star,
+		row_number() over(order by star_num DESC) as rNum
+		FROM contents_star
+		WHERE userId = #{userId}
+		<if test="searchType != null and keyword != null">
+			<choose>
+				<when test="searchType == 'title'">
+					AND title LIKE '%' || #{keyword} || '%'
+				</when>
+				<when test="searchType == 'contentType'">
+					AND contents_type LIKE '%' || #{keyword} || '%'
+				</when>
+			</choose>
+		</if>
+		) sub
+		WHERE rNum between #{criteria.startRow} AND #{criteria.endRow}
+		ORDER BY star_num DESC
+	</select>
+	
+	<!-- 내가 작성한 리뷰 총 개수 -->
+	<select id="countAllMyReview" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM reviewboard
+		WHERE USERID = #{userId}
+		<if test="searchType != null or keyword != null">
+			<choose>
+				<when test="searchType == 'title'">
+					AND TITLE LIKE '%' || #{keyword} || '%'
+				</when>
+				<when test="searchType == 'contentType'">
+					AND CONTENTTYPE LIKE '%' || #{keyword} || '%'
+				</when>
+			</choose>
+		</if>
+	</select>
+
+	<!-- 내가 작성한 리뷰 목록 -->
+	<select id="getMyReviewList" parameterType="map" resultMap="myReviewResult">
+		SELECT BSEQ, BOARDNUM, TITLE, NICKNAME, CONTENT, WRITEDATE, LIKE_NUM, UNLIKE_NUM, CNT, USERID, MOVIECODE, CONTENTTYPE
+		FROM (
+		SELECT BSEQ, BOARDNUM, TITLE, NICKNAME, CONTENT, WRITEDATE, LIKE_NUM, UNLIKE_NUM, CNT, USERID, MOVIECODE, CONTENTTYPE, row_number() over(order by BSEQ DESC) as rNum
+		FROM reviewboard
+		WHERE userId = #{userId}
+		<if test="searchType != null and keyword != null">
+			<choose>
+				<when test="searchType == 'title'">
+					AND title LIKE '%' || #{keyword} || '%'
+				</when>
+				<when test="searchType == 'contentType'">
+					AND CONTENTTYPE LIKE '%' || #{keyword} || '%'
+				</when>
+			</choose>
+		</if>
+		) sub
+		WHERE rNum between #{criteria.startRow} AND #{criteria.endRow}
+		ORDER BY BSEQ DESC
+	</select>
+	
+</mapper>

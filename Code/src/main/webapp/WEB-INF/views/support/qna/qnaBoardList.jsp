@@ -8,7 +8,6 @@
 <link rel="stylesheet" type="text/css" href="/resources/mypage/mypage.css">
 <script src="http://code.jquery.com/jquery-3.1.1.js"></script>
 <script src="https://kit.fontawesome.com/8e012a278c.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/mypage/mypage.js"></script>
 <title>리뷰어스 - 마이페이지</title>
 </head>
 <body>
@@ -17,7 +16,7 @@
 	<div class="mypage-container">
 	<jsp:include page="/WEB-INF/views/mypage/mypageMenu.jsp" />
 		<div class="mypage-content">
-			<div class="mypage-edit-title">1:1 문의 내역</div>
+			<div class="mypage-edit-title">나의 문의 내역</div>
 			<div class="mypage-edit-container">
 				<div class="basic-info">
 					<div class="qna-container">
@@ -58,11 +57,15 @@
 										<c:forEach items="${board}" var="board">
 											<tr>
 												<td class="qna-id">${board.boardId}</td>
-												<td class="qna-subject">[${board.subject}]</td>
+												<c:set var="subjectMap" value="${{'account': '계정', 'content': '컨텐츠 이용', 'error': '시스템 장애', 'police': '신고', 'etc': '기타'}}"/>
+												<c:set var="subject" value="${subjectMap[board.subject]}"/>
+												<td class="qna-subject">[${subject}]</td>
 												<td class="qna-title"><a href="/support/qna/${board.boardId}">${board.title}</a></td>
 												<td class="qna-writer">${board.writer}</td>
 												<td class="qna-date"><fmt:formatDate value="${board.writeDate}" pattern="yyyy.MM.dd" /></td>
-												<td class="qna-status <c:if test="${board.isAnswered == true}">answered</c:if>"><c:if test="${board.isAnswered == false}">처리중</c:if> <c:if test="${board.isAnswered == true}">답변완료</c:if></td>
+												<td class="qna-status <c:if test="${board.isAnswered == true}">answered</c:if>">
+												<c:if test="${board.isAnswered == 'N'}">처리중</c:if>
+												<c:if test="${board.isAnswered == 'Y'}"><span class="qna-answered" style="color:green;">답변완료</span></c:if></td>
 											</tr>
 										</c:forEach>
 									</c:when>

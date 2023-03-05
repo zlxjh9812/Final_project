@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.biz.support.qna.cmt.QnaCommentDAO">
+
+	<resultMap id="qnaCommentResultMap" type="QnaCommentVO">
+		<id property="commentId" column="comment_id" />
+		<result property="boardId" column="board_id" />
+		<result property="content" column="content" />
+		<result property="writer" column="writer" />
+		<result property="writerId" column="writer_id" />
+		<result property="writeDate" column="write_date" />
+		<result property="isDeleted" column="is_deleted" />
+		<result property="isAnswered" column="is_answered" />
+	</resultMap>
+
+	<!-- 댓글 불러오기 -->
+	<select id="getCommentByBoardId" parameterType="int" resultMap="qnaCommentResultMap">
+	    SELECT *
+	    FROM qna_board_cmt
+	    WHERE board_id = #{boardId} AND is_deleted = 'N'
+	</select>
+
+	<!-- 댓글 불러오기 -->
+	<select id="getCommentByCommentId" parameterType="int" resultMap="qnaCommentResultMap">
+	    SELECT *
+	    FROM qna_board_cmt
+	    WHERE comment_id = #{commentId} AND is_deleted = 'N'
+	</select>
+
+	<!-- 댓글 작성 -->
+	<insert id="insertComment" parameterType="QnaCommentVO">
+		INSERT INTO qna_board_cmt (board_id, comment_id, content, writer, writer_id)
+		VALUES (#{boardId}, qna_board_cmt_seq.nextval, #{content}, #{writer}, #{writerId})
+	</insert>
+
+	<!-- 댓글 수정 -->
+	<update id="updateComment" parameterType="QnaCommentVO">
+		UPDATE qna_board_cmt
+		SET content = #{content}
+		WHERE board_id = #{boardId} AND comment_id = #{commentId}
+	</update>
+
+	<!-- 댓글 삭제 -->
+	<update id="deleteComment" parameterType="QnaCommentVO">
+		UPDATE qna_board_cmt
+		SET is_deleted = 'Y'
+		WHERE comment_id = #{commentId}
+	</update>
+	
+	<!-- 댓글 삭제 후 게시글 상태 변경 -->
+	<update id="updateAnswerStatusToFalse" parameterType="QnaCommentVO">
+		UPDATE qna_board
+		SET is_answered = 'N'
+		WHERE board_id = #{board_id}
+	</update>
+	
+	<update id="updateAnswerStatus" parameterType="int">
+		UPDATE qna_board
+		SET is_answered = 'Y'
+		WHERE board_id = #{boardId}
+	</update>
+
+</mapper>
+

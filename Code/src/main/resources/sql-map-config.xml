@@ -18,7 +18,11 @@
 		<typeAlias alias="cnt"	type="com.spring.biz.CntHistory.CntHistoryVO"></typeAlias>
 		<typeAlias type="com.spring.biz.hashTag.HashTagVO" alias="hashTag"/>
 		<typeAlias type="com.spring.biz.MovieGenres.MovieGenresVO" alias="MovieGeners"/>
+		<typeAlias alias="QnaBoardVO" type="com.spring.biz.support.qna.QnaBoardVO"/>
+		<typeAlias alias="QnaCommentVO" type="com.spring.biz.support.qnaCmt.QnaCommentVO"/>
 		<typeAlias alias="FileUploadVO" type="com.spring.biz.support.qna.FileUploadVO"/>
+		<typeAlias alias="MyContentsVO" type="com.spring.biz.mypage.MyContentsVO"/>
+		<typeAlias alias="MyStarVO" type="com.spring.biz.mypage.MyStarVO"/>
 	</typeAliases>
 	
 	<!-- Sql Mapper 설정 -->
@@ -34,5 +38,8 @@
 		<mapper resource="mappings/ReportReview-mapping.xml"/>
 		<mapper resource="mappings/ReportComment-mapping.xml"/>
 		<mapper resource="mappings/reply-mapping.xml"/>
+		<mapper resource="mappings/qna-mapping.xml"/>
+		<mapper resource="mappings/qnacmt-mapping.xml"/>
+		<mapper resource="mappings/mypage-mapping.xml"/>
 	</mappers>
 </configuration>

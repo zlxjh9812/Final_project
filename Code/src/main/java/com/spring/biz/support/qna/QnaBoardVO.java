@@ -2,19 +2,23 @@ package com.spring.biz.support.qna;
 
 import java.util.Date;
 
+import com.spring.biz.user.UserVO;
+
 public class QnaBoardVO {
 
-	private int tableId;
-	private int boardId;
-	private String subject;
-	private String title;
-	private String content;
-	private String writer;
-	private String writerId;
-	private Date writeDate;
-	private String isDeleted;
-	private String isAnswered;
-
+	private int tableId; // 테이블 번호
+	private int boardId; // 게시글 번호
+	private String subject; // 질문 유형
+	private String title; // 제목
+	private String content; // 내용
+	private String writer; // 닉네임
+	private String writerId; // 아이디
+	private Date writeDate; // 작성일
+	private String isDeleted; // 삭제여부
+	private String isAnswered; // 답변여부
+	private UserVO user; // profileImg를 참조하기 위한 필드
+	private String profileImg;
+	
 	public int getTableId() {
 		return tableId;
 	}
@@ -95,4 +99,21 @@ public class QnaBoardVO {
 		this.isAnswered = isAnswered;
 	}
 
+	public UserVO getUser() {
+		return user;
+	}
+
+	public void setUser(UserVO user) {
+		this.user = user;
+	}
+
+	public String getProfileImg() {
+		return profileImg;
+	}
+
+	public void setProfileImg(String profileImg) {
+		this.profileImg = profileImg;
+	}
+
+	
 }

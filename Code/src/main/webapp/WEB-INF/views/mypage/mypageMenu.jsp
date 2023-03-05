@@ -6,9 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/mypage/mypage.js"></script>
-<title>Insert title here</title>
+<title>마이페이지 메뉴</title>
 </head>
-<body>${pageContext.servletContext.contextPath}
+<body>
 	<div class="mypage-menu">
 		<div class="mypage-menu__info">
 			<div class="profile-img-wrap">
@@ -42,9 +42,9 @@
 				<a href="#" class="myactive-dropdown-toggle">나의 활동 <i class="fa fa-plus"></i> <i class="fa fa-minus"></i>
 				</a>
 				<ul class="myactive-dropdown-list">
-					<li><a id="myfavorate" href="#">나의 관심 컨텐츠</a></li>
-					<li><a id="mypost" href="#">내가 쓴 게시물</a></li>
-					<li><a id="mycomment" href="#">내가 쓴 댓글</a></li>
+					<li><a id="mycomment" href="/mypage/myreview">내가 쓴 리뷰</a></li>
+					<li><a id="myfavorate" href="/mypage/myfavorite">나의 관심 컨텐츠</a></li>
+					<li><a id="mypost" href="/mypage/mystar">내가 평가한 컨텐츠</a></li>
 				</ul>
 			</div>
 			<a id="myqna" href="/support/qna">1:1 문의 내역</a>

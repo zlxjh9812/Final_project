@@ -26,11 +26,13 @@ public class FileUploadServiceImpl implements FileUploadService {
 		this.servletContext = servletContext;
 	}
 
+	// 파일 목록
 	@Override
 	public List<FileUploadVO> getFileUpload(int boardId) {
 		return fileUploadDAO.getFileUploads(boardId);
 	}
 
+	// 파일 업로드
 	@Override
 	public void uploadFile(int boardId, List<MultipartFile> files) throws Exception {
 		for (MultipartFile file : files) {
@@ -42,6 +44,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 		}
 	}
 
+	// 파일 저장
 	private String saveFile(MultipartFile file) throws Exception {
 		String basePath = "/resources/images/";
 		String uuid = UUID.randomUUID().toString();
@@ -50,6 +53,12 @@ public class FileUploadServiceImpl implements FileUploadService {
 		File saveFile = new File(servletContext.getRealPath(savedFileName));
 		file.transferTo(saveFile);
 		return savedFileName;
+	}
+
+	// 파일 삭제
+	@Override
+	public void deleteFileById(int fileId) {
+		fileUploadDAO.deleteFileById(fileId);
 	}
 
 }

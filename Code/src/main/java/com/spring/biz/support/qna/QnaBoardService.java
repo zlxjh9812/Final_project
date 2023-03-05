@@ -6,16 +6,28 @@ import com.spring.biz.support.util.SearchCriteria;
 
 public interface QnaBoardService {
 	
-	public int getBoardCount();
+	// 게시글 전체 개수 조회
+	public int getBoardCount(SearchCriteria criteria, String userId);
 	
+	// 사용자 게시글 개수 조회
 	public int getMyBoardCount(SearchCriteria criteria, String userId);
 	
-	public List<QnaBoardVO> getBoardList(SearchCriteria criteria);
+	// 게시글 전체 목록 조회
+	public List<QnaBoardVO> getBoardList(SearchCriteria criteria, String userId);
 	
+	// 사용자 게시글 목록 조회
 	public List<QnaBoardVO> getMyBoardList(SearchCriteria criteria, String userId);
 	
+	// 게시글 상세보기
 	public QnaBoardVO getBoard(int boardId);
 	
+	// 게시글 작성
 	public QnaBoardVO insertBoard(QnaBoardVO qnaBoardVO);
+	
+	// 게시글 수정
+	public void updateBoard(QnaBoardVO qnaBoardVO);
+	
+	// 게시글 삭제
+	public void deleteBoard(int boardId);
 
 }
