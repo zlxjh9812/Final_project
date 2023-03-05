@@ -42,7 +42,8 @@
 				TITLE = #{title}, 
 				CONTENT = #{content},
 				moviecode=#{moviecode},
-				contentType = #{contentType}
+				contentType = #{contentType},
+				filename = #{filename}
 			WHERE BSEQ = #{bseq}
 		]]>
 	</update>

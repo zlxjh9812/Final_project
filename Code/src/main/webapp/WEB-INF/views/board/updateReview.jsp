@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@include file="../common/sidebar.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -606,202 +607,57 @@ select {
 
 	});
 </script>
+<script type="text/javascript">
+	//이미지 미리보기
+	var sel_file;
+
+	$(document).ready(function() {
+		
+		$("#uploadFile").on("change", handleImgFileSelect);
+		$("#overview-cancel").on("click", MiRiBoGiCanCel);
+	});
+
+	function MiRiBoGiCanCel() {
+		$("#miribogiimg").attr("src", "");
+		$("#uploadFile").val("");
+		$("#overview-cancel").css("visibility", "hidden");
+	}
+
+	function handleImgFileSelect(e) {
+		$("#overview-cancel").css("visibility", "visible");
+		var files = e.target.files;
+		var filesArr = Array.prototype.slice.call(files);
+
+		var reg = /(.*?)\/(jpg|jpeg|png|bmp)$/;
+
+		filesArr.forEach(function(f) {
+			if (!f.type.match(reg)) {
+				alert("확장자는 이미지 확장자만 가능합니다.");
+				return;
+			}
+
+			sel_file = f;
+
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$("#miribogiimg").attr("src", e.target.result);
+			}
+			reader.readAsDataURL(f);
+		});
+
+		// 파일을 업로드 해야만 변경 버튼이 노출
+		//       var originalImage = $("#miribogiimg").attr("src");
+
+		//            $("#overview-cancel").on("click", function() {
+		//                $("#uploadFile").val("");
+		//                $("#miribogiimg").attr("src", originalImage);
+		//               $("#overview-cancle").css("visibility","hidden");
+		//            });
+	}
+</script>
 <body>
 
-	<!-- ======= Header ======= -->
-	<header id="header" class="header fixed-top d-flex align-items-center">
 
-		<div class="d-flex align-items-center justify-content-between">
-			<a href="testMovie.do?type=movie"
-				class="logo d-flex align-items-center"> <span
-				class="d-none d-lg-block">#Reviewers</span>
-			</a> <i class="bi bi-list toggle-sidebar-btn"></i>
-		</div>
-		<!-- End Logo -->
-
-		<div>
-			<!-- 검색 -->
-			<div class="search-bar">
-				<form class="search-form d-flex align-items-center"
-					action="search.do" id="searchHeader">
-					<input type="search" id="autocompleteText" name="searchKeyword"
-						aria-label="Search">
-					<button type="submit" value="search">
-						<i class="bi bi-search"></i>
-					</button>
-
-					<select id="SC" name="SC">
-						<option value="movie" selected>영화</option>
-						<option value="tv">TV</option>
-						<option value="review">리뷰</option>
-						<option value="tag">태그</option>
-						<option value="SearchId">아이디검색</option>
-					</select>
-				</form>
-
-			</div>
-		</div>
-		<!-- 검색 끝 -->
-
-
-		<nav class="header-nav ms-auto">
-			<ul class="d-flex align-items-center">
-
-				<li class="nav-item d-block d-lg-none">
-					<!-- 검색 클릭 버튼 --> <a class="nav-link nav-icon search-bar-toggle "
-					href="#"> <i class="bi bi-search"></i>
-				</a>
-				</li>
-				<!-- End Search Icon-->
-
-
-
-				<li class="nav-item dropdown pe-3"><c:choose>
-						<c:when test="${User.userId  eq null }">
-							<!-- Button trigger modal -->
-							<button type="button" class="btn" data-toggle="modal"
-								data-target="#exampleModalCenter">로그인</button>
-							<button type="button" onclick="location.href='sign_up.do'">회원가입</button>
-						</c:when>
-						<c:otherwise>
-							<a class="nav-link nav-profile d-flex align-items-center pe-0"
-								href="#" data-bs-toggle="dropdown"> <img
-								src="assets/img/profile-img.jpg" alt="Profile"
-								class="rounded-circle"> <span
-								class="d-none d-md-block dropdown-toggle ps-2">${UserInfo.nickname }</span>
-							</a>
-							<!-- End Profile Iamge Icon -->
-
-							<ul
-								class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-								<li class="dropdown-header">
-									<h6>${User.userId }</h6> <span>${UserInfo.nickname }</span>
-								</li>
-								<li>
-									<hr class="dropdown-divider">
-								</li>
-
-								<li><a class="dropdown-item d-flex align-items-center"
-									href="users-profile.html"> <i class="bi bi-person"></i> <span>내
-											프로필</span>
-								</a></li>
-								<li>
-									<hr class="dropdown-divider">
-								</li>
-
-								<li><a class="dropdown-item d-flex align-items-center"
-									href="users-profile.html"> <i class="bi bi-gear"></i> <span>계정
-											설정</span>
-								</a></li>
-								<li>
-									<hr class="dropdown-divider">
-								</li>
-
-								<li><a class="dropdown-item d-flex align-items-center"
-									href="pages-faq.html"> <i class="bi bi-question-circle"></i>
-										<span>도움말</span>
-								</a></li>
-								<li>
-									<hr class="dropdown-divider">
-								</li>
-
-								<li><a class="dropdown-item d-flex align-items-center"
-									href="logout.do"> <i class="bi bi-box-arrow-right"></i> <span>로그
-											아웃</span>
-								</a></li>
-
-							</ul>
-							<!-- End Profile Dropdown Items --></li>
-				<!-- End Profile Nav -->
-				</c:otherwise>
-				</c:choose>
-
-
-			</ul>
-		</nav>
-		<!-- End Icons Navigation -->
-
-	</header>
-	<!-- End Header -->
-
-	<!-- ======= Sidebar ======= -->
-	<aside id="sidebar" class="sidebar">
-
-		<ul class="sidebar-nav" id="sidebar-nav">
-
-			<li class="nav-item"><a class="nav-link collapsed"
-				data-bs-target="#icons-nav" data-bs-toggle="collapse"
-				href="testMovie.do?type=movie"> <i class="bi bi-grid"></i> <span>메인
-						페이지</span><i class="bi bi-chevron-down ms-auto"></i>
-			</a>
-				<ul id="icons-nav" class="nav-content collapse "
-					data-bs-parent="#sidebar-nav">
-					<li><a href="testMovie.do?type=movie"> <i
-							class="bi bi-circle"></i><span>인기 영화</span>
-					</a></li>
-					<li><a href="testMovie.do?type=tv"> <i
-							class="bi bi-circle"></i><span>인기 TV프로그램</span>
-					</a></li>
-					<li><a href="testMovie.do?type=webtoon"> <i
-							class="bi bi-circle"></i><span>인기 웹툰</span>
-					</a></li>
-				</ul></li>
-			<!-- End Dashboard Nav -->
-
-			<li class="nav-item"><a class="nav-link collapsed"
-				data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-					<i class="bi bi-menu-button-wide"></i> <span>컨텐츠 리뷰</span> <i
-					class="bi bi-chevron-down ms-auto"></i>
-			</a>
-				<ul id="components-nav" class="nav-content collapse "
-					data-bs-parent="#sidebar-nav">
-					<li><a href="getBoardList.do?boardnum=1"> <i
-							class="bi bi-circle"></i><span>영화</span>
-					</a></li>
-					<li><a href="getBoardList.do?boardnum=2"> <i
-							class="bi bi-circle"></i><span>TV프로그램</span>
-					</a></li>
-					<li><a href="getBoardList.do?boardnum=3"> <i
-							class="bi bi-circle"></i><span>웹툰</span>
-					</a></li>
-
-				</ul></li>
-			<!-- End Components Nav -->
-
-			<li class="nav-item"><a class="nav-link collapsed"
-				data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-					<i class="bi bi-journal-text"></i><span>커뮤니티</span><i
-					class="bi bi-chevron-down ms-auto"></i>
-			</a>
-				<ul id="forms-nav" class="nav-content collapse "
-					data-bs-parent="#sidebar-nav">
-					<li><a href="getBoardList.do?boardnum=4"> <i
-							class="bi bi-circle"></i><span>자유 게시판</span>
-					</a></li>
-
-				</ul></li>
-			<!-- End Forms Nav -->
-
-
-			<li class="nav-item"><a class="nav-link collapsed"
-				href="mypage.do"> <i class="bi bi-person"></i> <span>마이페이지</span>
-			</a></li>
-			<!-- End Profile Page Nav -->
-
-			<li class="nav-item"><a class="nav-link collapsed" href="cs.do">
-					<i class="bi bi-question-circle"></i> <span>고객센터</span>
-			</a></li>
-			<!-- End F.A.Q Page Nav -->
-
-			<li class="nav-item"><a class="nav-link collapsed"
-				href="login.do" data-toggle="modal"
-				data-target="#exampleModalCenter"> <i
-					class="bi bi-box-arrow-in-right"></i> <span>로그인</span>
-			</a></li>
-			<!-- End Login Page Nav -->
-		</ul>
-
-	</aside>
 	<!-- End Sidebar-->
 
 	<main id="main" class="main"> <!-- Modal -->
@@ -844,18 +700,28 @@ select {
 	<!-- 글 작성 폼 -->
 	<div class="container">
 		<div class="title">글쓰기</div>
-	<form action="updateBoard.do" method="post">
+	<form action="updateBoard.do" method="post" enctype="multipart/form-data">
 		
-	<input type = "hidden" id = "nickname" name="nickname" value = "${UserInfo.nickname }">
+	<input type = "hidden" id = "nickname" name="nickname" value = "${User.nickname }">
  	<input type="hidden" id = "userId" name="userId" value = "${User.userId }">
 	<input type = "hidden" id = "bseq" name = "bseq" value = "${board.bseq }">
 			<div class="form-title">
 				<div>제목</div>
 				<input name="title" type="text" placeholder="제목을 입력해주세요." value = "${board.title }">
 			</div>
+			<div style="justify-content: space-around; display: flex;">
 			<div>
-					<input type = "file" name = "filename" id = "filename"><br>
-					<img id="miribogiimg" style="height: 100px; width: auto;" >
+					<input type = "file" name = "uploadFile" id = "uploadFile" value = "${board.filename }"><br>
+						<c:choose>
+                   <c:when test="${board.filename != '2'}">
+                    <img id="miribogiimg" style="height: 100px; width: auto;" src = "/img/${board.filename }">
+                      
+                   </c:when>
+                   <c:otherwise>
+ 							<img id="miribogiimg" style="height: 100px; width: auto;" >
+                   </c:otherwise>
+                   </c:choose>
+					
 					<button class="miribogi" type="button" id="overview-cancel">취소하기</button>
 					
 				</div>
@@ -870,6 +736,7 @@ select {
 					<option value="webtoon">웹툰 리뷰</option>
 					<option value="community">자유게시판 글작성</option>
 				</select>
+			</div>
 			</div>
 			<div class="form-hashtag">
 								<div>#태그</div>

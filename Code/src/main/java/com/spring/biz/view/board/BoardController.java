@@ -67,6 +67,7 @@ public class BoardController {
 	@Autowired
 	private ReplyService replyService;
 	
+	
 	@RequestMapping(value="insertBoard.do")
 	public String insertBoard(MovieGenresVO Gvo,ReviewBoardVO vo,String basic,HashTagVO Hvo,@RequestParam(value="SC") String code, int moviecode	,
 			@RequestParam(value="uploadFile") MultipartFile file, HttpSession session) throws IOException {			
@@ -191,8 +192,8 @@ public class BoardController {
 
 	// 글 수정
 		@RequestMapping(value="updateBoard.do")
-		public String updateBoard( ReviewBoardVO vo, 
-				@RequestParam(value="SC") String code,String basic,HashTagVO Hvo,SearchCriteria cri) {
+		public String updateBoard( MovieGenresVO Gvo,ReviewBoardVO vo,String basic,HashTagVO Hvo,@RequestParam(value="SC") String code, int moviecode	,
+				 HttpSession session,@RequestParam(value="uploadFile") MultipartFile file) {
 			int num;
 			if(code.equals("movie")) {
 				num=1;
@@ -208,6 +209,7 @@ public class BoardController {
 			vo.setBoardnum(num);
 			System.out.println(vo.getBseq());
 			System.out.println("글 수정 처리");
+			
 //			logger.debug("[LOG] 글 수정 처리");
 			if(basic != null) {
 				try {
@@ -235,7 +237,22 @@ public class BoardController {
 					
 				}
 				
+				
 				}
+			if(file.isEmpty() == false) {
+				try {
+					System.out.println(file);
+					String filename = fileUpload(file, session);
+					vo.setFilename(filename);
+					System.out.println(vo.getFilename());
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.out.println("파일 업로드 실패");
+				}
+			}else {
+				vo.setFilename("2");
+			}
 			
 			
 			boardService.updateBoard(vo);
@@ -251,6 +268,7 @@ public class BoardController {
 //		logger.debug("[LOG] 글 상세 조회 처리");
 		System.out.println(vo.getBseq());
 		ReviewBoardVO result = boardService.getBoard(vo);
+		System.out.println(result.getFilename());
 		getContentInfo info = new getContentInfo();
 		if(result.getMoviecode()!=0) {
 			model.addAttribute("info",info.getjsonObjectInfo(result.getContentType(), result.getMoviecode()));	
@@ -303,60 +321,76 @@ public class BoardController {
 		}
 
 
-		// 글 상세 조회
-		@RequestMapping(value="/getBoard.do")
-		public String getBoard(ReviewBoardVO vo, Model model, UserVO uvo,HttpServletRequest request, CntHistoryVO cvo,HashTagVO Hvo,HttpServletResponse response) throws Exception {
-			System.out.println("글 상세 조회 처리");
-			HttpSession session = request.getSession();
-			ReviewBoardVO result = boardService.getBoard(vo);
-			getContentInfo info = new getContentInfo();
-			if(result.getMoviecode()!=0) {
-				model.addAttribute("info",info.getjsonObjectInfo(result.getContentType(), result.getMoviecode()));	
-			}
-			if(result.getReport().equals("Y")) {
-				response.setContentType("text/html; charset=UTF-8");
-		        PrintWriter out = response.getWriter();
-		        out.println("<script>alert('삭제된 게시물입니다.');history.go(-1);</script>");
-		        out.flush();
-		        return "redirect:history.go(-1)";
-			}
-			if((UserVO) session.getAttribute("User") != null) {			
-				uvo = (UserVO) session.getAttribute("User");
-				System.out.println(uvo.getUserId());
-				System.out.println(cvo.getBseq());
-				
-				cvo.setUserId(uvo.getUserId());
-				if(boardService.getCntBoard(cvo) == null) {
-					boardService.insertCntHistory(cvo);
-					boardService.updateCnt(vo);
-				}
-			}
-				
-			
-//			logger.debug("[LOG] 글 상세 조회 처리");
-			
-			// NULL Check
-					if (vo.getSearchCondition() == null) {
-						vo.setSearchCondition("TITLE");
-					}
-					if (vo.getSearchKeyword() == null) {
-						vo.setSearchKeyword("");
-					}
-					
-					System.out.println(vo.getBseq() + "getBseq");
-			List<ReplyVO> replyList = replyService.readReply(vo.getBseq());
-				System.out.println(replyList + "replyList");
-			model.addAttribute("replyList", replyList);
-		
-			// 검색 결과를 세션에 저장하고 목록 화면으로 이동한다.
-			Hvo.setBseq(vo.getBseq());
-			model.addAttribute("hashTag", hashtagService.getHashTag(Hvo));
-			model.addAttribute("board", boardService.getBoard(vo));
-			
-			
-			return "/board/getBoard";
+	// 글 상세 조회
+	@RequestMapping(value="/getBoard.do")
+	public String getBoard(ReviewBoardVO vo, Model model, UserVO uvo,HttpServletRequest request, CntHistoryVO cvo,HashTagVO Hvo,HttpServletResponse response) throws Exception {
+		System.out.println("글 상세 조회 처리");
+		ReviewLikeVO like = new ReviewLikeVO();
+		HttpSession session = request.getSession();
+		ReviewBoardVO result = boardService.getBoard(vo);
+		like.setSeq(vo.getBseq());
+		getContentInfo info = new getContentInfo();
+		if(result.getMoviecode()!=0) {
+			model.addAttribute("info",info.getjsonObjectInfo(result.getContentType(), result.getMoviecode()));	
 		}
-		// 글 목록 검색
+		if(result.getReport().equals("Y")) {
+			response.setContentType("text/html; charset=UTF-8");
+	        PrintWriter out = response.getWriter();
+	        out.println("<script>alert('삭제된 게시물입니다.');history.go(-1);</script>");
+	        out.flush();
+	        return "redirect:history.go(-1)";
+		}
+		if((UserVO) session.getAttribute("User") != null) {			
+			uvo = (UserVO) session.getAttribute("User");
+			System.out.println(uvo.getUserId());
+			System.out.println(cvo.getBseq());
+			
+			cvo.setUserId(uvo.getUserId());
+			if(boardService.getCntBoard(cvo) == null) {
+				boardService.insertCntHistory(cvo);
+				boardService.updateCnt(vo);
+			}
+			like.setUserid(uvo.getUserId());
+			
+			if(likeService.findLike(like)!=0) {	
+				System.out.println("좋아요 확인-컨트롤러");
+				model.addAttribute("like", likeService.findLike(like));
+			}
+		}
+		
+
+	
+		
+//		logger.debug("[LOG] 글 상세 조회 처리");
+		
+		// NULL Check
+				if (vo.getSearchCondition() == null) {
+					vo.setSearchCondition("TITLE");
+				}
+				if (vo.getSearchKeyword() == null) {
+					vo.setSearchKeyword("");
+				}
+				System.out.println(vo.getBseq() + "getBseq");
+				List<ReplyVO> replyList = replyService.readReply(vo.getBseq());
+					System.out.println(replyList + "replyList");
+				model.addAttribute("replyList", replyList);
+			
+				// 검색 결과를 세션에 저장하고 목록 화면으로 이동한다.
+				Hvo.setBseq(vo.getBseq());
+				model.addAttribute("hashTag", hashtagService.getHashTag(Hvo));
+				model.addAttribute("board", boardService.getBoard(vo));
+		
+	
+		// 검색 결과를 세션에 저장하고 목록 화면으로 이동한다.
+		Hvo.setBseq(vo.getBseq());
+		model.addAttribute("hashTag", hashtagService.getHashTag(Hvo));
+		model.addAttribute("board", boardService.getBoard(vo));
+		
+		
+		return "/board/getBoard";
+	}
+
+	// 글 목록 검색
 	@RequestMapping(value="getBoardList.do")
 	public String getBoardList(Model model,@RequestParam(value="boardnum") int num, ReviewBoardVO vo, HashTagVO Hvo) {
 		vo.setBoardnum(num);
@@ -416,99 +450,6 @@ public class BoardController {
 					}
 				
 			}
-	// 글 목록 검색
-	@RequestMapping(value="cgetBoardList.do")
-	public String getBoardList(Model model, @RequestParam(value = "type") String contents_type, @RequestParam(value = "id") int contents_num, ReviewBoardVO vo, HashTagVO Hvo) {
-		System.out.println(contents_type + "ccc");
-		vo.setMoviecode(contents_num);
-		vo.setContentType(contents_type);
-		
-		if (contents_type.equals("movie")) {
-			vo.setBoardnum(1);
-		} else if (contents_type.equals("tv")) {
-			vo.setBoardnum(2);
-		}
-		
-		System.out.println(vo + "BoardNum");
-		
-		getContentInfo info = new getContentInfo();
-		
-		// NULL Check
-				if (vo.getSearchCondition() == null) {
-					vo.setSearchCondition("TITLE");
-				}
-				if (vo.getSearchKeyword() == null) {
-					vo.setSearchKeyword("");
-				}
-				
-				
-				// Model 정보 저장
-				PageDTO pageMaker = new PageDTO(vo, boardService.getTotalPages(vo));
-				
-				List<ReviewBoardVO> result = boardService.cgetBoardList(vo);
-				
-				for(int i = 0;i<result.size();i++) {
-					Hvo.setBseq(result.get(i).getBseq());
-					if(hashtagService.getHashTag(Hvo)!=null) {
-						System.out.println(Hvo.getBseq());
-					List<HashTagVO> hashList = hashtagService.getHashTag(Hvo);
-					List<String> tempList = new ArrayList<String>();
-					for(int x = 0;x<hashList.size();x++) {
-						
-						String temp = hashList.get(x).getTags();
-						tempList.add(temp);
-					}
-					result.get(i).setTags(tempList);
-					}
-					
-					if(result.get(i).getReviewPic() == null) {
-						int code = result.get(i).getMoviecode();
-						System.out.println(code);
-						String contentType= result.get(i).getContentType();
-						System.out.println(contentType);
-						String temp = info.getjsonObjectInfo(contentType, code).getPoster_path();
-						System.out.println(temp);
-						result.get(i).setReviewPic(temp);
-						System.out.println(result.get(i).getReviewPic());
-					}
-					
-				}
-				model.addAttribute("pageMaker", pageMaker);	// Model 정보 저장
-				model.addAttribute("boardList", result);	// Model 정보 저장
-				System.out.println(result + "result");
-
-				return "/board/cmovieReview";
-				
-			}
-	
-	//댓글 작성
-    @RequestMapping(value = "/replyWrite.do")
-    public String boardReplySave(HttpServletRequest request, ReplyVO replyvo, Model model) throws Exception {
-        
-    	replyService.writeReply(replyvo);
-
-    	model.addAttribute("replyvo", replyvo);
-        
-        return "board/ReadAjaxReply";        
-    }
-    
-    @RequestMapping(value = "/replyDelete.do")
-    public void board8ReplyDelete(HttpServletResponse response, ReplyVO replyvo) throws Exception {
-        
-        ObjectMapper mapper = new ObjectMapper();
-        response.setContentType("application/json;charset=UTF-8");
-        
-        try {
-            if (!replyService.deleteReply(replyvo.getRseq()) ) {
-                response.getWriter().print(mapper.writeValueAsString("Fail"));
-            } else {
-                response.getWriter().print(mapper.writeValueAsString("OK"));
-            }
-        } catch (IOException ex) {
-            System.out.println("오류: 댓글 삭제에 문제가 발생했습니다.");
-        }
-    }
-
 	
 	@RequestMapping(value="cs.do")
 	public String faq() {
@@ -597,7 +538,34 @@ public class BoardController {
 		return  "";
 	}
 	
-	
+	//댓글 작성
+    @RequestMapping(value = "/replyWrite.do")
+    public String boardReplySave(HttpServletRequest request, ReplyVO replyvo, Model model) throws Exception {
+        
+    	replyService.writeReply(replyvo);
+
+    	model.addAttribute("replyvo", replyvo);
+        
+        return "board/ReadAjaxReply";        
+    }
+    
+    @RequestMapping(value = "/replyDelete.do")
+    public void board8ReplyDelete(HttpServletResponse response, ReplyVO replyvo) throws Exception {
+        
+        ObjectMapper mapper = new ObjectMapper();
+        response.setContentType("application/json;charset=UTF-8");
+        
+        try {
+            if (!replyService.deleteReply(replyvo.getRseq()) ) {
+                response.getWriter().print(mapper.writeValueAsString("Fail"));
+            } else {
+                response.getWriter().print(mapper.writeValueAsString("OK"));
+            }
+        } catch (IOException ex) {
+            System.out.println("오류: 댓글 삭제에 문제가 발생했습니다.");
+        }
+    }
+
 	}
 
 

@@ -108,11 +108,13 @@ public class QnaBoardController {
 		if (qnaComment != null && qnaComment.getIsDeleted().equals("N")) {
 			model.addAttribute("comment", qnaComment);
 		}
-
+		if(qnaBoard.getUser().getProfileImg()!=null) {
 		String writerImg = qnaBoard.getUser().getProfileImg();
+		model.addAttribute("writerImg", writerImg);
+		}
 		model.addAttribute("board", qnaBoard);
 		model.addAttribute("fileUploads", fileUploads);
-		model.addAttribute("writerImg", writerImg);
+		
 
 		return "support/qna/qnaBoardView";
 	}
