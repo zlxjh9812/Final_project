@@ -156,7 +156,7 @@ public class BoardController {
 				System.out.println("파일 업로드 실패");
 			}
 		}else {
-			vo.setFilename("2");
+			vo.setFilename("blankThumbnail.png");
 		}
 
 		
@@ -251,7 +251,7 @@ public class BoardController {
 					System.out.println("파일 업로드 실패");
 				}
 			}else {
-				vo.setFilename("2");
+				vo.setFilename("blankThumbnail.png");
 			}
 			
 			
