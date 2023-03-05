@@ -81,7 +81,7 @@
  						<div class="css-1rdb949-StyledLazyLoadingImage ezcopuc0">
  						<c:choose>
                    <c:when test="${board.filename != '2'}">
-                      <img alt="경호 확인 필요" src="/img/${board.filename }" class="css-qhzw1o-StyledImg ezcopuc1">
+                      <img alt="경호 확인 필요" src="/upload/thumbnail/${board.filename }" class="css-qhzw1o-StyledImg ezcopuc1">
                       
                    </c:when>
                    <c:otherwise>
