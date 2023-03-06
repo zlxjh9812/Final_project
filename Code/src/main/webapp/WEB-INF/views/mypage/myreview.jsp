@@ -145,7 +145,12 @@ $(function() {
 						<c:forEach items="${detailList}" var="detail" varStatus="status">
 						<div class="myreview-list-container" data-bseq="${myReviewList[status.index].getBseq()}">
 							<div class="myreview-poster-img-wrap">
-								<img class="myreview-poster-img" src="${detail.poster_path}">
+								<c:if test="${detail.poster_path == null or detail.poster_path == ''}">
+								  <img id="myreview-poster-img" class="myreview-poster-img" src="/resources/images/blankThumbnail.png">
+								</c:if>
+								<c:if test="${not empty detail.poster_path}">
+								  <img id="myreview-poster-img" class="myreview-poster-img" src="${detail.poster_path}">
+								</c:if>
 							</div>
 							<div class="myreview-text-container">
 								<div class="myreview-title-wrap">
@@ -213,5 +218,13 @@ $(function() {
 	</div>
 	</main>
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+	<script>
+	$(document).ready(function() {
+		  const img = $("#myreview-poster-img");
+		  if (!img.attr("src")) {
+		    img.attr("src", "/resources/img/blankThumbnail.png");
+		  }
+		});
+	</script>
 </body>
 </html>

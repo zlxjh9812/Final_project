@@ -72,9 +72,9 @@
 }
 
 .mycount__count{
-	text-decoration: none;
+	text-decoration: none !important;
 	font-size: 26px;
-	color: white;
+	color: white !important;
 	margin-top: 10px;
 	cursor: pointer;
 	padding: 3px;

@@ -28,7 +28,10 @@
 						<div class="mycontent-select-tv searchType-tv">TV 프로그램</div>
 					</div>
 					<form id="search-form" method="get" action="/mypage/myfavorite">
-						<input type="hidden" name="page" value="1"> <input type="hidden" name="perPageNum" value="16"> <input type="hidden" name="searchType" value=""> <input type="hidden" name="keyword" value="">
+						<input type="hidden" name="page" value="1">
+						<input type="hidden" name="perPageNum" value="16">
+						<input type="hidden" name="searchType" value="">
+						<input type="hidden" name="keyword" value="">
 					</form>
 					<div class="mycontents-container">
 						<c:if test="${empty detailList}">

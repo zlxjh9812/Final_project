@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+			
+<mapper namespace="com.spring.biz.support.faq.FaqBoardDAO">
+
+	<resultMap type="FaqBoardVO" id="faqBoardResultMap">
+		<id property="boardId" column="board_id" />
+		<result property="subject" column="subject" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="isDeleted" column="is_deleted" />
+		<result property="writer" column="writer" />
+		<result property="writerId" column="writer_id" />
+		<result property="writeDate" column="write_date" />
+	</resultMap>
+	
+	<select id="getBoardCount" resultType="int">
+		SELECT COUNT(*)
+		FROM faq_board
+		WHERE is_deleted = 'N'
+		<if test="searchType != null and keyword != null">
+			<choose>
+				<when test="searchType == 'title'">
+					AND title LIKE '%' || #{keyword} || '%'
+				</when>
+				<when test="searchType == 'content'">
+					AND content LIKE '%' || #{keyword} || '%'
+				</when>
+				<when test="searchType == 'subject'">
+					AND subject LIKE '%' || #{keyword} || '%'
+				</when>
+				<otherwise>
+					AND (title LIKE '%' || #{keyword} || '%' OR content LIKE
+					'%' || #{keyword} || '%')
+				</otherwise>
+			</choose>
+		</if>
+	</select>
+	
+	<select id="getBoardById" parameterType="int" resultMap="faqBoardResultMap">
+		SELECT board_id, subject, title, content, writer, writer_id, write_date
+		FROM faq_board
+		WHERE board_id = #{boardId}
+	</select>
+	
+	<select id="getBoardList" parameterType="map" resultMap="faqBoardResultMap">
+		SELECT board_id, subject, title, content, writer, writer_id, write_date
+		FROM (
+		      SELECT board_id, subject, title, content, writer, writer_id, write_date, row_number() over(order by board_id DESC) as rNum
+		      FROM faq_board
+		      WHERE is_deleted = 'N'
+		      <if test="searchType != null and keyword != null">
+			<choose>
+				<when test="searchType == 'title'">
+					AND title LIKE '%' || #{keyword} || '%'
+				</when>
+				<when test="searchType == 'content'">
+					AND content LIKE '%' || #{keyword} || '%'
+				</when>
+				<when test="searchType == 'subject'">
+					AND subject LIKE '%' || #{keyword} || '%'
+				</when>
+				<otherwise>
+					AND (title LIKE '%' || #{keyword} || '%' OR content LIKE
+					'%' ||
+					#{keyword} || '%')
+				</otherwise>
+			</choose>
+			</if>
+		      ) sub
+		WHERE rNum between #{startRow} AND #{endRow}
+		ORDER BY board_id DESC
+	</select>
+	
+	<insert id="insertBoard">
+		INSERT INTO faq_board (board_id, subject, title, content, writer, writer_id)
+		VALUES (faq_board_seq.nextval, #{subject}, #{title}, #{content}, #{writer}, #{writerId})
+	</insert>
+	
+	<update id="updateBoard" parameterType="FaqBoardVO">
+		UPDATE faq_board
+		SET subject = #{subject}, title = #{title}, content = #{content}
+		WHERE board_id = #{boardId}
+	</update>
+	
+	<update id="deleteBoard" parameterType="int">
+		UPDATE faq_board
+		SET is_deleted = 'Y'
+		WHERE board_id = #{boardId}
+	</update>
+
+</mapper>

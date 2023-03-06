@@ -474,23 +474,6 @@
 		  }
 		});
 	
-		/* $(".get-comment-edit-form").on("click", function() {
-			  var commentId = $(this).data("comment-id");
-			  console.log(commentId);
-			  $.ajax({
-			    type: "GET",
-			    url: "/support/qna/comment/" + commentId + "/edit",
-			    success: function(data) {
-			    	window.location.href = "/support/qna/comment/" + commentId + "/edit";
-			    },
-			    error: function(xhr, status, error) {
-			      console.log(error);
-			    }
-			  });
-			});
- */
-
-	
     // 아이콘 클릭 시 동작하는 함수
     function showAnswerForm() {
       // qna-answer-onclick 클래스를 가진 div 요소를 선택합니다.

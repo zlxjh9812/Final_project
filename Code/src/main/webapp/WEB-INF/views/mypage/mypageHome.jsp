@@ -50,8 +50,13 @@
 					<ul class="mycurrent-contents-poster-list">
 						<c:forEach items="${reviewDetailList}" var="reviewDetail" varStatus="status">
 							<li class="mycontents-poster-item mycurrent-contents-card" data-bseq="${myReviewList[status.index].getBseq()}">
+								<c:if test="${reviewDetail.poster_path == null or reviewDetail.poster_path == ''}">
+								  <img class="mycontents-poster" src="/resources/images/blankThumbnail.png">
+								</c:if>
 								<a href="<c:url value='/ContentsDetail.do?type=${reviewDetail.contents_type}&id=${reviewDetail.contents_num}' />">
-									<img class="mycontents-poster" src="${reviewDetail.poster_path}">
+									<c:if test="${not empty reviewDetail.poster_path}">
+									  <img class="mycontents-poster" src="${reviewDetail.poster_path}">
+									</c:if>
 								</a>
 								<div class="mycurrentcontents-poster-title">${reviewDetail.title}</div>
 								<div class="mycurrent-review-mycontent">${myReviewList[status.index].getContent()}</div>
