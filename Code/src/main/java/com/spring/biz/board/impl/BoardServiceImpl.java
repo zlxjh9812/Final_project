@@ -123,4 +123,10 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return boardDAO.cgetBoardList(vo);
 	}
+
+	@Override
+	public List<ReviewBoardVO> getSearchFree(ReviewBoardVO vo) {
+		// TODO Auto-generated method stub
+		return boardDAO.getSearchFree(vo);
+	}
 }

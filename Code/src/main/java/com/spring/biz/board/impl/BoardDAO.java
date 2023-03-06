@@ -132,4 +132,10 @@ public class BoardDAO {
 		mybatis.update("BoardDAO.updateReviewLikeCancel",vo);
 		
 	}
+	
+	// 자유게시판 검색
+	public List<ReviewBoardVO> getSearchFree(ReviewBoardVO vo){
+		
+		return mybatis.selectList("BoardDAO.getSearchFree", vo);
+	}
 }
