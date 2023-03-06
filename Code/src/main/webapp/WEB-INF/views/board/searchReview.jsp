@@ -13,8 +13,6 @@
 </head>
 <body>
     <main id="main" class="main">
-      <c:choose>
-    <c:when test="${searchname eq 'free'}">
     	 	<div id="board-list">
         <div class="container">
             <table class="board-table">
@@ -44,36 +42,6 @@
 
         </div>
     </div>
-    </c:when>
-    <c:otherwise>
-    	    <div class="css-1gkas1x-Grid e1689zdh0">
- 	<div class="css-1y901a1-Row emmoxnt0">
- 		<ul class="css-27z1pm-VisualUI-ContentGrid e14whxmg0" style="width:80%;margin:auto;">
- 		<c:forEach items="${result }" var="result">
- 			<li class="css-1hp6p72">
- 				<a title="${result.title }" href="getBoard.do?bseq=${result.bseq }">
- 					<div class="css-1qmeemv">
- 						<div class="css-1rdb949-StyledLazyLoadingImage ezcopuc0">
- 						<img src="<c:url value="/resources/images/${result.filename }"/>" class="css-qhzw1o-StyledImg ezcopuc1">
- 						</div>
- 					</div>
- 					<div class="css-ixy093">
- 						<div class="css-niy0za"><strong>${ result.title }</strong></div>
- 						
- 						<div class="css1vvt4am">작성자 : ${result.nickname }</div>
- 							<div>
- 								<div class="css-m9i0qw">👍 :${result.like_num}</div>
- 								<div class="css-m9i0qw">👎 :${result.unlike_num}</div>
- 							</div>
- 					</div>
- 				</a>
- 			</li>
- 		</c:forEach>
- 		</ul>
- 	</div>
- </div>
-    </c:otherwise>
-    </c:choose>
      
 </main>
               

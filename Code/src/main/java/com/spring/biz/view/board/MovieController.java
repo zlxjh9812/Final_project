@@ -255,7 +255,7 @@ public class MovieController {
 	
 	@RequestMapping(value = "search.do")
 	   public String searsch(@RequestParam(value = "SC")String searchCondition,Model model,String searchKeyword, ReviewBoardVO vo) {
-	    if(searchCondition.equals("review"))  {
+	    if(searchCondition.equals("free"))  {
 	    	
 	    	List<ReviewBoardVO> result = boardService.getSearchReview(vo);
 	    	Collections.sort(result, new SortByLike());

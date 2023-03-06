@@ -153,7 +153,7 @@
 			FROM(
 				SELECT * 
 				FROM REVIEWBOARD 
-				WHERE boardnum != 4 and report = 'N'
+				WHERE boardnum = 4 and report = 'N'
 				AND TITLE LIKE '%'||#{searchKeyword}||'%'
 		ORDER BY BSEQ DESC
 		) 
