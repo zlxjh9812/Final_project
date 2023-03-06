@@ -454,7 +454,7 @@ border-radius: 15px;
     
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="cs.do">
+        <a class="nav-link collapsed" href="/support/qna">
           <i class="bi bi-question-circle"></i>
           <span>고객센터</span>
         </a>

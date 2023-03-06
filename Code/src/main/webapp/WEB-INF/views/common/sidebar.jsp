@@ -563,7 +563,7 @@ border-radius: 15px;
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="/support">
+              <a class="dropdown-item d-flex align-items-center" href="/support/faq">
                 <i class="bi bi-question-circle"></i>
                 <span>도움말</span>
               </a>
@@ -665,7 +665,7 @@ border-radius: 15px;
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="/support">
+        <a class="nav-link collapsed" href="/support/faq">
           <i class="bi bi-question-circle"></i>
           <span>고객센터</span>
         </a>
@@ -747,7 +747,7 @@ border-radius: 15px;
      	 </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="/support">
+        <a class="nav-link collapsed" href="/support/faq">
         	<i class="bi bi-question-circle"></i>
           	<span>고객센터</span>
         </a>
