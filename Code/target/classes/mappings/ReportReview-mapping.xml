@@ -41,7 +41,7 @@
 		FROM (
 			SELECT ROWNUM RN,bseq,targetID,value
 			FROM (
-				 select bseq,targetID,value, count(*) from(select r.bseq,r.targetID,bn.value from reportReview r, boardNum bn where r.tableNum = bn.tableNum) group by bseq,targetID,value  having count(*)>=2  order by count(*) desc
+				 select bseq,targetID,value, count(*) from(select r.bseq,r.targetID,bn.value from reportReview r, boardNum bn where r.tableNum = bn.tableNum) group by bseq,targetID,value  having count(*)>=0  order by count(*) desc
 			) 
 			
     		WHERE ROWNUM <=  #{pageNum} * #{amount}

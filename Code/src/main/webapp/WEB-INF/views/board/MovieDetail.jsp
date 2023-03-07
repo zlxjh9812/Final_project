@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@include file="../common/sidebar.jsp" %>
 
 <script type="text/javascript" src="/resources/js/jquery-3.6.0.min.js"></script>
 <!-- css -->
@@ -51,6 +52,7 @@
    width: 450px;
 }
 </style>
+<main id="main" class="main">
 <div class="css-16jhzm7-Self e1ezac430">
    <div class="css-1ihluk0-Content e1ezac431">
       <div class="css-1iyk86f-Background e1ezac432">
@@ -140,7 +142,7 @@
 					  Swal.fire({			
 						  title: ' ',						  
 						  text: '평가하시려면 로그인이 필요해요.',
-						  imageUrl: '${pageContext.request.contextPath}/resources/images/star_icon.png',
+						  <%-- imageUrl: '${pageContext.request.contextPath}/resources/images/star_icon.png',--%>
 						  imageWidth: 70,
 						  imageHeight: 70,						  
 						  imageAlt: 'Custom image',
@@ -323,7 +325,7 @@
                                            Swal.fire({
                                                title: ' ',
                                                text: '내 보관함에 작품을 담으려면 로그인이 필요해요.',
-                                               imageUrl: window.ctx + '/resources/images/bookmark_icon.png',
+                                               <!--     imageUrl: window.ctx + '/resources/images/bookmark_icon.png',-->
                                                imageWidth: 70,
                                                imageHeight: 70,
                                                imageAlt: 'Custom image',
@@ -837,9 +839,11 @@
                <div class="css-ppmf8q-HiddenBlockOnlyMdScreen e1ezac4310"></div>
             </div>
          </div>
+         
       </div>
    </div>
 </div>
+</main>
 <!--코멘트 모달 틀-->
 <div class="modal fade" id="commentModal" tabindex="-1" role="dialog">
 	<div class="modal-dialog modal-dialog-centered modal-comment">
@@ -848,6 +852,7 @@
 		</div>
 	</div>
 </div>
+ <c:import url="../common/footer.jsp"></c:import>
 <!--코멘트 수정폼 모달 틀-->
 <div class="modal fade" id="commentUpdateModal" tabindex="-1"
 	role="dialog">

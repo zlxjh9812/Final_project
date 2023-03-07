@@ -254,25 +254,42 @@ public class MovieController {
 	}
 	
 	@RequestMapping(value = "search.do")
-	   public String searsch(@RequestParam(value = "SC")String searchCondition,Model model,String searchKeyword, ReviewBoardVO vo) {
-	    if(searchCondition.equals("review"))  {
-	    	
-	    	List<ReviewBoardVO> result = boardService.getSearchReview(vo);
-	    	Collections.sort(result, new SortByLike());
-	    	model.addAttribute("result", result);
-	    	return "board/searchReview";
-	    	
-	    }else {
-	    	
-		getSearchUtil search = new getSearchUtil();
-	         List<SearchVO> result = search.getInfoList(searchCondition, searchKeyword);
-	         Collections.sort(result, new SortByVote());
-	         model.addAttribute("result", result);
-	    }
-	      return "/board/search";
-	   }
-	
-	
+    public String searsch(@RequestParam(value = "SC")String searchCondition,Model model,String searchKeyword, ReviewBoardVO vo) {
+     if(searchCondition.equals("review"))  {
+    		getContentInfo info = new getContentInfo();
+         List<ReviewBoardVO> result = boardService.getSearchReview(vo);
+         Collections.sort(result, new SortByLike());
+         for(int i = 0;i<result.size();i++) {
+             if(result.get(i).getReviewPic() == null) {
+                 int code = result.get(i).getMoviecode();
+                 System.out.println(code);
+                 String contentType= result.get(i).getContentType();
+                 System.out.println(contentType);
+                 String temp = info.getjsonObjectInfo(contentType, code).getPoster_path();
+                 System.out.println(temp);
+                 result.get(i).setReviewPic(temp);
+                 System.out.println(result.get(i).getReviewPic());
+             }
+         }
+         model.addAttribute("result", result);
+         model.addAttribute("searchname", searchCondition);
+         return "board/searchReview";
+
+     }else if(searchCondition.equals("free")){
+         List<ReviewBoardVO> result = boardService.getSearchFree(vo);
+         Collections.sort(result, new SortByLike());
+         model.addAttribute("result", result);
+         model.addAttribute("searchname", searchCondition);
+         return "board/searchReview";
+     }else {
+
+     getSearchUtil search = new getSearchUtil();
+          List<SearchVO> result = search.getInfoList(searchCondition, searchKeyword);
+          Collections.sort(result, new SortByVote());
+          model.addAttribute("result", result);
+     }
+       return "/board/search";
+    }
 	
 	
 	

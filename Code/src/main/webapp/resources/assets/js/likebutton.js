@@ -11,6 +11,7 @@ if(likeVar){
 	console.log(likeVar);
 	
 	animationHeart.addEventListener('click', function(event){
+		
 		$.ajax({
 			type: 'post',
 			url : '/likeDown.do',
@@ -27,6 +28,7 @@ if(likeVar){
 		});	
 	});
 }else {
+	
 	console.log("좋아요 아직 안누름");
 	console.log(seq);
 	console.log(userid);

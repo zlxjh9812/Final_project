@@ -108,10 +108,11 @@ public class QnaBoardController {
 		if (qnaComment != null && qnaComment.getIsDeleted().equals("N")) {
 			model.addAttribute("comment", qnaComment);
 		}
-		if(qnaBoard.getUser().getProfileImg()!=null) {
-		String writerImg = qnaBoard.getUser().getProfileImg();
-		model.addAttribute("writerImg", writerImg);
-		}
+		
+		if (qnaBoard != null && qnaBoard.getUser() != null && qnaBoard.getUser().getProfileImg() != null) {
+            String writerImg = qnaBoard.getUser().getProfileImg();
+            model.addAttribute("writerImg", writerImg);
+        }
 		model.addAttribute("board", qnaBoard);
 		model.addAttribute("fileUploads", fileUploads);
 		

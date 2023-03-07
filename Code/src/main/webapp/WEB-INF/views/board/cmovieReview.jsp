@@ -58,7 +58,7 @@ window.onload = function(){
  		<ul class="css-27z1pm-VisualUI-ContentGrid e14whxmg0" style="width:80%;margin:auto;">
  		<c:forEach items="${boardList }" var="board">
  			<li class="css-1hp6p72">
- 				<a title="${board.title }" href="cgetBoard.do?bseq=${board.bseq }">
+ 				<a title="${board.title }" href="getBoard.do?bseq=${board.bseq }">
  					<div class="css-1qmeemv">
  						<div class="css-1rdb949-StyledLazyLoadingImage ezcopuc0">
  						<c:choose>

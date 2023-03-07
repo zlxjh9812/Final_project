@@ -36,7 +36,7 @@
 		FROM (
 			SELECT ROWNUM RN,cseq,targetID,value
 			FROM (
-				 select cseq,targetID,value, count(*) from(select r.cseq,r.targetID,bn.value from reportcomment r,boardnum bn where r.tableNum = bn.tableNum) group by cseq,targetID,value  having count(*)>=2  order by count(*) desc
+				 select cseq,targetID,value, count(*) from(select r.cseq,r.targetID,bn.value from reportcomment r,boardnum bn where r.tableNum = bn.tableNum) group by cseq,targetID,value  having count(*)>=0  order by count(*) desc
 			) 
 			
     		WHERE ROWNUM <= #{pageNum} * #{amount}

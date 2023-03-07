@@ -43,12 +43,12 @@
 						<table class="qna-table">
 							<thead>
 								<tr>
-									<th>번호</th>
-									<th>구분</th>
-									<th>제목</th>
-									<th>작성자</th>
-									<th>작성일</th>
-									<th>상태</th>
+									<th class = "Tnumber">번호</th>
+									<th class = "Toption">구분</th>
+									<th class = "Ttitle">제목</th>
+									<th class = "Twriter">작성자</th>
+									<th class = "Tdate">작성일</th>
+									<th class = "Tstate">상태</th>
 								</tr>
 							</thead>
 							<tbody>

@@ -25,7 +25,7 @@
 					<div class="mycontent-select-container">
 						<div class="mycontent-select-all searchType-empty">전체</div>
 						<div class="mycontent-select-movie searchType-movie">영화</div>
-						<div class="mycontent-select-tv searchType-tv">TV 프로그램</div>
+						<div class="mycontent-select-tv searchType-tv">TV</div>
 					</div>
 					<form id="search-form" method="get" action="/mypage/myfavorite">
 						<input type="hidden" name="page" value="1">

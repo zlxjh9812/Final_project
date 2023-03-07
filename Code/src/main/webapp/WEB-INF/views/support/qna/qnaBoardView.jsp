@@ -311,7 +311,16 @@
 									</div>
 								</div>
 								<div class="qna-answer-writer-wrap">
-									<div class="user-icon-small-wrap"><img src="<c:url value="${writerImg }"/>" alt="Profile" class="user-icon-small"></div>
+									<div class="user-icon-small-wrap">
+                                       <c:choose>
+                                          <c:when test="${not empty writerImg}">
+                                             <img src="<c:url value="${writerImg }"/>" alt="Profile" class="user-icon-small">
+                                          </c:when>
+                                          <c:otherwise>
+                                             <img src="/resources/assets/img/blankUserImg.png" alt="Default Profile" class="user-icon-small">
+                                          </c:otherwise>
+                                       </c:choose>
+                                    </div>
 									<div class="qna-answer-writer__nickname">${board.writer }(${board.writerId })</div>
 								</div>
 							</div>

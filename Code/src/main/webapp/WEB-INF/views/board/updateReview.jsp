@@ -699,7 +699,7 @@ select {
 	
 	<!-- 글 작성 폼 -->
 	<div class="container">
-		<div class="title">글쓰기</div>
+		<div class="title">리뷰 수정하기</div>
 	<form action="updateBoard.do" method="post" enctype="multipart/form-data">
 		
 	<input type = "hidden" id = "nickname" name="nickname" value = "${User.nickname }">

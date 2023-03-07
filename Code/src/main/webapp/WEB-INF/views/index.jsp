@@ -60,7 +60,7 @@
   </c:choose>
   <div>
 
-    <button onClick="location.href='getReviewReport.do'" class="custom-btn btn-1">관리자 페이지</button>
+    
 
     <div class="slider">
    	  <c:forEach var="release_date" begin="0" end="19" step="1" items="${release_date}">

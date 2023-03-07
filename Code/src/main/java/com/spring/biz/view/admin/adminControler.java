@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.spring.biz.UserBlackList.UserBlackListService;
 import com.spring.biz.UserBlackList.UserBlackListVO;
@@ -27,6 +29,7 @@ import com.spring.biz.util.PageDTO;
 import com.spring.biz.util.SearchCriteria;
 
 @Controller
+@SessionAttributes({"report","comment"})
 public class adminControler {
 	@Autowired
 	private ReportReviewService reviewService;
@@ -45,7 +48,7 @@ public class adminControler {
 	public String getReviewReport(Model model,SearchCriteria cri) {
 		// Model 정보 저장
 				PageDTO pageMaker = new PageDTO(cri, reviewService.getTotalPages(cri));
-				System.out.println("TotalPage : " + pageMaker.getTotalPage());
+
 				System.out.println("StartPage : " + pageMaker.getStartPage());
 				System.out.println("EndPage : " + pageMaker.getEndPage());
 				
@@ -61,7 +64,7 @@ public class adminControler {
 	@RequestMapping(value = "/getCommentReport.do")
 	public String getCommentReport(Model model,SearchCriteria cri) {
 		PageDTO pageMaker = new PageDTO(cri, commentService.getTotalPages(cri));
-		System.out.println("TotalPage : " + pageMaker.getTotalPage());
+	
 		System.out.println("StartPage : " + pageMaker.getStartPage());
 		System.out.println("EndPage : " + pageMaker.getEndPage());
 		System.out.println(commentService.getBoardListWithDynamicPaging(cri));
@@ -272,6 +275,23 @@ public class adminControler {
 	public String InsertReport() {
 		
 		return "admin/InsertReport";
+	}
+	@RequestMapping(value ="ReportComment.do",method =RequestMethod.POST)
+	public String InsertReportComment(Model model,ReportCommentVO vo,String commentContent) {
+		System.out.println(commentContent);
+		UserVO user = new UserVO();
+		user.setNickname(vo.getTargetID());
+		System.out.println(user.getNickname());
+		vo.setTargetID(userService.getNickname(user).getUserId());
+		System.out.println(vo.getUserId());
+		model.addAttribute("report",vo);
+		model.addAttribute("comment",commentContent);
+		return "admin/InsertReportComment";
+	}
+	@RequestMapping(value ="ReportComment.do", method =RequestMethod.GET)
+	public String InsertReportComment() {
+		
+		return "admin/InsertReportComment";
 	}
 	
 }

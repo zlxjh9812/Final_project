@@ -54,7 +54,15 @@
  				<a title="${result.title }" href="getBoard.do?bseq=${result.bseq }">
  					<div class="css-1qmeemv">
  						<div class="css-1rdb949-StyledLazyLoadingImage ezcopuc0">
- 						<img src="<c:url value="/resources/images/${result.filename }"/>" class="css-qhzw1o-StyledImg ezcopuc1">
+ 					<c:choose>
+                   <c:when test="${result.filename != '2'}">
+                      <img alt="경호 확인 필요" src="/img/${result.filename }" class="css-qhzw1o-StyledImg ezcopuc1">
+                      
+                   </c:when>
+                   <c:otherwise>
+ 							<img src="${result.reviewPic }" class="css-qhzw1o-StyledImg ezcopuc1">
+                   </c:otherwise>
+                   </c:choose>
  						</div>
  					</div>
  					<div class="css-ixy093">

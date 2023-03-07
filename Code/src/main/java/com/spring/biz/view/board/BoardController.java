@@ -156,7 +156,7 @@ public class BoardController {
 				System.out.println("파일 업로드 실패");
 			}
 		}else {
-			vo.setFilename("blankThumbnail.png");
+			vo.setFilename("2");
 		}
 
 		
@@ -251,7 +251,7 @@ public class BoardController {
 					System.out.println("파일 업로드 실패");
 				}
 			}else {
-				vo.setFilename("blankThumbnail.png");
+				vo.setFilename("2");
 			}
 			
 			
@@ -506,7 +506,7 @@ public class BoardController {
 	@ResponseBody
 	public String likeUp(ReviewLikeVO rvo, ReviewBoardVO vo) {
 		
-		
+		System.out.println("likeUp.do 실행");
 		System.out.println(rvo.getSeq());
 		System.out.println(rvo.getUserid());
 		if(rvo.getUserid() != null) {
@@ -566,6 +566,69 @@ public class BoardController {
         }
     }
 
+	@RequestMapping(value="cgetBoardList.do")
+	public String getBoardList(Model model, @RequestParam(value = "type") String contents_type, @RequestParam(value = "id") int contents_num, ReviewBoardVO vo, HashTagVO Hvo) {
+		System.out.println(contents_type + "ccc");
+		vo.setMoviecode(contents_num);
+		vo.setContentType(contents_type);
+		
+		if (contents_type.equals("movie")) {
+			vo.setBoardnum(1);
+		} else if (contents_type.equals("tv")) {
+			vo.setBoardnum(2);
+		}
+		
+		System.out.println(vo + "BoardNum");
+		
+		getContentInfo info = new getContentInfo();
+		
+		// NULL Check
+				if (vo.getSearchCondition() == null) {
+					vo.setSearchCondition("TITLE");
+				}
+				if (vo.getSearchKeyword() == null) {
+					vo.setSearchKeyword("");
+				}
+				
+				
+				// Model 정보 저장
+				PageDTO pageMaker = new PageDTO(vo, boardService.getTotalPages(vo));
+				
+				List<ReviewBoardVO> result = boardService.cgetBoardList(vo);
+				
+				for(int i = 0;i<result.size();i++) {
+					Hvo.setBseq(result.get(i).getBseq());
+					if(hashtagService.getHashTag(Hvo)!=null) {
+						System.out.println(Hvo.getBseq());
+					List<HashTagVO> hashList = hashtagService.getHashTag(Hvo);
+					List<String> tempList = new ArrayList<String>();
+					for(int x = 0;x<hashList.size();x++) {
+						
+						String temp = hashList.get(x).getTags();
+						tempList.add(temp);
+					}
+					result.get(i).setTags(tempList);
+					}
+					
+					if(result.get(i).getReviewPic() == null) {
+						int code = result.get(i).getMoviecode();
+						System.out.println(code);
+						String contentType= result.get(i).getContentType();
+						System.out.println(contentType);
+						String temp = info.getjsonObjectInfo(contentType, code).getPoster_path();
+						System.out.println(temp);
+						result.get(i).setReviewPic(temp);
+						System.out.println(result.get(i).getReviewPic());
+					}
+					
+				}
+				model.addAttribute("pageMaker", pageMaker);	// Model 정보 저장
+				model.addAttribute("boardList", result);	// Model 정보 저장
+				System.out.println(result + "result");
+
+				return "/board/cmovieReview";
+				
+			}
 	}
 
 

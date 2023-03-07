@@ -112,7 +112,7 @@
 		<div class="faq-footer">
 			<div class="faq-title">찾으시는 내용이 없으신가요?</div>
 			<div class="faq-title">자세한 내용을 함께 보내주시면 신속히 답변드리겠습니다.</div>
-			<button class="qna-link-btn">1:1 문의하기</button>
+		<button class="qna-link-btn" onclick="location.href='/support/qna'">1:1 문의하기</button>
 		</div>
 	</div>
 	</main>

@@ -34,7 +34,7 @@ public class SearchCriteria {
 
 	public void setAmount(int amount) {
 		if (amount <= 0 || amount > 100) { 
-			this.amount = 2; 
+			this.amount = 5; 
 			return;
 		}
 		this.amount = amount;

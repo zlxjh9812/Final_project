@@ -9,4 +9,5 @@
 	<a href="#" onclick="replyReply('<c:out value="${replyvo.rseq}"/>')">댓글</a>
 	<br/>
 	<div id="reply<c:out value="${replyvo.rseq}"/>"><c:out value="${replyvo.content}"/></div>
+	
 </div><br/>

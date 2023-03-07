@@ -3,6 +3,7 @@ package com.spring.biz.view.blackList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -22,10 +23,10 @@ public class BlackListContoller {
 	@Autowired
 	UserService userService;
 	
-	@RequestMapping(value = "getAllBlackListUser.do")
+	@GetMapping(value = "getAllBlackListUser.do")
 	public String getAllBlackListUser(SearchCriteria cri,Model model) {
 		PageDTO pageMaker = new PageDTO(cri, blackList.getAllBlackListCount(cri));
-		System.out.println("TotalPage : " + pageMaker.getTotalPage());
+		
 		System.out.println("StartPage : " + pageMaker.getStartPage());
 		System.out.println("EndPage : " + pageMaker.getEndPage());
 		
@@ -41,7 +42,7 @@ public class BlackListContoller {
 	@RequestMapping(value = "getEndDateBlackListUser.do")
 	public String getEndDateBlackListUser(SearchCriteria cri,Model model) {
 		PageDTO pageMaker = new PageDTO(cri, blackList.getEndDateUserCount(cri));
-		System.out.println("TotalPage : " + pageMaker.getTotalPage());
+	
 		System.out.println("StartPage : " + pageMaker.getStartPage());
 		System.out.println("EndPage : " + pageMaker.getEndPage());
 		

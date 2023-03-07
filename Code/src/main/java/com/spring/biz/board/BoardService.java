@@ -18,6 +18,10 @@ public interface BoardService {
 		// 글 상세 조회
 		public ReviewBoardVO getBoard(ReviewBoardVO vo);
 		
+		// 자유게시판 검색
+		public List<ReviewBoardVO> getSearchFree(ReviewBoardVO vo);
+
+		
 		// 글 목록 조회
 		public List<ReviewBoardVO> getBoardList(ReviewBoardVO vo);
 		

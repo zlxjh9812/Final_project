@@ -29,7 +29,7 @@
 	<update id="updateByEndDate">
 	<![CDATA[ update UserBlackList set EndDate = (select EndDate from UserBlackList where UserId = #{UserId})+#{date} where UserId = #{UserId}]]>
 	</update>
-	<select id="	getEndDateUser" resultMap="blackLIstesult">
+	<select id="getEndDateUser" resultMap="blackLIstesult">
 	<![CDATA[
 		SELECT * 
 		FROM(

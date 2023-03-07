@@ -32,6 +32,11 @@ public class BoardDAO {
 
 	}
 	
+	public List<ReviewBoardVO> getSearchFree(ReviewBoardVO vo){
+
+		return mybatis.selectList("BoardDAO.getSearchFree", vo);
+	}
+	
 	// 글 삭제
 	public void deleteBoard(ReviewBoardVO vo) {
 		System.out.println("글 삭제");
