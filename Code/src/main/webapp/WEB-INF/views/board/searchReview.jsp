@@ -12,7 +12,7 @@
 <title>검색 결과</title>
 </head>
 <body>
-    <main id="main" class="main">
+   <main id="main" class="main">
       <c:choose>
     <c:when test="${searchname eq 'free'}">
     	 	<div id="board-list">

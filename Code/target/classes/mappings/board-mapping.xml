@@ -166,6 +166,27 @@
   		]]>
 	</select>
 	
+			<select id="getSearchFree" resultMap="boardResult">
+		SELECT * 
+		FROM(
+			SELECT ROWNUM RN, BSEQ, BOARDNUM, TITLE, NICKNAME, CONTENT,FILENAME,WRITEDATE, LIKE_NUM, UNLIKE_NUM, CNT, USERID 
+			FROM(
+				SELECT * 
+				FROM REVIEWBOARD 
+				WHERE boardnum = 4 and report = 'N'
+				AND TITLE LIKE '%'||#{searchKeyword}||'%'
+		ORDER BY BSEQ DESC
+		) 
+			<![CDATA[
+    		WHERE ROWNUM <= #{pageNum} * #{amount}
+    		]]>
+    	) 
+  		<![CDATA[
+  		WHERE RN > (#{pageNum} - 1) * #{amount}
+  		]]>
+	</select>
+
+	
 	
 	<select id="getSearchFree" resultMap="boardResult">
 		SELECT * 

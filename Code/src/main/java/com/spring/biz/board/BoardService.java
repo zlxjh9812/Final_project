@@ -19,7 +19,7 @@ public interface BoardService {
 		public ReviewBoardVO getBoard(ReviewBoardVO vo);
 		
 		// 자유게시판 검색
-		public List<ReviewBoardVO> getSearchFree(ReviewBoardVO vo);
+	
 
 		
 		// 글 목록 조회
@@ -48,6 +48,9 @@ public interface BoardService {
 		
 		// 리뷰 검색 
 		public List<ReviewBoardVO> getSearchReview(ReviewBoardVO vo);
+		
+		// 자유게시판 검색
+		public List<ReviewBoardVO> getSearchFree(ReviewBoardVO vo);
 		
 		public void reportUpdateReviewY(ReviewBoardVO vo);
 		public void reportUpdateReviewN(ReviewBoardVO vo);

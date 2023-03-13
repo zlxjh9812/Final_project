@@ -44,6 +44,8 @@ import com.spring.biz.user.UserVO;
 import com.spring.biz.util.getContentInfo;
 import com.spring.biz.util.getInfoUtil;
 import com.spring.biz.util.getSearchUtil;
+import com.spring.biz.view.board.MovieController.SortByLike;
+import com.spring.biz.view.board.MovieController.SortByVote;
 
 @Controller
 public class MovieController {
@@ -254,6 +256,7 @@ public class MovieController {
 	}
 	
 	@RequestMapping(value = "search.do")
+
     public String searsch(@RequestParam(value = "SC")String searchCondition,Model model,String searchKeyword, ReviewBoardVO vo) {
      if(searchCondition.equals("review"))  {
     		getContentInfo info = new getContentInfo();
@@ -290,6 +293,10 @@ public class MovieController {
      }
        return "/board/search";
     }
+
+	
+	
+
 	
 	
 	

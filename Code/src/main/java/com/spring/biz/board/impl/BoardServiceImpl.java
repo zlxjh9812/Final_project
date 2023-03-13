@@ -54,11 +54,7 @@ public class BoardServiceImpl implements BoardService {
 		boardDAO.updateCnt(vo);
 		
 	}
-	@Override
-	public List<ReviewBoardVO> getSearchFree(ReviewBoardVO vo) {
-		// TODO Auto-generated method stub
-		return boardDAO.getSearchFree(vo);
-	}
+	
 	@Override
 	public int getTotalPages(ReviewBoardVO vo) {
 		return boardDAO.getTotalPages(vo);
@@ -126,5 +122,11 @@ public class BoardServiceImpl implements BoardService {
 	public List<ReviewBoardVO> cgetBoardList(ReviewBoardVO vo) {
 		// TODO Auto-generated method stub
 		return boardDAO.cgetBoardList(vo);
+	}
+
+	@Override
+	public List<ReviewBoardVO> getSearchFree(ReviewBoardVO vo) {
+		// TODO Auto-generated method stub
+		return boardDAO.getSearchFree(vo);
 	}
 }
