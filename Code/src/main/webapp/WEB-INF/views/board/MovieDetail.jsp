@@ -52,7 +52,7 @@
    width: 450px;
 }
 </style>
-<main id="main" class="main">
+<main id="main" class="main" style="background-color: rgb(251, 247, 242)">
 <div class="css-16jhzm7-Self e1ezac430">
    <div class="css-1ihluk0-Content e1ezac431">
       <div class="css-1iyk86f-Background e1ezac432">
@@ -97,7 +97,7 @@
                   </div>
                </div>
             </div>
-            <div class="css-1p7n6er-Pane e1svyhwg15">
+            <div class="css-1p7n6er-Pane e1svyhwg15" style ="background-color: rgb(251, 247, 242);" >
                <div class="css-569z5v">
                   <div class="css-1po9d5k">
                      <div class="css-1d6udxb">
@@ -142,7 +142,7 @@
 					  Swal.fire({			
 						  title: ' ',						  
 						  text: '평가하시려면 로그인이 필요해요.',
-						  <%-- imageUrl: '${pageContext.request.contextPath}/resources/images/star_icon.png',--%>
+						 imageUrl: '${pageContext.request.contextPath}/resources/images/star_icon.png',
 						  imageWidth: 70,
 						  imageHeight: 70,						  
 						  imageAlt: 'Custom image',
@@ -215,7 +215,7 @@
 			//(1)별점입력 및 변경
 			$('.star_area .rateit').bind('rated', function (e) { //rated reset		
 		        var ri = $(this);
-	      
+	      		console.log(ri.rateit('value'));
 				var checkComment = ${checkComment};
 		       /*var user_id = ${user_id};*/	        
 				var value = ri.rateit('value'); 
@@ -325,7 +325,7 @@
                                            Swal.fire({
                                                title: ' ',
                                                text: '내 보관함에 작품을 담으려면 로그인이 필요해요.',
-                                               <!--     imageUrl: window.ctx + '/resources/images/bookmark_icon.png',-->
+                                                imageUrl: window.ctx + '/resources/images/bookmark_icon.png',
                                                imageWidth: 70,
                                                imageHeight: 70,
                                                imageAlt: 'Custom image',
@@ -472,7 +472,9 @@
                </div>
             </div>
          </section>
-         <div class="css-1bn16fq-ContentSections e1ezac433">
+         <div class="css-1bn16fq-ContentSections e1ezac433" style="
+    background-color: rgb(251, 247, 242);
+">
             <div class="css-bs9kkj">
                <div class="css-1po9d5k">
                   <div class="css-uvsgck">
@@ -704,19 +706,16 @@
 																							class="css-1f9m1s4-StylelessLocalLink eovgsd01"
 																							href="${pageContext.request.contextPath}/member/myPage.do?user_num=${commentList.userId}"><div
 																								class="css-107z6xc">
-																								<div class="css-bv6e27-ProfilePhotoImage">
+																								
 																									<c:if
 																										test="${empty cmt_memberList[status.index].profileImg}">
-																										<img
-																											src="${pageContext.request.contextPath}/resources/images/face.png"
-																											width="32" height="32" class="my-photo">
+																										
 																									</c:if>
 																									<c:if
 																										test="${!empty cmt_memberList[status.index].profileImg}">
-																										<img width="32" height="32" class="my-photo"
-																											src="${pageContext.request.contextPath}/member/photoView.do?user_num=${commentList.userId}">
+																										
 																									</c:if>
-																								</div>
+																								
 																							</div>
 																							<div class="css-1agoci2">
 																								${cmt_memberList[status.index].name }<span
@@ -852,7 +851,7 @@
 		</div>
 	</div>
 </div>
- <c:import url="../common/footer.jsp"></c:import>
+ 
 <!--코멘트 수정폼 모달 틀-->
 <div class="modal fade" id="commentUpdateModal" tabindex="-1"
 	role="dialog">
