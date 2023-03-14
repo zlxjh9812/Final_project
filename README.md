@@ -48,36 +48,46 @@ ___
     <img src = "forRead/moviedetail2.png", width="49%">
 </p>
 
-**4. 전체 리뷰 보기**
+**4. 콘텐츠 코멘트**
+<p align="center">
+    <img src = "forRead/moviedetail_comment.png", width="49%">
+    <img src = "forRead/moviedetail_comment.png2", width="49%">
+</p>
+
+
+**5. 전체 리뷰 보기**
 <p align="center">
     <img src = "forRead/contentList.png", width="100%">
 </p>
 
-**5. 글 작성 하기**
+**6. 글 작성 하기**
 <p align="center">
     <img src = "forRead/리뷰 작성.png", width="49%">
     <img src = "forRead/리뷰 작성(제출).png", width="49%">
 </p>
 
-**6. 댓글 작성하기**
+**7. 댓글 작성하기**
 <p align="center">
     <img src = "forRead/comment.png", width="100%">
 </p>
 
-**7. 신고하기**
+**8. 신고하기**
 <p align="center">
     <img src = "forRead/report_review.png", width="100%">
 </p>
 
-**8. 마이페이지**
+**9. 마이페이지**
 <p align="center">
     <img src = "forRead/mypage1.png", width="49%">
     <img src = "forRead/mypage2.png", width="49%">
 </p>
 
-**9. 회원 정보수정**
+**10. 회원 정보수정**
 <p align="center">
     <img src = "forRead/editprofile.png", width="100%">
 </p>
 
-**10. FAQ**
+**11. FAQ**
+<p align="center">
+    <img src = "forRead/FAQ.png", width="100%">
+</p>
