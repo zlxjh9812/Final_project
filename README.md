@@ -104,3 +104,19 @@ ___
 <p align="center">
     <img src = "forRead/FAQ.png", width="100%">
 </p>
+
+**14. 1:1문의하기**
+<p align="center">
+    <img src = "forRead/inquiry.png", width="100%">
+</p>
+
+**15. 관리자**
+
+<p align="center">
+    <img src = "forRead/reporReviewtList.png", width="49%">
+    <img src = "forRead/reportCommentList.png", width="49%">
+</p>
+<p align="center">
+    <img src = "forRead/reportUser.png", width="49%">
+    <img src = "forRead/endreport.png", width="49%">
+</p>
