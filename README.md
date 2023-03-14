@@ -25,7 +25,15 @@ ___
 ___
 ## 사용기술 및 개발환경
 <p align="center">
-    <img src = "forREADME/01.JPG", width="100%">
+    <img src = "forRead/Skill.png", width="100%">
 </p>
 
 ___
+
+## 주요기능
+
+**1. 메인화면**
+<p align="center">
+    <img src = "forREADME/main.JPG", width="100%">
+</p>
+
