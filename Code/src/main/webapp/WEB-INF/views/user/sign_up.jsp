@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@include file="../common/sidebar.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,26 +13,19 @@
 <link href="<c:url value="/resources/new.css" />" rel="stylesheet">
 <link href ="<c:url value = "/resources/signUp.js" />">
 <script type="text/javascript" src="<c:url value = "/resources/signUp.js" />"></script>
-<style>
 
-#gender{
-	display: flex;
-    justify-content: space-evenly;
-}
-</style>
 </head>
 <body>
 <script type="text/javascript">
 
 </script>
-
+<main style=" padding-top: 100px;">
 <form action="insertUser.do" class="validation-form" id="frm" method = "post">
 <div class="member">
-       <!-- 1. 로고 -->
-        <h1>#REVIEWERS</h1>
+
 
         <!-- 2. 필드 -->
-        <div class="field tel-number">
+        <div class="field">
            <b>아이디</b>
             <span class="placehold-text">
             <div>
@@ -60,7 +54,7 @@
         </div>
       
 
-		 <div class="field tel-number">
+		 <div class="field">
            <b>별명</b>
             <span class="placehold-text">
             <div>
@@ -76,7 +70,7 @@
 
        
        
-        <div class="field tel-number">
+        <div class="field">
             <b>이메일</b>
             
             <div>
@@ -114,6 +108,6 @@
 	<input type="hidden" name="emilChk" value="invalid" />
 </form>
 
-
+</main>
 </body>
 </html>

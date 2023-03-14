@@ -540,7 +540,7 @@ border-radius: 15px;
   
    <main id="main" class="main" style="text-align: center;">
    <h1>해제 당일 유저</h1>
-   <button id = "btn">해제하기</button>
+
 <table class="table" >
 			 
 			 
@@ -570,9 +570,11 @@ border-radius: 15px;
     
     </c:forEach>
     
-    
+       
   </tbody>
+
 </table>
+  <button id = "btn">해제하기</button>
 <div class="text-center">
 	<ul class="pagination justify-content-center">
 		<c:if test="${pageMaker.prev}">

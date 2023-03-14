@@ -543,7 +543,7 @@ border-radius: 15px;
   
    <main id="main" class="main" style="text-align: center;">
    <h1>신고된 전체 유저</h1>
-   <button id = "btn">해제하기</button>
+  
 <table class="table" >
 			 
 			 
@@ -573,7 +573,10 @@ border-radius: 15px;
     
     
   </tbody>
+
 </table>
+   <button id = "btn">해제하기</button>
+   <br>
 <div class="text-center">
 	<ul class="pagination justify-content-center">
 		<c:if test="${pageMaker.prev}">

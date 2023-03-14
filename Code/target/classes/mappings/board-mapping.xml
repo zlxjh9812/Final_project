@@ -165,8 +165,7 @@
   		WHERE RN > (#{pageNum} - 1) * #{amount}
   		]]>
 	</select>
-	
-			<select id="getSearchFree" resultMap="boardResult">
+<!-- 		<select id="getSearchFree" resultMap="boardResult">
 		SELECT * 
 		FROM(
 			SELECT ROWNUM RN, BSEQ, BOARDNUM, TITLE, NICKNAME, CONTENT,FILENAME,WRITEDATE, LIKE_NUM, UNLIKE_NUM, CNT, USERID 
@@ -186,7 +185,7 @@
   		]]>
 	</select>
 
-	
+	 -->
 	
 	<select id="getSearchFree" resultMap="boardResult">
 		SELECT * 
