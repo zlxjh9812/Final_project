@@ -5,7 +5,8 @@
 2. [설계의 주안점](#설계의-주안점)
 3. [사용기술 및 개발환경](#사용기술-및-개발환경)
 4. [주요기능](#주요기능)
-5. [Document](#Document)
+5. [Document](#document)
+
 ___
 ## 기획 의도
 - 여러개의 플랫봄에서 이용되는 컨텐츠 들의 리뷰를 하나의 사이트에서 보고 싶다.
@@ -119,4 +120,29 @@ ___
 <p align="center">
     <img src = "forRead/reportUser.png", width="49%">
     <img src = "forRead/endreport.png", width="49%">
+</p>
+
+___
+
+## Document
+
+**ClassDiagram**
+<p align="center">
+    <img src = "forRead/board.png", width="49%">
+    <img src = "forRead/User.png", width="49%">
+</p>
+<p align="center">
+    <img src = "forRead/Class_Admin.png", width="49%">
+    <img src = "forRead/Class_QnA.png", width="49%">
+</p>
+
+**UseCase**
+<p align="center">
+    <img src = "forRead/UseCase.png", width="49%">
+    <img src = "forRead/UseCaseAdmin.png", width="49%">
+</p>
+
+**ER Diagram**
+<p align="center">
+    <img src = "forRead/erdiagram.png", width="100%">
 </p>
