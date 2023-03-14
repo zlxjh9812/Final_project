@@ -126,7 +126,7 @@ ___
 
 ## Document
 
-**ClassDiagram**
+### ClassDiagram
 <p align="center">
     <img src = "forRead/board.png", width="49%">
     <img src = "forRead/User.png", width="49%">
@@ -136,13 +136,13 @@ ___
     <img src = "forRead/Class_QnA.png", width="49%">
 </p>
 
-**UseCase**
+### UseCase
 <p align="center">
     <img src = "forRead/UseCase.png", width="49%">
     <img src = "forRead/UseCaseAdmin.png", width="49%">
 </p>
 
-**ER Diagram**
+### ER Diagram
 <p align="center">
     <img src = "forRead/erdiagram.png", width="100%">
 </p>
