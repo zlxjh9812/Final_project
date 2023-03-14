@@ -51,7 +51,7 @@ ___
 **4. 콘텐츠 코멘트**
 <p align="center">
     <img src = "forRead/moviedetail_comment.png", width="49%">
-    <img src = "forRead/moviedetail_comment.png2", width="49%">
+    <img src = "forRead/moviedetail_comment2.png", width="49%">
 </p>
 
 
@@ -60,34 +60,47 @@ ___
     <img src = "forRead/contentList.png", width="100%">
 </p>
 
-**6. 글 작성 하기**
+
+**6. 검색**
+<p align="center">
+    <img src = "forRead/search.png", width="49%">
+    <img src = "forRead/searchResult.png", width="49%">
+</p>
+
+**7. 글 작성 하기**
 <p align="center">
     <img src = "forRead/리뷰 작성.png", width="49%">
     <img src = "forRead/리뷰 작성(제출).png", width="49%">
 </p>
 
-**7. 댓글 작성하기**
+**8. 댓글 작성하기**
 <p align="center">
     <img src = "forRead/comment.png", width="100%">
 </p>
 
-**8. 신고하기**
+**9. 글 상세보기**
+<p align="center">
+    <img src = "forRead/getBoard.png", width="100%">
+</p>
+
+
+**10. 신고하기**
 <p align="center">
     <img src = "forRead/report_review.png", width="100%">
 </p>
 
-**9. 마이페이지**
+**11. 마이페이지**
 <p align="center">
     <img src = "forRead/mypage1.png", width="49%">
     <img src = "forRead/mypage2.png", width="49%">
 </p>
 
-**10. 회원 정보수정**
+**12. 회원 정보수정**
 <p align="center">
     <img src = "forRead/editprofile.png", width="100%">
 </p>
 
-**11. FAQ**
+**13. FAQ**
 <p align="center">
     <img src = "forRead/FAQ.png", width="100%">
 </p>
