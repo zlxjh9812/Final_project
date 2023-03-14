@@ -1,5 +1,5 @@
 # 모든 영화,TV프로그램의 정보 #리뷰어스
-##### 팀원 : 박진우(조장), 김진원, 박성범, 문영
+##### 팀원 : 박진우(조장), 김진원, 박성범, 문영석
 ## Contetns
 1. [기획 의도](#기획-의도)
 2. [설계의 주안점](#설계의-주안점)
@@ -34,6 +34,50 @@ ___
 
 **1. 메인화면**
 <p align="center">
-    <img src = "forREADME/main.JPG", width="100%">
+    <img src = "forRead/MainPage.png", width="100%">
 </p>
 
+**2. 회원가입**
+<p align="center">
+    <img src = "forRead/signup.png", width="100%">
+</p>
+
+**3. 컨텐츠 상세정보**
+<p align="center">
+    <img src = "forRead/moviedetail1.png", width="49%">
+    <img src = "forRead/moviedetail2.png", width="49%">
+</p>
+
+**4. 전체 리뷰 보기**
+<p align="center">
+    <img src = "forRead/contentList.png", width="100%">
+</p>
+
+**5. 글 작성 하기**
+<p align="center">
+    <img src = "forRead/리뷰 작성.png", width="49%">
+    <img src = "forRead/리뷰 작성(제출).png", width="49%">
+</p>
+
+**6. 댓글 작성하기**
+<p align="center">
+    <img src = "forRead/comment.png", width="100%">
+</p>
+
+**7. 신고하기**
+<p align="center">
+    <img src = "forRead/report_review.png", width="100%">
+</p>
+
+**8. 마이페이지**
+<p align="center">
+    <img src = "forRead/mypage1.png", width="49%">
+    <img src = "forRead/mypage2.png", width="49%">
+</p>
+
+**9. 회원 정보수정**
+<p align="center">
+    <img src = "forRead/editprofile.png", width="100%">
+</p>
+
+**10. FAQ**
