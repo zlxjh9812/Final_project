@@ -521,6 +521,7 @@ border-radius: 15px;
       <th scope="col">신고 댓글</th>
       <th scope="col">신고 사유</th>
       <th scope="col">삭제 </th>
+      <th scope="col">취소</th>
     </tr>
   </thead>
   <tbody>
@@ -533,7 +534,8 @@ border-radius: 15px;
       <td id = ${list.tableNum }><a href = "getboard.do?seq=${list.seq }">내용보기</a></td>
        <td><a href = "javascript:void(0);onclick:window.open('getReportCommentDetail.do?seq=${list.seq }', '신고 상세정보', 
            'width=500, height=700, scrollbars=yes,resizable=no');">사유보기</a></td>
-          <td><button id="mail-Check-Btn"><a href="updateReportComment.do?seq=${list.seq }&targetID=${list.targetID }">회원 제재</a></button></td>
+          <td><a href="updateReportComment.do?seq=${list.seq }&targetID=${list.targetID }">회원 제재</a></td>
+           <td><a href="deleteReportReview.do?seq=${list.seq }">신고 취소</a></td>
     </tr>
     
     </c:forEach>

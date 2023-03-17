@@ -575,7 +575,7 @@ border-radius: 15px;
   </tbody>
 
 </table>
-   <button id = "btn">해제하기</button>
+    <button id = "btn" style = "margin-left: 83%;">해제하기</button>
    <br>
 <div class="text-center">
 	<ul class="pagination justify-content-center">

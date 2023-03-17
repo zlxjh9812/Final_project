@@ -30,7 +30,7 @@
 	<!-- 페이징 -->
 	<select id="getTotalPages" resultType="int">
 		<![CDATA[ SELECT count(*)
-		FROM (select bseq,targetID,tableNum, count(*) from reportReview group by bseq,targetID,tableNum having count(*)>=2  order by count(*) desc)
+		FROM (select bseq,targetID,tableNum, count(*) from reportReview group by bseq,targetID,tableNum having count(*)>=0  order by count(*) desc)
 		WHERE 1 = 1 
 		]]>
   	</select>

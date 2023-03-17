@@ -25,7 +25,7 @@
 	<!-- 페이징 전체 갯수 -->
 	<select id="getTotalPages" resultType="int">
 		<![CDATA[ SELECT count(*)
-		FROM (select cseq,targetID,tableNum, count(*) from reportComment group by cseq,targetID,tableNum having count(*)>=2  order by count(*) desc)
+		FROM (select cseq,targetID,tableNum, count(*) from reportComment group by cseq,targetID,tableNum having count(*)>=0  order by count(*) desc)
 		WHERE 1 = 1
 		]]>
   	</select>
